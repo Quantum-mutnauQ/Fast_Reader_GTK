@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Speed Reader"
+msgstr "Speed Reader"
+
+msgid "Einstellungen:"
+msgstr "Settings:"
+
+msgid "Hintergrund:"
+msgstr "Background:"
+
+msgid "Schrift:"
+msgstr "Font:"
+
+msgid "Schrift Größe:"
+msgstr "Font Size:"
+
+msgid "Fortschritt Zeigen:"
+msgstr "Show Progress:"
+
+msgid "Angezeigte wörter:"
+msgstr "Displayed Words:"
+
+msgid "Lesen"
+msgstr "Read"
+
+msgid "Zurück"
+msgstr "Back"
+
