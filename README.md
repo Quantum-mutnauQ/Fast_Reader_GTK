@@ -1,27 +1,26 @@
 # Speed Reader
 
-Speed Reader is a simple yet powerful application designed to help users read text rapidly and efficiently. Built using the GTK library in C, this program offers a customizable interface for optimizing the reading experience.
-
+Speed Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
 
 ## Features
 
-- **Customizable Settings**: Users can configure various aspects of the reading experience, including background color, text color, font size, and whether to show progress indicators.
-- **Text Input**: Users can input text into the application using a text entry field.
-- **Word-by-Word Display**: The entered text is split into words, and each word is displayed individually, allowing users to focus on one word at a time.
-- **Navigation Options**: Users can navigate through the text using navigation buttons (previous and next) or keyboard shortcuts.
-- **Progress Indicators**: The application provides progress indicators to show the current position in the text and overall progress.
-- **Internationalization Support**: Speed Reader supports internationalization, allowing for localization of user-facing strings in different languages.
-
+- **Customizable Settings**: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.
+- **Text Input**: Easily input text into the application through a dedicated text entry field.
+- **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
+- **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
+- **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
+- 
 ## Getting Started
 
-To use Speed Reader, follow these steps:
+To begin using Speed Reader, follow these simple steps:
 
-1. **Installation**: Downloda the latest relase and upack the zip file.
-2. **RUN** run the Copiled "SpeedReader", you can execute ./SpeedReader in the folder where the programm is safen of you can dobble click it.
+1. **Installation**: Download the latest release and extract the contents from the zip file.
+2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./SpeedReader` in the folder where the program is saved, or simply double-click on it.
 
-## Adding new laguage
-1. **Ceate files** Ceate a folder in the locales folader named in the short form of you language and in this foalder creat an other foalder named ```LC_MESSAGES```. Than in this folder create a flie named ```speedreader.po```.
-2.  **Add Translation to file** copy this template, and modify the Englisch names to the maes in your laguage.
+## Adding a New Language
+
+1. **Create Files**: Within the "locales" folder, create a subfolder named with the short of your language. Inside this folder, create another folder named `LC_MESSAGES`. Then, within this folder, create a file named `speedreader.po`.
+2. **Add Translations to File**: Copy the provided template and modify the English phrases to their equivalents in your language in the speedreader.po file.
 ```
 msgid ""
 msgstr ""
@@ -54,11 +53,12 @@ msgstr "Read"
 msgid "Zurück"
 msgstr "Back"
  ```
-4. **Compile** use the command msgfmt to compile the laguage.  ``` locale/<Your language>/LC_MESSAGES/speedreader.po -o locale/<Your language>/LC_MESSAGES/speedreader.m ```
-5. **Testing** star up the Spead reader an look if it works. if it dosen pleas open a issuse and send you speedreader.po and you laguang an I will add it.
-6. **Support the prgekt(Optional)** Open a issuse and schare you speedreader.po and you laguang an I will add it.
+3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt locale/<YourLanguage>/LC_MESSAGES/speedreader.po -o locale/<YourLanguage>/LC_MESSAGES/speedreader.mo`.
+4. **Testing**: Launch Speed Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `speedreader.po` file and language details.
+5. **Support the Project (Optional)**: Open an issue and share your `speedreader.po` file along with your language details, and we will add it to the project.
 
-##Compile it your self
-1. **Download the code** Downloat the leates code.
-2. **Compile it** use this command to comile it: ``` gcc -o SpeedReader SpeedReader.c `pkg-config --cflags --libs gtk4` && msgfmt locale/de/LC_MESSAGES/speedreader.po -o locale/de/LC_MESSAGES/speedreader.mo && msgfmt locale/en/LC_MESSAGES/speedreader.po -o locale/en/LC_MESSAGES/speedreader.mo```. If it dosn ´t work you have to install gcc, msgfmt and libgtk-4-dev. 
-   
+## Compiling It Yourself
+
+1. **Download the Code**: Download the latest code.
+2. **Compilation**: Compile it using the following command:
+3. ```gcc -o SpeedReader SpeedReader.c `pkg-config --cflags --libs gtk4` && msgfmt locale/de/LC_MESSAGES/speedreader.po -o locale/de/LC_MESSAGES/speedreader.mo && msgfmt locale/en/LC_MESSAGES/speedreader.po -o locale/en/LC_MESSAGES/speedreader.mo ```. If any issues arise, ensure you have `GCC`, `msgfmt`, and `libgtk-4-dev` installed.
