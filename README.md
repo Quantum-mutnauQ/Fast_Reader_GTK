@@ -62,3 +62,8 @@ msgstr "Back"
 1. **Download the Code**: Download the latest code.
 2. **Compilation**: Compile it using the following command:
 3. ```gcc -o SpeedReader SpeedReader.c `pkg-config --cflags --libs gtk4` && msgfmt locale/de/LC_MESSAGES/speedreader.po -o locale/de/LC_MESSAGES/speedreader.mo && msgfmt locale/en/LC_MESSAGES/speedreader.po -o locale/en/LC_MESSAGES/speedreader.mo ```. If any issues arise, ensure you have `GCC`, `msgfmt`, and `libgtk-4-dev` installed.
+
+## Plans for the future 
+ 1. Implement time-based word predictions.
+ 2. Include statistics like time per word.
+ 3. Save last settings with configuration
