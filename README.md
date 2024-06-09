@@ -19,7 +19,7 @@ To begin using Fast Reader, follow these simple steps:
 
 ## Adding a New Language
 
-1. **Create Files**: Within the "locales" folder, create a subfolder named with the short of your language. Inside this folder, create another folder named `LC_MESSAGES`. Then, within this folder, create a file named `speedreader.po`.
+1. **Create Files**: Within the "locales" folder, create a subfolder named with the short of your language. Inside this folder, create another folder named `LC_MESSAGES`. Then, within this folder, create a file named `FastReader.po`.
 2. **Add Translations to File**: Copy the provided template and modify the English phrases to their equivalents in your language in the speedreader.po file.
 ```
 msgid ""
