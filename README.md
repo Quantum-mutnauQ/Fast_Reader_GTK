@@ -1,4 +1,4 @@
-# Speed Reader
+# Fast Reader
 
 Speed Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
 
@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Speed Reader"
-msgstr "Speed Reader"
+msgid "Fast Reader"
+msgstr "Fast Reader"
 
 msgid "Einstellungen:"
 msgstr "Settings:"
@@ -61,7 +61,7 @@ msgstr "Back"
 
 1. **Download the Code**: Download the latest code.
 2. **Compilation**: Compile it using the following command:
-3. ```gcc -o SpeedReader SpeedReader.c `pkg-config --cflags --libs gtk4` && msgfmt locale/de/LC_MESSAGES/speedreader.po -o locale/de/LC_MESSAGES/speedreader.mo && msgfmt locale/en/LC_MESSAGES/speedreader.po -o locale/en/LC_MESSAGES/speedreader.mo ```. If any issues arise, ensure you have `GCC`, `msgfmt`, and `libgtk-4-dev` installed.
+3. ```gcc -o FastReader FastReader.c `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo && ./FastReader```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
 
 ## Plans for the future 
  1. Implement time-based word predictions.
