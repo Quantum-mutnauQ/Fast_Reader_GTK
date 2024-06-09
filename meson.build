@@ -4,5 +4,5 @@ project('FastReader', 'c',
 
 # Quellen
 executable('FastReader', 'FastReader.c',
-  dependencies: [dependency('gtk4'), dependency('libconfig')])
+  dependencies: [dependency('gtk4')])
 
