@@ -1,6 +1,6 @@
 # Fast Reader
 
-Speed Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
+Fast Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
 
 ## Features
 
@@ -12,10 +12,10 @@ Speed Reader is a versatile application designed to assist users in reading text
 - 
 ## Getting Started
 
-To begin using Speed Reader, follow these simple steps:
+To begin using Fast Reader, follow these simple steps:
 
 1. **Installation**: Download the latest release and extract the contents from the zip file.
-2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./SpeedReader` in the folder where the program is saved, or simply double-click on it.
+2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./FastReader` in the folder where the program is saved, or simply double-click on it.
 
 ## Adding a New Language
 
@@ -53,9 +53,9 @@ msgstr "Read"
 msgid "Zurück"
 msgstr "Back"
  ```
-3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt locale/<YourLanguage>/LC_MESSAGES/speedreader.po -o locale/<YourLanguage>/LC_MESSAGES/speedreader.mo`.
-4. **Testing**: Launch Speed Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `speedreader.po` file and language details.
-5. **Support the Project (Optional)**: Open an issue and share your `speedreader.po` file along with your language details, and we will add it to the project.
+3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
+4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
+5. **Support the Project (Optional)**: Open an issue and share your `FastReader.po` file along with your language details, and we will add it to the project.
 
 ## Compiling It Yourself
 
