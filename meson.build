@@ -3,8 +3,8 @@ project('FastReader', 'c',
   default_options: ['warning_level=3'])
 
 # Abhängigkeiten
-gtk4_dep = dependency('gtk4')
 libconfig_dep = dependency('libconfig')
+gtk4_dep = dependency('gtk4')
 
 # Quellen
 executable('FastReader', 'FastReader.c',
