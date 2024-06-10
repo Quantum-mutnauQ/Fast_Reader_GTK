@@ -9,7 +9,7 @@ Fast Reader is a versatile application designed to assist users in reading text 
 - **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
 - **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
 - **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
-- 
+  
 ## Getting Started
 
 To begin using Fast Reader, follow these simple steps:
