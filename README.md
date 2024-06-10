@@ -16,6 +16,7 @@ To begin using Fast Reader, follow these simple steps:
 
 1. **Installation**: Download the latest release and extract the contents from the zip file.
 2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./FastReader` in the folder where the program is saved, or simply double-click on it.
+**Troubleshooting** You need to install `libgtk-4-1`.
 
 ## Adding a New Language
 
