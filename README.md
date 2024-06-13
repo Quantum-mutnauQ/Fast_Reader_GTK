@@ -67,4 +67,4 @@ msgstr "Back"
 ## Plans for the future 
  1. Implement time-based word predictions.
  2. Include statistics like time per word.
- 3. Save last settings with configuration
+ 3. Save last settings with configuration (Version 3)
