@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
-#include <string.h>
 #include <libintl.h>
 #include <locale.h>
+#include <libconfig.h>
 
 #define _(STRING) gettext(STRING)
 
@@ -19,11 +19,143 @@ static GtkProgressBar *global_ProgressBar = NULL;
 static GtkSwitch *global_labelProgressSwitch = NULL;
 static GtkSpinButton *global_labelWortsPerTimeSpinn = NULL;
 
+static gchar *config_file_path = NULL;
 
 // Globale Variablen zur Verwaltung des Texts und der Wörter
 static gchar **words = NULL;
 static int current_word_index = 0;
 static int total_words = 0;
+
+static void save_settings() {
+    config_t cfg;
+    config_init(&cfg);
+
+    config_setting_t *root = config_root_setting(&cfg);
+
+    GdkRGBA bg_color;
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(global_labelBackgroundColor), &bg_color);
+    config_setting_t *bg_color_setting = config_setting_add(root, "background_color", CONFIG_TYPE_STRING);
+    config_setting_set_string(bg_color_setting, gdk_rgba_to_string(&bg_color));
+
+    GdkRGBA fg_color;
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(global_labelForgroudColor), &fg_color);
+    config_setting_t *fg_color_setting = config_setting_add(root, "foreground_color", CONFIG_TYPE_STRING);
+    config_setting_set_string(fg_color_setting, gdk_rgba_to_string(&fg_color));
+
+    const char *font = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(global_labelTextButton));
+    config_setting_t *font_setting = config_setting_add(root, "font", CONFIG_TYPE_STRING);
+    config_setting_set_string(font_setting, font);
+
+    gboolean show_progress = gtk_switch_get_active(global_labelProgressSwitch);
+    config_setting_t *show_progress_setting = config_setting_add(root, "show_progress", CONFIG_TYPE_BOOL);
+    config_setting_set_bool(show_progress_setting, show_progress);
+
+    int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
+    config_setting_t *words_per_time_setting = config_setting_add(root, "words_per_time", CONFIG_TYPE_INT);
+    config_setting_set_int(words_per_time_setting, words_per_time);
+    
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+
+    GtkTextIter start, end;
+    gtk_text_buffer_get_start_iter(buffer, &start);
+    gtk_text_buffer_get_end_iter(buffer, &end);
+
+    char *text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
+    config_setting_t *text_setting = config_setting_add(root, "text", CONFIG_TYPE_STRING);
+    config_setting_set_string(text_setting, text);
+
+    if (!config_write_file(&cfg, config_file_path)) {
+        fprintf(stderr, _("Error while writing file.\n"));
+    }
+
+    config_destroy(&cfg);
+}
+
+static void load_settings() {
+    config_t cfg;
+    config_init(&cfg);
+
+    if (!config_read_file(&cfg, config_file_path)) {
+        fprintf(stderr, _("Error while reading file: %s:%d - %s\n"),
+                config_error_file(&cfg),
+                config_error_line(&cfg),
+                config_error_text(&cfg));
+                fprintf(stderr,_("Trye to corrct"));
+        save_settings();
+        config_destroy(&cfg);
+        return;
+    }
+
+    const char *bg_color_str;
+    if (config_lookup_string(&cfg, "background_color", &bg_color_str)) {
+        GdkRGBA bg_color;
+        if (gdk_rgba_parse(&bg_color, bg_color_str)) {
+            gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(global_labelBackgroundColor), &bg_color);
+        }
+    }
+    
+
+    const char *fg_color_str;
+    if (config_lookup_string(&cfg, "foreground_color", &fg_color_str)) {
+        GdkRGBA fg_color;
+        if (gdk_rgba_parse(&fg_color, fg_color_str)) {
+            gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(global_labelForgroudColor), &fg_color);
+        }
+    }
+
+
+    const char *font_str;
+    if (config_lookup_string(&cfg, "font", &font_str)) {
+    
+         // Aktuell eingestellte Schriftart speichern
+        char *previous_font = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(global_labelTextButton));
+    
+        PangoFontDescription *font_desc = pango_font_description_from_string(font_str);
+        
+        if (font_desc != NULL) {
+            // Versuche die Schriftart auf die Komponente anzuwenden
+            gtk_font_chooser_set_font(GTK_FONT_CHOOSER(global_labelTextButton), font_str);
+    
+            // Überprüfe, ob die Schriftart erfolgreich gesetzt wurde
+            char *current_font = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(global_labelTextButton));
+            if (g_strcmp0(current_font, font_str) != 0) {
+                 // Setze die vorherige Schriftart wieder ein
+                gtk_font_chooser_set_font(GTK_FONT_CHOOSER(global_labelTextButton), previous_font);
+            }
+            g_free(current_font);
+            pango_font_description_free(font_desc);
+        } else {
+            // Falls die Font-Beschreibung fehlschlägt, setze die vorherige Schriftart wieder ein
+            gtk_font_chooser_set_font(GTK_FONT_CHOOSER(global_labelTextButton), previous_font);
+        }
+    
+        // Speicher freigeben
+        g_free(previous_font);
+    }
+
+
+
+    int show_progress;
+    if (config_lookup_bool(&cfg, "show_progress", &show_progress)) {
+        gtk_switch_set_active(global_labelProgressSwitch, show_progress);
+    }
+    
+    int words_per_time;
+    if (config_lookup_int(&cfg, "words_per_time", &words_per_time)) {
+        if (words_per_time > 0) {
+            gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, words_per_time);
+        }
+    }
+    
+    const char *text_str;
+    if (config_lookup_string(&cfg, "text", &text_str)) {
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+        gtk_text_buffer_set_text(buffer, text_str, -1); 
+
+    }
+
+    config_destroy(&cfg);
+}
 
 static void update_button_and_Lable_states() {
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
@@ -172,12 +304,10 @@ static void apply_label_styles() {
 
     gchar *font_desc_str = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(global_labelTextButton));
 
-    // Extrahiere Schriftartname aus font_desc_str
     PangoFontDescription *font_desc = pango_font_description_from_string(font_desc_str);
     const gchar *font_family = pango_font_description_get_family(font_desc);
     
-    // Setze die Schriftgröße explizit auf 50
-    gint font_size = 50;
+    gint font_size = pango_font_description_get_size(font_desc)/PANGO_SCALE;
 
     gchar *css = g_strdup_printf(
         "* {"
@@ -230,12 +360,7 @@ static void on_switch_to_page2(GtkWidget *widget, gpointer data) {
         gtk_widget_hide(GTK_WIDGET(global_ProgressBar));
     }
     gtk_stack_set_visible_child_name(stack, "page2");
-}
-
-// Callback-Funktion, die beim Schließen des Fensters aufgerufen wird
-static void on_window_destroy(GtkWidget *widget, gpointer data) {
-    GMainLoop *loop = (GMainLoop *)data;
-    g_main_loop_quit(loop);
+    save_settings();
 }
 
 // Tastensignal-Callback-Funktion
@@ -257,15 +382,43 @@ static gboolean on_key_press(GtkEventControllerKey *controller, guint keyval, gu
     }
     return FALSE;
 }
+static void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
+    // Setze die Standard-Hintergrund- und Schriftfarbe zurück
+    GdkRGBA bg_color, fg_color;
+    get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(global_labelBackgroundColor), &bg_color);
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(global_labelForgroudColor), &fg_color);
+
+    // Setze die Schriftart und -größe zurück
+    PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
+    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
+    gchar *default_font_desc_str = pango_font_description_to_string(default_font_desc);
+    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(global_labelTextButton), default_font_desc_str);
+
+    pango_font_description_free(default_font_desc);
+    g_free(default_font_desc_str);
+
+    // Setze den Fortschrittsschalter zurück
+    gtk_switch_set_active(global_labelProgressSwitch, TRUE);
+
+    // Setze die Anzahl der Wörter pro Zeitspanne zurück
+    gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, 1);
+
+    // Leere das Textfeld
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    gtk_text_buffer_set_text(buffer, "", -1);
+    
+    update_read_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
+}
+
 
 // Funktion zum Erstellen von Seite 1
 static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
-
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
     GtkWidget *label = gtk_label_new(_("Einstellungen:"));
     gtk_widget_set_halign(label, GTK_ALIGN_CENTER);
-    
+
     GtkWidget *Backround = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *labelBackground = gtk_label_new(_("Hintergrund:"));
     GtkWidget *labelBackgroundColor = gtk_color_button_new();
@@ -282,10 +435,12 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     GtkWidget *labelProgress = gtk_label_new(_("Fortschritt Zeigen:"));
     GtkWidget *labelProgressSwitch = gtk_switch_new();
 
-    GtkAdjustment *adjustment = gtk_adjustment_new(1,1,100000000,1,10,1);
+    GtkAdjustment *adjustment = gtk_adjustment_new(1, 1, 100000000, 1, 10, 1);
     GtkWidget *WortsPerTime = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *labelWortsPerTime = gtk_label_new(_("Angezeigte wörter:"));
-    GtkWidget *labelWortsPerTimeSpinn = gtk_spin_button_new(adjustment,1,0);
+    GtkWidget *labelWortsPerTimeSpinn = gtk_spin_button_new(adjustment, 1, 0);
+
+    GtkWidget *ResetButton = gtk_button_new_with_label(_("Zurücksetzen"));
 
     gtk_switch_set_active(GTK_SWITCH(labelProgressSwitch), TRUE);
 
@@ -331,6 +486,8 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_box_append(GTK_BOX(WortsPerTime), labelWortsPerTimeSpinn);
     gtk_box_append(GTK_BOX(page1), WortsPerTime);
 
+    gtk_box_append(GTK_BOX(page1), ResetButton);
+
     gtk_box_append(GTK_BOX(page1), scrolled_window);
     gtk_widget_set_vexpand(scrolled_window, TRUE);
     gtk_box_append(GTK_BOX(page1), button1);
@@ -338,22 +495,24 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_widget_set_vexpand(button1, FALSE);
 
     global_text_view = GTK_TEXT_VIEW(text_view);
-    global_labelBackgroundColor= GTK_COLOR_BUTTON(labelBackgroundColor);
-    global_labelForgroudColor= GTK_COLOR_BUTTON(labelForgroudColor);
-    global_labelTextButton= GTK_FONT_BUTTON(labelTextButton);
-    global_button_read=GTK_BUTTON(button1);
-    global_labelProgressSwitch=GTK_SWITCH(labelProgressSwitch);
+    global_labelBackgroundColor = GTK_COLOR_BUTTON(labelBackgroundColor);
+    global_labelForgroudColor = GTK_COLOR_BUTTON(labelForgroudColor);
+    global_labelTextButton = GTK_FONT_BUTTON(labelTextButton);
+    global_button_read = GTK_BUTTON(button1);
+    global_labelProgressSwitch = GTK_SWITCH(labelProgressSwitch);
     global_labelWortsPerTimeSpinn = GTK_SPIN_BUTTON(labelWortsPerTimeSpinn);
-    
+
     update_read_button_state(gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view)), NULL);
-        
+
     g_signal_connect(button1, "clicked", G_CALLBACK(on_switch_to_page2), stack);
     g_signal_connect(gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view)), "changed", G_CALLBACK(update_read_button_state), NULL);
+    g_signal_connect(ResetButton, "clicked", G_CALLBACK(on_reset_button_clicked), window);
+
     return page1;
 }
 
 // Funktion zum Erstellen von Seite 2
-static GtkWidget *create_page2(GtkStack *stack,GtkWidget *window ) {
+static GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     GtkWidget *label = gtk_label_new("");
 
@@ -370,7 +529,7 @@ static GtkWidget *create_page2(GtkStack *stack,GtkWidget *window ) {
     GtkWidget *spacer1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_vexpand(spacer1, TRUE);
     gtk_box_append(GTK_BOX(page2), spacer1);
-    
+
     gtk_widget_set_halign(label, GTK_ALIGN_CENTER);
     gtk_box_append(GTK_BOX(page2), label);
 
@@ -399,12 +558,21 @@ static GtkWidget *create_page2(GtkStack *stack,GtkWidget *window ) {
     g_signal_connect(button2, "clicked", G_CALLBACK(on_switch_to_page1), stack);
 
     global_label = GTK_LABEL(label);
-    global_button_previous =GTK_BUTTON(button_previous);
-    global_button_next=GTK_BUTTON(button_next);
+    global_button_previous = GTK_BUTTON(button_previous);
+    global_button_next = GTK_BUTTON(button_next);
     global_ProgressLabel = GTK_LABEL(ProgressLabel);
     global_ProgressBar = GTK_PROGRESS_BAR(ProgressBar);
 
     return page2;
+}
+
+// Callback-Funktion, die beim Schließen des Fensters aufgerufen wird
+static void on_window_destroy(GtkWidget *widget, gpointer data) {
+    GMainLoop *loop = (GMainLoop *)data;
+    g_main_loop_quit(loop);
+}
+static void on_close_request(GtkWidget *widget, gpointer data) {
+    save_settings();
 }
 
 int main(int argc, char *argv[]) {
@@ -413,6 +581,22 @@ int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "");
     bindtextdomain("FastReader", "locale");
     textdomain("FastReader");
+    
+    const gchar *config_dir = g_get_user_config_dir();
+    if (config_dir == NULL) {
+        printf(_("Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"));
+        return 1;
+    }
+
+    gchar *fastreader_dir = g_build_filename(config_dir, "FastReader", NULL);
+
+    if (g_mkdir_with_parents(fastreader_dir, 0700) != 0) {
+        printf(_("Fehler beim Erstellen des Verzeichnisses FastReader.\n"));
+        g_free(fastreader_dir);
+        return 1;
+    }
+
+    config_file_path = g_build_filename(fastreader_dir, "config.cfg", NULL);
 
     GtkWidget *window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
@@ -420,13 +604,17 @@ int main(int argc, char *argv[]) {
 
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), loop);
-
+    g_signal_connect(window, "close-request", G_CALLBACK(on_close_request), NULL);
+    
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
-    gtk_stack_add_named(GTK_STACK(stack), create_page1(GTK_STACK(stack),window), "page1");
-    gtk_stack_add_named(GTK_STACK(stack), create_page2(GTK_STACK(stack),window), "page2");
+    gtk_stack_add_named(GTK_STACK(stack), create_page1(GTK_STACK(stack), window), "page1");
+    gtk_stack_add_named(GTK_STACK(stack), create_page2(GTK_STACK(stack), window), "page2");
 
     gtk_window_set_child(GTK_WINDOW(window), stack);
+    
+    load_settings();
+
 
     GtkEventController *controller = gtk_event_controller_key_new();
     g_signal_connect(controller, "key-pressed", G_CALLBACK(on_key_press), stack);
@@ -436,6 +624,9 @@ int main(int argc, char *argv[]) {
     g_main_loop_run(loop);
 
     g_main_loop_unref(loop);
+    g_free(fastreader_dir);
+    g_free(config_file_path);
     return 0;
 }
+
 

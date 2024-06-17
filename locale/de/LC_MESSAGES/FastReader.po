@@ -5,6 +5,15 @@ msgstr ""
 msgid "Fast Reader"
 msgstr "Geschwindigkeitsleser"
 
+msgid "Error while writing file.\n"
+msgstr "Fehler beim Schreiben der Datei.\n"
+
+msgid "Error while reading file: %s:%d - %s\n"
+msgstr "Fehler beim Lesen der Datei: %s:%d - %s\n"
+
+msgid "Trye to corrct"
+msgstr "Versuchen zu korrigieren"
+
 msgid "Einstellungen:"
 msgstr "Einstellungen:"
 
@@ -18,10 +27,13 @@ msgid "Schrift Größe:"
 msgstr "Schriftgröße:"
 
 msgid "Fortschritt Zeigen:"
-msgstr "Fortschritt Zeigen:"
+msgstr "Fortschritt zeigen:"
 
 msgid "Angezeigte wörter:"
 msgstr "Angezeigte Wörter:"
+
+msgid "Zurücksetzen"
+msgstr "Zurücksetzen"
 
 msgid "Lesen"
 msgstr "Lesen"
@@ -29,3 +41,8 @@ msgstr "Lesen"
 msgid "Zurück"
 msgstr "Zurück"
 
+msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+
+msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+msgstr "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
