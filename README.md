@@ -27,8 +27,14 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Fast Reader"
-msgstr "Fast Reader"
+msgid "Error while writing file.\n"
+msgstr "Error while writing file.\n"
+
+msgid "Error while reading file: %s:%d - %s\n"
+msgstr "Error while reading file: %s:%d - %s\n"
+
+msgid "Trye to corrct"
+msgstr "Try to correct"
 
 msgid "Einstellungen:"
 msgstr "Settings:"
@@ -46,13 +52,25 @@ msgid "Fortschritt Zeigen:"
 msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed Words:"
+msgstr "Displayed words:"
+
+msgid "Zurücksetzen"
+msgstr "Reset"
 
 msgid "Lesen"
 msgstr "Read"
 
 msgid "Zurück"
 msgstr "Back"
+
+msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+msgstr "Could not retrieve the default configuration directory.\n"
+
+msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+msgstr "Error while creating the FastReader directory.\n"
+
+msgid "Fast Reader"
+msgstr "Fast Reader"
  ```
 3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
 4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
