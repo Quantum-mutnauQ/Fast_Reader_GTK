@@ -83,6 +83,5 @@ msgstr "Fast Reader"
 3. ```gcc -o FastReader FastReader.c `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo && ./FastReader```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
 
 ## Plans for the future 
- 1. Implement time-based word predictions.
+ 1. Implement time-based word predictions. (Version 4)
  2. Include statistics like time per word.
- 3. Save last settings with configuration (Version 3)
