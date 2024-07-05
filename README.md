@@ -1,6 +1,6 @@
 # Fast Reader
 
-Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
+Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
 
 **Version 4 image**:
 
