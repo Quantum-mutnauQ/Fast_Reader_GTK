@@ -27,7 +27,20 @@ msgid "Fortschritt Zeigen:"
 msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed words:"
+msgstr "Displayed Words:"
+
+msgid "Zeitbassirt nechstes Wort:"
+msgstr "Time-based Next Word:"
+
+msgid "Zeit (sec):"
+msgstr "Time (sec):"
+
+msgid ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+msgstr ""
+"The time is calculated by:\n"
+"Time−Per−Word×(₃√Word−Length )"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
@@ -42,7 +55,7 @@ msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Could not retrieve the default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error while creating the FastReader directory.\n"
+msgstr "Error creating the FastReader directory.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"

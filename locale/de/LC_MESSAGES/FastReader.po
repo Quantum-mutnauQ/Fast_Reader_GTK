@@ -2,9 +2,6 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Fast Reader"
-msgstr "Geschwindigkeitsleser"
-
 msgid "Error while writing file.\n"
 msgstr "Fehler beim Schreiben der Datei.\n"
 
@@ -12,7 +9,7 @@ msgid "Error while reading file: %s:%d - %s\n"
 msgstr "Fehler beim Lesen der Datei: %s:%d - %s\n"
 
 msgid "Trye to corrct"
-msgstr "Versuchen zu korrigieren"
+msgstr "Versuchen Sie, es zu korrigieren"
 
 msgid "Einstellungen:"
 msgstr "Einstellungen:"
@@ -27,10 +24,23 @@ msgid "Schrift Größe:"
 msgstr "Schriftgröße:"
 
 msgid "Fortschritt Zeigen:"
-msgstr "Fortschritt zeigen:"
+msgstr "Fortschritt anzeigen:"
 
 msgid "Angezeigte wörter:"
 msgstr "Angezeigte Wörter:"
+
+msgid "Zeitbassirt nechstes Wort:"
+msgstr "Zeitbasiertes nächstes Wort:"
+
+msgid "Zeit (sec):"
+msgstr "Zeit (Sek):"
+
+msgid ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+msgstr ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
 
 msgid "Zurücksetzen"
 msgstr "Zurücksetzen"
@@ -46,3 +56,7 @@ msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+
+msgid "Fast Reader"
+msgstr "Geschwindigkeitsleser"
+
