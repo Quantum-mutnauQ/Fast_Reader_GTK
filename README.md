@@ -1,6 +1,10 @@
 # Fast Reader
 
-Fast Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
+Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C, this program offers a customizable interface to enhance the reading experience.
+
+**Version 4 image**:
+
+![Bildschirmfoto vom 2024-07-05 21-01-55](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816) ![Bildschirmfoto vom 2024-07-05 21-08-48](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d)
 
 ## Features
 
@@ -9,6 +13,9 @@ Fast Reader is a versatile application designed to assist users in reading text 
 - **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
 - **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
 - **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
+- **Time-Based Word predictions**: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
+
+ You can set a variable time limit for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)" (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
   
 ## Getting Started
 
@@ -52,7 +59,20 @@ msgid "Fortschritt Zeigen:"
 msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed words:"
+msgstr "Displayed Words:"
+
+msgid "Zeitbassirt nechstes Wort:"
+msgstr "Time-based Next Word:"
+
+msgid "Zeit (sec):"
+msgstr "Time (sec):"
+
+msgid ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+msgstr ""
+"The time is calculated by:\n"
+"Time−Per−Word×(₃√Word−Length )"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
@@ -67,7 +87,7 @@ msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Could not retrieve the default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error while creating the FastReader directory.\n"
+msgstr "Error creating the FastReader directory.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"
@@ -80,8 +100,7 @@ msgstr "Fast Reader"
 
 1. **Download the Code**: Download the latest code.
 2. **Compilation**: Compile it using the following command:
-3. ```gcc -o FastReader FastReader.c `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo && ./FastReader```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
+3. ```g++ -std=c++11  -o FastReader FastReader.cpp `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
 
 ## Plans for the future 
- 1. Implement time-based word predictions. (Version 4)
- 2. Include statistics like time per word.
+1. Include statistics like time per word. (Version 5)
