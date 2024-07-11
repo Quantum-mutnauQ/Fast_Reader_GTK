@@ -11,6 +11,30 @@ msgstr "Error while reading file: %s:%d - %s\n"
 msgid "Trye to corrct"
 msgstr "Try to correct"
 
+msgid "Statistiken:"
+msgstr "Statistics:"
+
+msgid "Lese Zeit Ergebnisse"
+msgstr "Reading Time Results"
+
+msgid "Gesamtzeit: "
+msgstr "Total Time: "
+
+msgid "Farbe:"
+msgstr "Color:"
+
+msgid "Wort"
+msgstr "Word"
+
+msgid "Zeit (s)"
+msgstr "Time (s)"
+
+msgid "Prozentuale Zeit (%)"
+msgstr "Percentage Time (%)"
+
+msgid "Punkte"
+msgstr "Points"
+
 msgid "Einstellungen:"
 msgstr "Settings:"
 
@@ -27,20 +51,23 @@ msgid "Fortschritt Zeigen:"
 msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed Words:"
+msgstr "Displayed words:"
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Time-based Next Word:"
+msgstr "Time based next word:"
 
 msgid "Zeit (sec):"
 msgstr "Time (sec):"
 
+msgid "Statistiken erheben:"
+msgstr "Collect Statistics:"
+
 msgid ""
 "Die Zeit wird berechnet durch:\n"
-"Zeit−Pro−Wort×(₃√Wort−Länge )"
+"Zeit-Pro-Wort  * Wort-Länge * 0.5"
 msgstr ""
-"The time is calculated by:\n"
-"Time−Per−Word×(₃√Word−Length )"
+"The time will be calculated by:\n"
+"Time-Per-Word * Word-Length * 0.5"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
@@ -48,14 +75,17 @@ msgstr "Reset"
 msgid "Lesen"
 msgstr "Read"
 
+msgid "Ergebnissezeigen"
+msgstr ""
+
 msgid "Zurück"
 msgstr "Back"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
-msgstr "Could not retrieve the default configuration directory.\n"
+msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error creating the FastReader directory.\n"
+msgstr "Error while creating FastReader directory.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"
