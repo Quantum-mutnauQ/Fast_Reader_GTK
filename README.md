@@ -4,7 +4,9 @@ Reader is a versatile application designed to assist users in reading text swift
 
 **Version 4 image**:
 
-![Bildschirmfoto vom 2024-07-05 21-01-55](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816) ![Bildschirmfoto vom 2024-07-05 21-08-48](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d)
+![Bildschirmfoto vom 2024-07-05 21-01-55](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816) ![Bildschirmfoto vom 2024-07-05 21-08-48](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d)![Bildschirmfoto vom 2024-07-11 15-30-05](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/0e4b847a-79a7-496a-a9cc-8c63dbe68507)![Bildschirmfoto vom 2024-07-11 15-30-10](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/6131c3e0-7c8b-479e-95de-31b312c993b4)
+
+
 
 ## Features
 
@@ -14,6 +16,8 @@ Reader is a versatile application designed to assist users in reading text swift
 - **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
 - **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
 - **Time-Based Word predictions**: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
+- **Statistic Collection**: Generates statistics for you, showing how long you took to read each word.
+- **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
 
  You can set a variable time limit for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)" (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
   
@@ -43,6 +47,30 @@ msgstr "Error while reading file: %s:%d - %s\n"
 msgid "Trye to corrct"
 msgstr "Try to correct"
 
+msgid "Statistiken:"
+msgstr "Statistics:"
+
+msgid "Lese Zeit Ergebnisse"
+msgstr "Reading Time Results"
+
+msgid "Gesamtzeit: "
+msgstr "Total Time: "
+
+msgid "Farbe:"
+msgstr "Color:"
+
+msgid "Wort"
+msgstr "Word"
+
+msgid "Zeit (s)"
+msgstr "Time (s)"
+
+msgid "Prozentuale Zeit (%)"
+msgstr "Percentage Time (%)"
+
+msgid "Punkte"
+msgstr "Points"
+
 msgid "Einstellungen:"
 msgstr "Settings:"
 
@@ -59,20 +87,23 @@ msgid "Fortschritt Zeigen:"
 msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed Words:"
+msgstr "Displayed words:"
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Time-based Next Word:"
+msgstr "Time based next word:"
 
 msgid "Zeit (sec):"
 msgstr "Time (sec):"
 
+msgid "Statistiken erheben:"
+msgstr "Collect Statistics:"
+
 msgid ""
 "Die Zeit wird berechnet durch:\n"
-"Zeit−Pro−Wort×(₃√Wort−Länge )"
+"Zeit-Pro-Wort  * Wort-Länge * 0.5"
 msgstr ""
-"The time is calculated by:\n"
-"Time−Per−Word×(₃√Word−Length )"
+"The time will be calculated by:\n"
+"Time-Per-Word * Word-Length * 0.5"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
@@ -80,14 +111,17 @@ msgstr "Reset"
 msgid "Lesen"
 msgstr "Read"
 
+msgid "Ergebnissezeigen"
+msgstr ""
+
 msgid "Zurück"
 msgstr "Back"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
-msgstr "Could not retrieve the default configuration directory.\n"
+msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error creating the FastReader directory.\n"
+msgstr "Error while creating FastReader directory.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"
@@ -103,4 +137,4 @@ msgstr "Fast Reader"
 3. ```g++ -std=c++11  -o FastReader FastReader.cpp `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
 
 ## Plans for the future 
-1. Include statistics like time per word. (Version 5)
+1. Optimize RAM usage and clean up code (Version 6)
