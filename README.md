@@ -35,7 +35,7 @@ To begin using Fast Reader, follow these simple steps:
 
 ## Adding a New Language
 
-1. **Create Files**: Within the "locales" folder, create a subfolder named with the short of your language. Inside this folder, create another folder named `LC_MESSAGES`. Then, within this folder, create a file named `FastReader.po`.
+1. **Create Files**: Within the "src/locales" folder, create a subfolder named with the short of your language. Inside this folder, create another folder named `LC_MESSAGES`. Then, within this folder, create a file named `FastReader.po`.
 2. **Add Translations to File**: Copy the provided template and modify the English phrases to their equivalents in your language in the speedreader.po file.
 ```
 msgid ""
@@ -130,16 +130,28 @@ msgstr "Error while creating FastReader directory.\n"
 msgid "Fast Reader"
 msgstr "Fast Reader"
  ```
-3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
+3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt src/locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o build/locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
 4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
 5. **Support the Project (Optional)**: Open an issue and share your `FastReader.po` file along with your language details, and we will add it to the project.
+6. **Add Language Support for CMake (Optional)**: To include support for an additional language, add the following line under the existing `compile_po_files(en)` entry in your CMake configuration: `compile_po_files([your_language_short_name])` After making this change, reconfigure CMake to apply the updates.
 
 ## Compiling It Yourself
 
 1. **Download the Code**: Download the latest code.
-2. **Compilation**: Compile it using the following command:
-3. ```g++ -std=c++11  -o FastReader FastReader.cpp `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
+2. **Preperation**: Create the build dir in the foalder
+3. **create build programm**: run `cmake ..` in the buld foalder
+4. **Run the build**: run `make -j[tread count]` in the buld directory. Before that repalce the `[tread count]` with the amound ot the treath count you want to use.
 
+### Build Instructions
+
+1. **Download the Code**: Begin by downloading the latest version of the code.
+2. **Preparation**: Create a build directory within the project folder.
+3. **Create Build Program**: Navigate to the build directory and run the following command: `cmake ..`
+4. **Run the Build**: In the build directory, execute the following command to compile the code:
+       `make -j[thread count]` Replace `[thread count]` with the number of threads you wish to utilize for the build process.
+
+
+Feel free to let me know if you need any further modifications!
 ## Plans for the future 
 1. Optimize RAM usage and clean up code (Version 7)
 2. Move to GTK 4.14.2 version (Version 6)
