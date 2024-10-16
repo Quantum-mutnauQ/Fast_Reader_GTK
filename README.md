@@ -141,4 +141,5 @@ msgstr "Fast Reader"
 3. ```g++ -std=c++11  -o FastReader FastReader.cpp `pkg-config --cflags --libs gtk4 libconfig` && msgfmt locale/de/LC_MESSAGES/FastReader.po -o locale/de/LC_MESSAGES/FastReader.mo && msgfmt locale/en/LC_MESSAGES/FastReader.po -o locale/en/LC_MESSAGES/FastReader.mo```. If any issues arise, ensure you have `GCC`, `msgfmt`, `libconfig-dev`,and `libgtk-4-dev` installed.
 
 ## Plans for the future 
-1. Optimize RAM usage and clean up code (Version 6)
+1. Optimize RAM usage and clean up code (Version 7)
+2. Move to GTK 4.14.2 version (Version 6)
