@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Error while writing file.\n"
+msgstr "Fehler beim Schreiben der Datei.\n"
+
+msgid "Error while reading file: %s:%d - %s\n"
+msgstr "Fehler beim Lesen der Datei: %s:%d - %s\n"
+
+msgid "Trye to corrct"
+msgstr "Versuche zu korrigieren"
+
+msgid "Statistiken:"
+msgstr "Statistiken:"
+
+msgid "Lese Zeit Ergebnisse"
+msgstr "Lesezeit Ergebnisse"
+
+msgid "Gesamtzeit: "
+msgstr "Gesamtzeit: "
+
+msgid "Farbe:"
+msgstr "Farbe:"
+
+msgid "Wort"
+msgstr "Wort"
+
+msgid "Zeit (s)"
+msgstr "Zeit (s)"
+
+msgid "Prozentuale Zeit (%)"
+msgstr "Prozentuale Zeit (%)"
+
+msgid "Punkte"
+msgstr "Punkte"
+
+msgid "Einstellungen:"
+msgstr "Einstellungen:"
+
+msgid "Hintergrund:"
+msgstr "Hintergrund:"
+
+msgid "Schrift:"
+msgstr "Schrift:"
+
+msgid "Schrift Größe:"
+msgstr "Schriftgröße:"
+
+msgid "Fortschritt Zeigen:"
+msgstr "Fortschritt anzeigen:"
+
+msgid "Angezeigte wörter:"
+msgstr "Angezeigte Wörter:"
+
+msgid "Zeitbassirt nechstes Wort:"
+msgstr "Zeitbasiert nächstes Wort:"
+
+msgid "Zeit (sec):"
+msgstr "Zeit (s):"
+
+msgid "Statistiken erheben:"
+msgstr "Statistiken erstellen:"
+
+msgid ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+msgstr ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+
+msgid "Zurücksetzen"
+msgstr "Zurücksetzen"
+
+msgid "Lesen"
+msgstr "Lesen"
+
+msgid "Ergebnissezeigen"
+msgstr "Ergebnisse anzeigen"
+
+msgid "Zurück"
+msgstr "Zurück"
+
+msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+
+msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+msgstr "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+
+msgid "Fast Reader"
+msgstr "Geschwindigkeitsleser"
+
