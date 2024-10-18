@@ -13,11 +13,11 @@ add_executable(FastReader src/FastReader.cpp)
 # Finde GTK4 und libconfig und füge deren Abhängigkeiten hinzu
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
-pkg_check_modules(libconfig REQUIRED)
+pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
-target_include_directories(FastReader PRIVATE ${GTK4_INCLUDE_DIRS}})
-target_link_directories(FastReader PRIVATE ${GTK4_LIBRARY_DIRS}})
-target_link_libraries(FastReader PRIVATE ${GTK4_LIBRARIES}})
+target_include_directories(FastReader PRIVATE ${GTK4_INCLUDE_DIRS} ${LIBCONFIG_INCLUDE_DIRS})
+target_link_directories(FastReader PRIVATE ${GTK4_LIBRARY_DIRS} ${LIBCONFIG_LIBRARY_DIRS})
+target_link_libraries(FastReader PRIVATE ${GTK4_LIBRARIES} ${LIBCONFIG_LIBRARIES})
 
 # Nachrichtenkompilierung
 find_program(MSGFMT_EXECUTABLE msgfmt REQUIRED)
