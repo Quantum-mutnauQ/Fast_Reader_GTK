@@ -13,7 +13,7 @@ add_executable(FastReader src/FastReader.cpp)
 # Finde GTK4 und libconfig und füge deren Abhängigkeiten hinzu
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
-find_package(libconfig REQUIRED)
+pkg_check_modules(LIBCONFIG REQUIREDlibconfig)
 
 target_include_directories(FastReader PRIVATE ${GTK4_INCLUDE_DIRS} ${LIBCONFIG_INCLUDE_DIRS})
 target_link_directories(FastReader PRIVATE ${GTK4_LIBRARY_DIRS} ${LIBCONFIG_LIBRARY_DIRS})
