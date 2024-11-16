@@ -136,12 +136,6 @@ msgstr "Fast Reader"
 6. **Add Language Support for CMake (Optional)**: To include support for an additional language, add the following line under the existing `compile_po_files(en)` entry in your CMake configuration: `compile_po_files([your_language_short_name])` After making this change, reconfigure CMake to apply the updates.
 
 ## Compiling It Yourself
-
-1. **Download the Code**: Download the latest code.
-2. **Preperation**: Create the build dir in the foalder
-3. **create build programm**: run `cmake ..` in the buld foalder
-4. **Run the build**: run `make -j[tread count]` in the buld directory. Before that repalce the `[tread count]` with the amound ot the treath count you want to use.
-
 ### Build Instructions
 
 1. **Download the Code**: Begin by downloading the latest version of the code.
