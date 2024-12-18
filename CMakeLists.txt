@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Projektname und Version
-project(FastReader VERSION 5)
+project(FastReader VERSION 1.0)
 
 # Setze den Standard-C++-Standard
 set(CMAKE_CXX_STANDARD 11)
@@ -9,6 +9,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Füge die Executable hinzu
 add_executable(FastReader src/FastReader.cpp)
+
+option(FLATPAK_BUILD "Enable Flatpak-specific build settings" OFF)
+
+if(FLATPAK_BUILD)
+    add_compile_definitions(LOCALEDIRR="/app/share/locale")
+else()
+    add_compile_definitions(LOCALEDIRR="locale")
+endif()
+
 
 # Finde GTK4 und libconfig und füge deren Abhängigkeiten hinzu
 find_package(PkgConfig REQUIRED)

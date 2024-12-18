@@ -116,7 +116,7 @@ static void load_settings() {
             config_error_file(&cfg),
             config_error_line(&cfg),
             config_error_text(&cfg));
-    fprintf(stderr, _("Trye to corrct"));
+    fprintf(stderr, _("Trye to corrct\n"));
     save_settings();
     config_destroy(&cfg);
     return;
@@ -1099,7 +1099,7 @@ int main(int argc, char *argv[]) {
     gtk_init();
 
     setlocale(LC_ALL, "");
-    bindtextdomain("FastReader", "locale");
+    bindtextdomain("FastReader", LOCALEDIRR);
     textdomain("FastReader");
 
     const gchar *config_dir = g_get_user_config_dir();
