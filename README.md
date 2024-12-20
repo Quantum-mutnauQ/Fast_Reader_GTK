@@ -147,5 +147,6 @@ msgstr "Fast Reader"
 
 Feel free to let me know if you need any further modifications!
 ## Plans for the future 
-1. Optimize RAM usage and clean up code (Version 7)
-2. Move to GTK 4.14.2 version (Version 6)
+1. Optimize RAM usage and clean up code (Version 8)
+2. Move to GTK 4.14.2 version (Version 7)
+3. add flatpak support (Version 6)
