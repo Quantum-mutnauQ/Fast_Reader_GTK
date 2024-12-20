@@ -18,7 +18,6 @@ else()
     add_compile_definitions(LOCALEDIRR="locale")
 endif()
 
-
 # Finde GTK4 und libconfig und füge deren Abhängigkeiten hinzu
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
@@ -32,17 +31,16 @@ target_link_libraries(FastReader PRIVATE ${GTK4_LIBRARIES} ${LIBCONFIG_LIBRARIES
 find_program(MSGFMT_EXECUTABLE msgfmt REQUIRED)
 
 # Übersetzungsverzeichnisse definieren
-set(LOCALE_DIR "${CMAKE_BINARY_DIR}/locale")
-set(LOCALE_DE_DIR "${LOCALE_DIR}/de/LC_MESSAGES")
-set(LOCALE_EN_DIR "${LOCALE_DIR}/en/LC_MESSAGES")
-
-# Erstelle Verzeichnisse für die Übersetzungen im Build-Verzeichnis
-file(MAKE_DIRECTORY ${LOCALE_DE_DIR})
-file(MAKE_DIRECTORY ${LOCALE_EN_DIR})
+if(FLATPAK_BUILD)
+    set(LOCALE_DIR "/app/share/locale")
+else()
+    set(LOCALE_DIR "${CMAKE_BINARY_DIR}/locale")
+endif()
 
 # Funktion zum Kompilieren der Übersetzungen
 function(compile_po_files lang)
-    set(PO_FILE "${CMAKE_SOURCE_DIR}/src//locale/${lang}/LC_MESSAGES/FastReader.po")
+    file(MAKE_DIRECTORY "${LOCALE_DIR}/${lang}/LC_MESSAGES")
+    set(PO_FILE "${CMAKE_SOURCE_DIR}/src/locale/${lang}/LC_MESSAGES/FastReader.po")
     set(MO_FILE "${LOCALE_DIR}/${lang}/LC_MESSAGES/FastReader.mo")
 
     # Füge die Kompilierung als benutzerdefinierten Befehl hinzu
@@ -56,16 +54,28 @@ function(compile_po_files lang)
 
     # Füge die .mo-Dateien als Abhängigkeiten für das Ziel hinzu
     add_custom_target("${lang}_mo" ALL DEPENDS ${MO_FILE})
+    # Installation der .mo-Dateien
+    install(FILES ${MO_FILE}
+            DESTINATION "${LOCALE_DIR}/${lang}/LC_MESSAGES")
+endfunction()
+
+function(copy_icon)
+    if(FLATPAK_BUILD)
+        set(ASSETS_TARGET_DIR "/app/share/icons/hicolor/scalable/apps")
+    else()
+        set(ASSETS_TARGET_DIR "${CMAKE_BINARY_DIR}/assets")
+    endif()
+    
+    file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
+
+    set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/fastreader.svg")
+    
+    file(COPY ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
+    add_custom_target(icon ALL DEPENDS ${SOURCE_ICON})
+    install(FILES ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
 endfunction()
 
 # Kompiliere die Übersetzungen für Deutsch und Englisch
 compile_po_files(de)
 compile_po_files(en)
-
-# Installation der .mo-Dateien
-install(FILES ${LOCALE_DE_DIR}/FastReader.mo
-        DESTINATION locale/de/LC_MESSAGES)
-
-install(FILES ${LOCALE_EN_DIR}/FastReader.mo
-        DESTINATION locale/en/LC_MESSAGES)
-
+copy_icon()
