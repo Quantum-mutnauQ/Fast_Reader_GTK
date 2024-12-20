@@ -75,6 +75,19 @@ msgstr "Zurücksetzen"
 msgid "Lesen"
 msgstr "Lesen"
 
+msgid "Copy"
+msgstr "Kopieren"
+
+msgid "Paste"
+msgstr "Einfügen"
+
+msgid "Clear"
+msgstr "Löschen"
+
+msgid "Undo"
+msgstr "Rückgängig"
+
+
 msgid "Ergebnissezeigen"
 msgstr "Ergebnisse anzeigen"
 

@@ -1,0 +1,153 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-20 15:11+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: FastReader.cpp:104
+#, c-format
+msgid "Error while writing file.\n"
+msgstr ""
+
+#: FastReader.cpp:115
+#, c-format
+msgid "Error while reading file: %s:%d - %s\n"
+msgstr ""
+
+#: FastReader.cpp:119
+#, c-format
+msgid "Trye to corrct\n"
+msgstr ""
+
+#: FastReader.cpp:316
+msgid "Statistiken:"
+msgstr ""
+
+#: FastReader.cpp:451
+msgid "Lese Zeit Ergebnisse"
+msgstr ""
+
+#: FastReader.cpp:458
+msgid "Gesamtzeit: "
+msgstr ""
+
+#: FastReader.cpp:468
+msgid "Farbe:"
+msgstr ""
+
+#: FastReader.cpp:479
+msgid "Wort"
+msgstr ""
+
+#: FastReader.cpp:480
+msgid "Zeit (s)"
+msgstr ""
+
+#: FastReader.cpp:481
+msgid "Prozentuale Zeit (%)"
+msgstr ""
+
+#: FastReader.cpp:482
+msgid "Punkte"
+msgstr ""
+
+#: FastReader.cpp:838
+msgid "Einstellungen:"
+msgstr ""
+
+#: FastReader.cpp:842
+msgid "Hintergrund:"
+msgstr ""
+
+#: FastReader.cpp:846
+msgid "Schrift:"
+msgstr ""
+
+#: FastReader.cpp:850
+msgid "Schrift Größe:"
+msgstr ""
+
+#: FastReader.cpp:854
+msgid "Fortschritt Zeigen:"
+msgstr ""
+
+#: FastReader.cpp:859
+msgid "Angezeigte wörter:"
+msgstr ""
+
+#: FastReader.cpp:864
+msgid "Zeitbassirt nechstes Wort:"
+msgstr ""
+
+#: FastReader.cpp:866
+msgid "Zeit (sec):"
+msgstr ""
+
+#: FastReader.cpp:870
+msgid "Statistiken erheben:"
+msgstr ""
+
+#: FastReader.cpp:873
+msgid ""
+"Die Zeit wird berechnet durch:\n"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
+msgstr ""
+
+#: FastReader.cpp:874
+msgid "Zurücksetzen"
+msgstr ""
+
+#: FastReader.cpp:885
+msgid "Lesen"
+msgstr ""
+
+#: FastReader.cpp:950
+msgid "Copy"
+msgstr ""
+
+#: FastReader.cpp:954
+msgid "Paste"
+msgstr ""
+
+#: FastReader.cpp:958
+msgid "Clear"
+msgstr ""
+
+#: FastReader.cpp:962
+msgid "Undo"
+msgstr ""
+
+#: FastReader.cpp:1014
+msgid "Ergebnissezeigen"
+msgstr ""
+
+#: FastReader.cpp:1024
+msgid "Zurück"
+msgstr ""
+
+#: FastReader.cpp:1107
+#, c-format
+msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+msgstr ""
+
+#: FastReader.cpp:1114
+#, c-format
+msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+msgstr ""
+
+#: FastReader.cpp:1122
+msgid "Fast Reader"
+msgstr ""
