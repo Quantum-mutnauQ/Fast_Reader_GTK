@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.quantum_mutnauq.fast_reader_gtk</id>
+  
+  <name>Fast Reader</name>
+  <name xml:lang="de">Geschwindigkeitsleser</name>
+
+  <summary>Fast Reader helps you read quickly by displaying only one word at a time</summary>
+
+  <developer id="io.github.quantum_mutnauq.fast_reader_gtk">
+    <name>Quantum_mutnauQ</name>
+  </developer>  
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+  
+  <description>
+    <p>
+      Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
+    </p>
+    <p>
+      Features:
+    </p>
+    <p>
+      - Customizable Settings: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators. - Text Input: Easily input text into the application through a dedicated text entry field. - Word-by-Word Display: The text is broken down into individual words, presented one at a time, facilitating focused reading. - Navigation Options: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts. - Progress Indicators: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress. - Time-Based Word predictions: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: &quot;Time-Per-Word × (Cube Root of Word-Length)&quot;. This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience. - Statistic Collection: Generates statistics for you, showing how long you took to read each word. - <em>
+    </em>Colorize Statistics<em>
+  </em>: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
+</p>
+<p>
+  You can set a variable time limit for the display of each word. The formula for calculating the word display time is: &quot;Time-Per-Word × (Cube Root of Word-Length)&quot; (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
+</p>
+</description>
+
+<launchable type="desktop-id">io.github.quantum_mutnauq.fast-reader-gtk.desktop</launchable>
+<icon type="stock">io.github.quantum_mutnauq.fast_reader_gtk</icon>
+<categories>
+  <category>Education</category>
+</categories>
+
+<branding>
+  <color type="primary" scheme_preference="light">#3584e4</color>
+  <color type="primary" scheme_preference="dark">#134380</color>
+</branding>
+
+<content_rating type="oars-1.0" />
+
+<url type="bugtracker">https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/issues</url>
+<url type="homepage">https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/</url>
+
+<screenshots>
+  <screenshot type="default">
+    <image>https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816</image>
+  </screenshot>
+  <screenshot>
+    <image>https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d</image>
+  </screenshot>
+  <screenshot>
+    <image>https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/0e4b847a-79a7-496a-a9cc-8c63dbe68507</image>
+  </screenshot>
+  <screenshot>
+    <image>https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/6131c3e0-7c8b-479e-95de-31b312c993b4</image>
+  </screenshot>
+
+</screenshots>
+<releases>
+  <release version="6" date="2024-12-28">
+    <description>
+      Version 6
+      <p>Flatpak Support</p>
+      <ul>
+        <li>Introduced CMake integration</li>
+        <li>Added CMake options specifically for Flatpak</li>
+        <li>Implemented buttons for copy, paste, clear, and undo in the input text field</li>
+        <li>Initialized support for GTK version 4.14.2</li>
+      </ul>
+    </description>
+  </release>
+  <release version="5" date="2024-07-11">
+    <description>
+      Version 5
+      <p>Include statistics like time per word</p>
+        <ul>
+          <li>Introduces a new statistics window</li>
+          <li>Includes an option to control statistics creation</li>
+          <li>Provides an option to customize the color of the statistics window</li>
+          <li>Generates statistics for: Total read time, time per word, time percentage per word, and a score per word</li>
+        </ul>
+    </description>
+  </release>
+  <release version="4" date="2024-07-05">
+    <description>
+      Version 4
+      <p>Implement time-based word predictions</p>
+        <ul>
+          <li>Added Implement time-based word prediction</li>
+          <li>Moved to cpp (C++)</li>
+        </ul>
+    </description>
+  </release>
+  <release version="3" date="2024-06-17">
+    <description>
+      Version 3
+      <p>Add config support</p>
+        <ul>
+          <li>Saves all you settings in a file.</li>
+          <li>Saves your last text in this file also.</li>
+        </ul>
+    </description>
+  </release>
+  <release version="2" date="2024-06-09">
+    <description>
+      Version 2
+        <ul>
+          <li>Support for multi languages that are German and English(Hopefully works).</li>
+          <li>he ability to show multiple words at the same time.</li>
+        </ul>
+    </description>
+  </release>
+  <release version="1" date="2024-06-01">
+    <description>
+      Version 1
+      <p>The first version from the Speed reader </p>
+    </description>
+  </release>
+</releases>
+
+<translation type="gettext">gnome-builder</translation>
+
+<custom>
+    <value key="flathub::manifest">https://example.com/url_with_a_git_hash/com.example.my-app.json</value>
+</custom>
+
+</component>
+
+

@@ -75,7 +75,22 @@ function(copy_icon)
     install(FILES ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
 endfunction()
 
+function(copy_metainfo)
+    if(FLATPAK_BUILD)
+        set(ASSETS_TARGET_DIR "/app/share/metainfo")
+        set(SOURCE_METAINFO "${CMAKE_SOURCE_DIR}/src/assets/metainfo.xml")
+    
+        file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
+
+        file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
+        add_custom_target(metainfo ALL DEPENDS ${SOURCE_METAINFO})
+        install(FILES ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
+
+    endif()
+endfunction()
+
 # Kompiliere die Übersetzungen für Deutsch und Englisch
 compile_po_files(de)
 compile_po_files(en)
 copy_icon()
+copy_metainfo()
