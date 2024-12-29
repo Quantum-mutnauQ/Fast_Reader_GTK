@@ -106,7 +106,7 @@ function(copy_metainfo)
         add_custom_target(metainfo ALL DEPENDS ${SOURCE_METAINFO})
         install(FILES ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
 
-        file(RENAME "${ASSETS_TARGET_DIR}/fastreader.svg" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
+        file(RENAME "${ASSETS_TARGET_DIR}/metainfo.xml" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
 
     endif()
 endfunction()
