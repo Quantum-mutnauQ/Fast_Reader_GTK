@@ -31,7 +31,7 @@
 </p>
 </description>
 
-<launchable type="desktop-id">io.github.quantum_mutnauq.fast-reader-gtk.desktop</launchable>
+<launchable type="desktop-id">io.github.quantum_mutnauq.fast_reader_gtk.desktop</launchable>
 <icon type="stock">io.github.quantum_mutnauq.fast_reader_gtk</icon>
 <categories>
   <category>Education</category>
