@@ -26,6 +26,7 @@ if(FLATPAK_BUILD AND NOT FLATPAK_ID)
 endif()
 
 if(FLATPAK_BUILD)
+    file(RENAME "${EXECUTABLE_OUTPUT_PATH}/FastReader" "${EXECUTABLE_OUTPUT_PATH}/fast-reader")
     add_compile_definitions(LOCALEDIRR="/app/share/locale")
 else()
     add_compile_definitions(LOCALEDIRR="locale")
