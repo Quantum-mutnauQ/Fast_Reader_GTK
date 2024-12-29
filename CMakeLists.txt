@@ -19,7 +19,12 @@ else()
 endif()
 
 # Füge die Executable hinzu
-add_executable(FastReader src/FastReader.cpp)
+if(FLATPAK_BUILD)
+    add_executable(fast-reader src/FastReader.cpp)
+else()
+    add_executable(FastReader src/FastReader.cpp)
+endif()
+
 
 if(FLATPAK_BUILD AND NOT FLATPAK_ID)
     message(FATAL_ERROR "FLATPAK_ID must be set!")
