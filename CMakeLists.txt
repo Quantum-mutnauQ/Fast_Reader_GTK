@@ -97,7 +97,9 @@ function(copy_icon)
 
     if(FLATPAK_BUILD)
         file(RENAME "${ASSETS_TARGET_DIR}/fastreader.svg" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.svg")
-        file(REMOVE_RECURSE "${ASSETS_TARGET_DIR}/fastreader.svg")
+        if(EXISTS "${ASSETS_TARGET_DIR}/fastreader.svg")
+          file(REMOVE "${ASSETS_TARGET_DIR}/fastreader.svg")
+        endif()
     endif()
 
 endfunction()
@@ -114,7 +116,7 @@ function(copy_metainfo)
         install(FILES ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
 
         file(RENAME "${ASSETS_TARGET_DIR}/metainfo.xml" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
-        file(REMOVE_RECURSE "${ASSETS_TARGET_DIR}/metainfo.xml")
+        file(REMOVE "${ASSETS_TARGET_DIR}/metainfo.xml")
     endif()
 endfunction()
 
