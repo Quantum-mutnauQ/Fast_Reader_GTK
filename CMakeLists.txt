@@ -98,13 +98,15 @@ endfunction()
 function(copy_metainfo)
     if(FLATPAK_BUILD)
         set(ASSETS_TARGET_DIR "/app/share/metainfo")
-        set(SOURCE_METAINFO "${CMAKE_SOURCE_DIR}/src/assets/${FLATPAK_ID}.metainfo.xml")
+        set(SOURCE_METAINFO "${CMAKE_SOURCE_DIR}/src/assets/metainfo.xml")
     
         file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
 
         file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
         add_custom_target(metainfo ALL DEPENDS ${SOURCE_METAINFO})
         install(FILES ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
+
+        file(RENAME "${ASSETS_TARGET_DIR}/fastreader.svg" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
 
     endif()
 endfunction()
