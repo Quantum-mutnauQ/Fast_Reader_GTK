@@ -2,26 +2,26 @@
 
 Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
 
-**Version 4(Light theame Version 6) images**:
+**Version 4(Light theme Version 6) images**:
 
-***Dark theame:***
+***Dark Theme***
 
 ![Bildschirmfoto vom 2024-07-05 21-01-55](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816)
 ![Bildschirmfoto vom 2024-07-05 21-08-48](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d)
 
-***Light theame:***
+***Light Theme:***
 
 ![Bildschirmfoto vom 2024-12-29 13-24-42](https://github.com/user-attachments/assets/6de4cee5-b628-42c4-bea0-ede9130b102d)
 ![Bildschirmfoto vom 2024-12-29 13-25-03](https://github.com/user-attachments/assets/a8433539-2451-4863-a260-e844d4bc868e)
 
-**Version 5(Light theame Version 6) images:**
+**Version 5(Light theme Version 6) images:**
 
-***Dark theame:***
+***Dark Theme:***
 
 ![Bildschirmfoto vom 2024-07-11 15-30-05](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/0e4b847a-79a7-496a-a9cc-8c63dbe68507)
 ![Bildschirmfoto vom 2024-07-11 15-30-10](https://github.com/Quantum-mutnauQ/Fast-Reader-GTK/assets/141065355/6131c3e0-7c8b-479e-95de-31b312c993b4)
 
-***Light theame:***
+***Light Theme:***
 
 ![Bildschirmfoto vom 2024-12-29 13-25-26](https://github.com/user-attachments/assets/6195e5e6-5c20-4446-a75b-6a44a4235514)
 ![Bildschirmfoto vom 2024-12-29 13-25-36](https://github.com/user-attachments/assets/044fc9d1-aa70-4128-80b3-fb7554f04750)
