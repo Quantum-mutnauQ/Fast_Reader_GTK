@@ -20,11 +20,12 @@ endif()
 
 # Füge die Executable hinzu
 if(FLATPAK_BUILD)
-    add_executable(fast-reader src/FastReader.cpp)
+    set(EXECUDABLE_NAME "fast-reader")
 else()
-    add_executable(FastReader src/FastReader.cpp)
+    set(EXECUDABLE_NAME "FastReader")
 endif()
 
+add_executable(${EXECUDABLE_NAME} src/FastReader.cpp)
 
 if(FLATPAK_BUILD AND NOT FLATPAK_ID)
     message(FATAL_ERROR "FLATPAK_ID must be set!")
@@ -41,9 +42,9 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
-target_include_directories(FastReader PRIVATE ${GTK4_INCLUDE_DIRS} ${LIBCONFIG_INCLUDE_DIRS})
-target_link_directories(FastReader PRIVATE ${GTK4_LIBRARY_DIRS} ${LIBCONFIG_LIBRARY_DIRS})
-target_link_libraries(FastReader PRIVATE ${GTK4_LIBRARIES} ${LIBCONFIG_LIBRARIES})
+target_include_directories(${EXECUDABLE_NAME} PRIVATE ${GTK4_INCLUDE_DIRS} ${LIBCONFIG_INCLUDE_DIRS})
+target_link_directories(${EXECUDABLE_NAME} PRIVATE ${GTK4_LIBRARY_DIRS} ${LIBCONFIG_LIBRARY_DIRS})
+target_link_libraries(${EXECUDABLE_NAME} PRIVATE ${GTK4_LIBRARIES} ${LIBCONFIG_LIBRARIES})
 
 # Nachrichtenkompilierung
 find_program(MSGFMT_EXECUTABLE msgfmt REQUIRED)
