@@ -95,33 +95,22 @@ function(copy_icon)
     add_custom_target(icon ALL DEPENDS ${SOURCE_ICON})
     install(FILES ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
 
-    if(FLATPAK_BUILD)
-        file(RENAME "${ASSETS_TARGET_DIR}/fastreader.svg" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.svg")
-        if(EXISTS "${ASSETS_TARGET_DIR}/fastreader.svg")
-          file(REMOVE "${ASSETS_TARGET_DIR}/fastreader.svg")
-        endif()
-    endif()
-
 endfunction()
 
 function(copy_metainfo)
     if(FLATPAK_BUILD)
         set(ASSETS_TARGET_DIR "/app/share/metainfo")
         set(SOURCE_METAINFO "${CMAKE_SOURCE_DIR}/src/assets/metainfo.xml")
+        set(DESTINATION_METAINFO "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
     
         file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
 
-        file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
-        add_custom_target(metainfo ALL DEPENDS ${SOURCE_METAINFO})
-        install(FILES ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
-
-        file(RENAME "${ASSETS_TARGET_DIR}/metainfo.xml" "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.metainfo.xml")
-        if(EXISTS "${ASSETS_TARGET_DIR}/metainfo.xml")
-          file(REMOVE "${ASSETS_TARGET_DIR}/metainfo.xml")
-        endif()
+        # Kopiere die Metainformationen mit dem neuen Namen
+        file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR} FILES ${DESTINATION_METAINFO})
+        add_custom_target(metainfo ALL DEPENDS ${DESTINATION_METAINFO})
+        install(FILES ${DESTINATION_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
     endif()
 endfunction()
-
 
 function(generate_desktop_file)
     set(DESKTOP_FILE_IN "${CMAKE_SOURCE_DIR}/src/assets/fastreader.desktop.in")
