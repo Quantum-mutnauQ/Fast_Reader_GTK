@@ -83,18 +83,22 @@ endfunction()
 function(copy_icon)
     if(FLATPAK_BUILD)
         set(ASSETS_TARGET_DIR "/app/share/icons/hicolor/scalable/apps")
-        set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/${FLATPAK_ID}.svg")  # Ändere den Namen hier
+        set(DESTINATION_ICON "${ASSETS_TARGET_DIR}/${FLATPAK_ID}.svg")  # Setze den Zielnamen auf ${FLATPAK_ID}.svg
     else()
         set(ASSETS_TARGET_DIR "${CMAKE_BINARY_DIR}/assets")
-        set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/fastreader.svg")
+        set(DESTINATION_ICON "${ASSETS_TARGET_DIR}/fastreader.svg")  # Behalte den ursprünglichen Namen für Nicht-Flatpak-Bauten
     endif()
     
     file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
 
-    file(COPY ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
-    add_custom_target(icon ALL DEPENDS ${SOURCE_ICON})
-    install(FILES ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
+    set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/fastreader.svg")
+    
+    file(COPY ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})  # Kopiere die Datei an den Zielort
+    file(RENAME "${ASSETS_TARGET_DIR}/fastreader.svg" "${DESTINATION_ICON}")  # Benenne die Datei um, wenn FLATPAK_BUILD aktiv ist
+    add_custom_target(icon ALL DEPENDS ${DESTINATION_ICON})  # Abhängigkeit auf das umbenannte Icon setzen
+    install(FILES ${DESTINATION_ICON} DESTINATION ${ASSETS_TARGET_DIR})  # Installiere die umbenannte Datei
 endfunction()
+
 
 function(copy_metainfo)
     if(FLATPAK_BUILD)
