@@ -83,18 +83,17 @@ endfunction()
 function(copy_icon)
     if(FLATPAK_BUILD)
         set(ASSETS_TARGET_DIR "/app/share/icons/hicolor/scalable/apps")
+        set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/${FLATPAK_ID}.svg")  # Ändere den Namen hier
     else()
         set(ASSETS_TARGET_DIR "${CMAKE_BINARY_DIR}/assets")
+        set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/fastreader.svg")
     endif()
     
     file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
 
-    set(SOURCE_ICON "${CMAKE_SOURCE_DIR}/src/assets/fastreader.svg")
-    
     file(COPY ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
     add_custom_target(icon ALL DEPENDS ${SOURCE_ICON})
     install(FILES ${SOURCE_ICON} DESTINATION ${ASSETS_TARGET_DIR})
-
 endfunction()
 
 function(copy_metainfo)
