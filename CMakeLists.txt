@@ -106,7 +106,9 @@ function(copy_metainfo)
         file(MAKE_DIRECTORY ${ASSETS_TARGET_DIR})
 
         # Kopiere die Metainformationen mit dem neuen Namen
-        file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR} FILES ${DESTINATION_METAINFO})
+        file(COPY ${SOURCE_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
+        file(RENAME "${ASSETS_TARGET_DIR}/metainfo.xml" "${DESTINATION_METAINFO}")
+        
         add_custom_target(metainfo ALL DEPENDS ${DESTINATION_METAINFO})
         install(FILES ${DESTINATION_METAINFO} DESTINATION ${ASSETS_TARGET_DIR})
     endif()
