@@ -77,6 +77,15 @@
 
 
 <releases>
+  <release version="6.2" date="2024-12-30">
+    <description>
+      Version 6.1
+      <p>Flatpak Support</p>
+      <ul>
+        <li>Did some things in cmake.</li>
+      </ul>
+    </description>
+  </release>
   <release version="6.1" date="2024-12-29">
     <description>
       Version 6.1
