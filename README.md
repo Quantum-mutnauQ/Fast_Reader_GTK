@@ -176,4 +176,5 @@ Feel free to let me know if you need any further modifications!
 ## Plans for the future 
 1. Optimize RAM usage and clean up code (Version 8)
 2. Move to GTK 4.14.2 version (Version 7)
-3. add flatpak support (Version 6)
+3. Enhance the readability of the settings (Version 6.3)
+4. Refine the description (Version 6.3)
