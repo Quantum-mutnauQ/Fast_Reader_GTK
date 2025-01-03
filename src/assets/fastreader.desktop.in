@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Fast Reader
 Name[de]=Geschwindigkeitsleser
-Comment=Fast Reader helps you read quickly by displaying only one word at a time
+Comment=The program helps you read quickly by displaying only one word at a time.
 Exec=@EXEC_COMMAND@
 Icon=@ICON_NAME@
 Terminal=false
