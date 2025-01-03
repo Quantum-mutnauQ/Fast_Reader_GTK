@@ -180,4 +180,4 @@ Feel free to let me know if you need any further modifications!
 - [ ] Move to GTK 4.14.2 version (Version 7)
 - [x] Enhance the readability of the settings (Version 6.3)
 - [ ] Refine the description (Version 6.3)
-- [ ] - [ ] [ ] Add icon (Version 6.3)
+- [ ] Add icon (Version 6.3)
