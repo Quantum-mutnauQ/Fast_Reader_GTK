@@ -87,7 +87,6 @@ msgstr "Löschen"
 msgid "Undo"
 msgstr "Rückgängig"
 
-
 msgid "Ergebnissezeigen"
 msgstr "Ergebnisse anzeigen"
 

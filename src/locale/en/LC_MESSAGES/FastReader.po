@@ -64,10 +64,10 @@ msgstr "Collect Statistics:"
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
-"Zeit-Pro-Wort  * Wort-Länge * 0.5"
+"Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
 "The time will be calculated by:\n"
-"Time-Per-Word * Word-Length * 0.5"
+"Time-Per-Word×(₃√Word-Length)"
 
 msgid "Zurücksetzen"
 msgstr "Reset"

@@ -834,6 +834,8 @@ static void on_undo_button_clicked(GtkButton *button, gpointer data) {
 // Funktion zum Erstellen von Seite 1
 static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(settings_box, 4);
 
     GtkWidget *label = gtk_label_new(_("Einstellungen:"));
     gtk_widget_set_halign(label, GTK_ALIGN_CENTER);
@@ -894,43 +896,46 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_color_dialog_button_set_rgba(global_labelBackgroundColor, &bg_color);
     gtk_color_dialog_button_set_rgba(global_labelForgroudColor, &fg_color);
 
-    gtk_box_append(GTK_BOX(page1), label);
+    gtk_box_append(GTK_BOX(settings_box), label);
     gtk_box_append(GTK_BOX(Backround), labelBackground);
     gtk_box_append(GTK_BOX(Backround), GTK_WIDGET(global_labelBackgroundColor));
-    gtk_box_append(GTK_BOX(page1), Backround);
+    gtk_box_append(GTK_BOX(settings_box), Backround);
 
     gtk_box_append(GTK_BOX(Forgroud), labelForgroud);
     gtk_box_append(GTK_BOX(Forgroud), GTK_WIDGET(global_labelForgroudColor));
-    gtk_box_append(GTK_BOX(page1), Forgroud);
+    gtk_box_append(GTK_BOX(settings_box), Forgroud);
 
     gtk_box_append(GTK_BOX(Text), labelTextSize);
     gtk_box_append(GTK_BOX(Text), GTK_WIDGET(global_labelTextButton));
-    gtk_box_append(GTK_BOX(page1), Text);
+    gtk_box_append(GTK_BOX(settings_box), Text);
 
     gtk_box_append(GTK_BOX(Progress), labelProgress);
     gtk_box_append(GTK_BOX(Progress), GTK_WIDGET(global_labelProgressSwitch));
-    gtk_box_append(GTK_BOX(page1), Progress);
+    gtk_box_append(GTK_BOX(settings_box), Progress);
 
     gtk_box_append(GTK_BOX(WortsPerTime), labelWortsPerTime);
     gtk_box_append(GTK_BOX(WortsPerTime), GTK_WIDGET(global_labelWortsPerTimeSpinn));
-    gtk_box_append(GTK_BOX(page1), WortsPerTime);
+    gtk_box_append(GTK_BOX(settings_box), WortsPerTime);
 
     gtk_box_append(GTK_BOX(TimeToNextWord), labelTimeToNextWord);
     gtk_box_append(GTK_BOX(TimeToNextWord), GTK_WIDGET(global_TimeToNextWordSwitch));
     gtk_box_append(GTK_BOX(TimeToNextWord), label2TimeToNextWord);
     gtk_box_append(GTK_BOX(TimeToNextWord), GTK_WIDGET(global_TimeToNextWordSpinn));
-    gtk_box_append(GTK_BOX(page1), TimeToNextWord);
+    gtk_box_append(GTK_BOX(settings_box), TimeToNextWord);
     
     gtk_box_append(GTK_BOX(Statistics), labelStatistics);
     gtk_box_append(GTK_BOX(Statistics), GTK_WIDGET(global_StatisticsSwitch));
-    gtk_box_append(GTK_BOX(page1), Statistics);
+    gtk_box_append(GTK_BOX(settings_box), Statistics);
+
+    gtk_box_append(GTK_BOX(page1), settings_box);
 
     gtk_box_append(GTK_BOX(page1), ResetButton);
+
     
     // Box für die vier Buttons erstellen
     GtkWidget *button_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     
-const gchar *css = 
+    const gchar *css = 
     ".custom-button {"
     "    background-color: transparent;"
     "    border: none;"
@@ -939,9 +944,9 @@ const gchar *css =
     "    border: 1px solid;"
     "}";
 
-GtkCssProvider *provider = gtk_css_provider_new();
-gtk_css_provider_load_from_string(provider, css); // Der vierte Parameter ist in GTK-4 nicht mehr notwendig
-gtk_style_context_add_provider_for_display(gdk_display_get_default(), 
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_string(provider, css); // Der vierte Parameter ist in GTK-4 nicht mehr notwendig
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(), 
                                            GTK_STYLE_PROVIDER(provider), 
                                            GTK_STYLE_PROVIDER_PRIORITY_USER);
 
@@ -1066,11 +1071,11 @@ static GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     GtkWidget *overlay = gtk_overlay_new();
     gtk_overlay_set_child(GTK_OVERLAY(overlay), page2);
 
-// Lade dynamisch eine CSS-Datei
-GtkCssProvider *provider = gtk_css_provider_new();
-gtk_css_provider_load_from_string(provider, ".transparent-button { background-color: transparent; border: none; box-shadow: none; }");
-gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-g_object_unref(provider);
+    // Lade dynamisch eine CSS-Datei
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_string(provider, ".transparent-button { background-color: transparent; border: none; box-shadow: none; }");
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    g_object_unref(provider);
 
     // Button für die rechte obere Ecke
     global_top_right_button = GTK_BUTTON(gtk_button_new_with_label("▶️"));
@@ -1102,6 +1107,16 @@ int main(int argc, char *argv[]) {
     bindtextdomain("FastReader", LOCALEDIRR);
     textdomain("FastReader");
 
+    GtkIconTheme *icon_theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
+    gtk_icon_theme_add_search_path(icon_theme, "assets/");
+    gtk_icon_theme_add_resource_path(icon_theme, "assets/");
+
+    if (gtk_icon_theme_has_icon(icon_theme, "fastreader")) {
+        g_print(_("Icon gefunden.\n"));
+    } else {
+        g_print(_("Icon nicht gefunden.\n"));
+    }
+
     const gchar *config_dir = g_get_user_config_dir();
     if (config_dir == NULL) {
         printf(_("Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"));
@@ -1121,6 +1136,9 @@ int main(int argc, char *argv[]) {
     GtkWidget *window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 600);
+
+    gtk_window_set_icon_name(GTK_WINDOW(window),"fastreader");
+
 
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), loop);
