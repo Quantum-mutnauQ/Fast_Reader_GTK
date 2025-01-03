@@ -181,4 +181,5 @@ Feel free to let me know if you need any further modifications!
 - [x] Enhance the readability of the settings (Version 6.3)
 - [ ] Enhance the readability of the statistics (Version 6.3)
 - [ ] Refine the description (Version 6.3)
-- [ ] Add icon (Version 6.3)
+- [ ] Add icon (Version ?)
+- [ ] fix metainfo (Version 6.3)
