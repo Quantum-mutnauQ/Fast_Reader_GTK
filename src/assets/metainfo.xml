@@ -5,7 +5,7 @@
   <name>Fast Reader</name>
   <name xml:lang="de">Geschwindigkeitsleser</name>
 
-  <summary>The program helps you read quickly by displaying only one word at a time.</summary>
+  <summary>Reading one word at a time</summary>
 
   <developer id="io.github.quantum_mutnauq.fast_reader_gtk">
     <name>Quantum_mutnauQ</name>
@@ -37,6 +37,14 @@
   <category>Education</category>
 </categories>
 
+  <keywords>
+    <keyword>reading</keyword>
+    <keyword>fast reading</keyword>
+    <keyword>fast reader</keyword>
+    <keyword>quick reader</keyword>
+    <keyword>quick reading</keyword>
+  </keywords>
+
 <branding>
   <color type="primary" scheme_preference="light">#3584e4</color>
   <color type="primary" scheme_preference="dark">#134380</color>
@@ -49,27 +57,35 @@
 
 <screenshots>
   <screenshot type="default">
+    <caption></caption>
     <image>https://github.com/user-attachments/assets/6de4cee5-b628-42c4-bea0-ede9130b102d</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/Quantum-mutnauQ/Fast_Reader_GTK/assets/141065355/48d57ddf-fe5d-4209-aaed-1b30403e1816</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/user-attachments/assets/a8433539-2451-4863-a260-e844d4bc868e</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/Quantum-mutnauQ/Fast_Reader_GTK/assets/141065355/cc7e675b-7642-43a6-a2a9-a5eecfc2e72d</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/user-attachments/assets/6195e5e6-5c20-4446-a75b-6a44a4235514</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/Quantum-mutnauQ/Fast_Reader_GTK/assets/141065355/0e4b847a-79a7-496a-a9cc-8c63dbe68507</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/user-attachments/assets/044fc9d1-aa70-4128-80b3-fb7554f04750</image>
   </screenshot>
   <screenshot>
+    <caption></caption>
     <image>https://github.com/Quantum-mutnauQ/Fast_Reader_GTK/assets/141065355/6131c3e0-7c8b-479e-95de-31b312c993b4</image>
   </screenshot>
 
@@ -161,7 +177,6 @@
 <custom>
     <value key="flathub::manifest">https://github.com/flathub/io.github.quantum_mutnauq.fast_reader_gtk/blob/master/io.github.quantum_mutnauq.fast_reader_gtk.yml</value>
 </custom>
-
 </component>
 
 

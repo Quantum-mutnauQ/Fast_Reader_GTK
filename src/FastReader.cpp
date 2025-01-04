@@ -451,9 +451,10 @@ static void show_results_window() {
     gtk_window_set_title(GTK_WINDOW(results_window), _("Lese Zeit Ergebnisse"));
     gtk_window_set_default_size(GTK_WINDOW(results_window), 600, 300);
     
-    GtkWidget *results = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *results = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_widget_set_margin_start(results, 4);
     gtk_window_set_child(GTK_WINDOW(results_window), results);
-   
+
     // Füge die Gesamtzeit hinzu
     std::string total_time_text = _("Gesamtzeit: ") + std::to_string(total_time) + " s\n";
     GtkWidget *total_time_label = gtk_label_new(total_time_text.c_str());
@@ -474,6 +475,8 @@ static void show_results_window() {
     // Erstelle ein Grid zur Organisation der Widgets
     grid = gtk_grid_new();
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), grid);
+    gtk_grid_set_row_spacing(GTK_GRID(grid),6);
+    gtk_grid_set_column_spacing(GTK_GRID(grid),4);
 
     // Füge Spaltenüberschriften hinzu
     GtkWidget *word_label = gtk_label_new(_("Wort"));
@@ -484,7 +487,6 @@ static void show_results_window() {
     gtk_grid_attach(GTK_GRID(grid), time_label, 1, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), relative_time_label, 2, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), score_label, 3, 1, 1, 1);
-
     // Berechne Scores und sortiere sie
     scores.clear();
     for (int i = 0; i < word_times.size(); ++i) {
@@ -833,7 +835,7 @@ static void on_undo_button_clicked(GtkButton *button, gpointer data) {
 
 // Funktion zum Erstellen von Seite 1
 static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
-    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_margin_start(settings_box, 4);
 
