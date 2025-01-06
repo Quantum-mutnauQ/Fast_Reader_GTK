@@ -39,7 +39,10 @@ Reader is a versatile application designed to assist users in reading text swift
 - **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
 
  You can set a variable time limit for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)" (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
-  
+
+## Translations by:
+- Italian:  [albanobattistella](https://github.com/albanobattistella)
+
 ## Getting Started
 
 To begin using Fast Reader, follow these simple steps:
