@@ -97,9 +97,20 @@
 
 
 <releases>
+  <release version="6.3" date="2025-1-6">
+    <description>
+      Version 6.3
+      <p>Some Improvements</p>
+      <ul>
+        <li>Enhanced the readability of the settings</li>
+        <li>Enhanced the readability of the statistics</li>
+        <li>Fixed metainfo</li>
+      </ul>
+    </description>
+  </release>
   <release version="6.2" date="2024-12-30">
     <description>
-      Version 6.1
+      Version 6.2
       <p>Flatpak Support</p>
       <ul>
         <li>Did some things in cmake.</li>
