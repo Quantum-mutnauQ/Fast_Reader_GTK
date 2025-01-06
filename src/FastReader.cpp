@@ -450,6 +450,12 @@ static void show_results_window() {
     GtkWidget *results_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(results_window), _("Lese Zeit Ergebnisse"));
     gtk_window_set_default_size(GTK_WINDOW(results_window), 600, 300);
+
+    #ifdef ICON_NAME
+        gtk_window_set_icon_name(GTK_WINDOW(results_window), ICON_NAME);
+    #else
+        gtk_window_set_icon_name(GTK_WINDOW(results_window), "fastreader");
+    #endif
     
     GtkWidget *results = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(results, 4);
@@ -835,8 +841,8 @@ static void on_undo_button_clicked(GtkButton *button, gpointer data) {
 
 // Funktion zum Erstellen von Seite 1
 static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
-    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-    GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(settings_box, 4);
 
     GtkWidget *label = gtk_label_new(_("Einstellungen:"));
@@ -1109,6 +1115,7 @@ int main(int argc, char *argv[]) {
     bindtextdomain("FastReader", LOCALEDIRR);
     textdomain("FastReader");
 
+    #ifndef ICON_NAME
     GtkIconTheme *icon_theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
     gtk_icon_theme_add_search_path(icon_theme, "assets/");
     gtk_icon_theme_add_resource_path(icon_theme, "assets/");
@@ -1118,6 +1125,9 @@ int main(int argc, char *argv[]) {
     } else {
         g_print(_("Icon nicht gefunden.\n"));
     }
+    #else
+    g_print(_("ICON_NAME ist definiert: %s\n"), ICON_NAME);
+    #endif
 
     const gchar *config_dir = g_get_user_config_dir();
     if (config_dir == NULL) {
@@ -1139,8 +1149,11 @@ int main(int argc, char *argv[]) {
     gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 600);
 
-    gtk_window_set_icon_name(GTK_WINDOW(window),"fastreader");
-
+    #ifdef ICON_NAME
+        gtk_window_set_icon_name(GTK_WINDOW(window), ICON_NAME);
+    #else
+        gtk_window_set_icon_name(GTK_WINDOW(window), "fastreader");
+    #endif
 
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), loop);
