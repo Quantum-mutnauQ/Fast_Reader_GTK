@@ -93,6 +93,15 @@ msgstr "Ergebnisse anzeigen"
 msgid "Zurück"
 msgstr "Zurück"
 
+msgid "Icon gefunden.\n"
+msgstr "Icon gefunden.\n"
+
+msgid "Icon nicht gefunden.\n"
+msgstr "Icon nicht gefunden.\n"
+
+msgid "ICON_NAME ist definiert: %s\n"
+msgstr "ICON_NAME ist definiert: %s\n"
+
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 

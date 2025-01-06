@@ -3,110 +3,108 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
-msgstr "Error while writing file.\n"
+msgstr ""
 
 msgid "Error while reading file: %s:%d - %s\n"
-msgstr "Error while reading file: %s:%d - %s\n"
+msgstr ""
 
 msgid "Trye to corrct\n"
-msgstr "Try to correct\n"
+msgstr ""
 
 msgid "Statistiken:"
-msgstr "Statistics:"
+msgstr ""
 
 msgid "Lese Zeit Ergebnisse"
-msgstr "Reading Time Results"
+msgstr ""
 
 msgid "Gesamtzeit: "
-msgstr "Total Time: "
+msgstr ""
 
 msgid "Farbe:"
-msgstr "Color:"
+msgstr ""
 
 msgid "Wort"
-msgstr "Word"
+msgstr ""
 
 msgid "Zeit (s)"
-msgstr "Time (s)"
+msgstr ""
 
 msgid "Prozentuale Zeit (%)"
-msgstr "Percentage Time (%)"
+msgstr ""
 
 msgid "Punkte"
-msgstr "Points"
+msgstr ""
 
 msgid "Einstellungen:"
-msgstr "Settings:"
+msgstr ""
 
 msgid "Hintergrund:"
-msgstr "Background:"
+msgstr ""
 
 msgid "Schrift:"
-msgstr "Font:"
+msgstr ""
 
 msgid "Schrift Größe:"
-msgstr "Font Size:"
+msgstr ""
 
 msgid "Fortschritt Zeigen:"
-msgstr "Show Progress:"
+msgstr ""
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed words:"
+msgstr ""
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Time based next word:"
+msgstr ""
 
 msgid "Zeit (sec):"
-msgstr "Time (sec):"
+msgstr ""
 
 msgid "Statistiken erheben:"
-msgstr "Collect Statistics:"
+msgstr ""
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
-"The time will be calculated by:\n"
-"Time-Per-Word×(₃√Word-Length)"
 
 msgid "Zurücksetzen"
-msgstr "Reset"
+msgstr ""
 
 msgid "Lesen"
-msgstr "Read"
+msgstr ""
 
 msgid "Copy"
-msgstr "Copy"
+msgstr ""
 
 msgid "Paste"
-msgstr "Paste"
+msgstr ""
 
 msgid "Clear"
-msgstr "Clear"
+msgstr ""
 
 msgid "Undo"
-msgstr "Undo"
+msgstr ""
 
 msgid "Ergebnissezeigen"
-msgstr "Show results"
+msgstr ""
 
 msgid "Zurück"
-msgstr "Back"
+msgstr ""
 
 msgid "Icon gefunden.\n"
-msgstr "Icon found.\n"
+msgstr ""
 
 msgid "Icon nicht gefunden.\n"
-msgstr "Icon not found.\n"
+msgstr ""
 
 msgid "ICON_NAME ist definiert: %s\n"
-msgstr "ICON_NAME is defined: %s\n"
+msgstr ""
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
-msgstr "Could not retrieve default configuration directory.\n"
+msgstr ""
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error while creating FastReader directory.\n"
+msgstr ""
 
 msgid "Fast Reader"
-msgstr "Fast Reader"
+msgstr ""

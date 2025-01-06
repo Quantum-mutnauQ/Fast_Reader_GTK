@@ -3,110 +3,101 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
-msgstr "Error while writing file.\n"
+msgstr "Errore durante la scrittura del file.\n"
 
 msgid "Error while reading file: %s:%d - %s\n"
-msgstr "Error while reading file: %s:%d - %s\n"
+msgstr "Errore durante la lettura del file: %s:%d - %s\n"
 
-msgid "Trye to corrct\n"
-msgstr "Try to correct\n"
+msgid "Trye to corrct"
+msgstr "Prova a correggere"
 
 msgid "Statistiken:"
-msgstr "Statistics:"
+msgstr "Statistiche:"
 
 msgid "Lese Zeit Ergebnisse"
-msgstr "Reading Time Results"
+msgstr "Risultati del tempo di lettura"
 
 msgid "Gesamtzeit: "
-msgstr "Total Time: "
+msgstr "Tempo totale: "
 
 msgid "Farbe:"
-msgstr "Color:"
+msgstr "Colore:"
 
 msgid "Wort"
-msgstr "Word"
+msgstr "Parola"
 
 msgid "Zeit (s)"
-msgstr "Time (s)"
+msgstr "Tempo (s)"
 
 msgid "Prozentuale Zeit (%)"
-msgstr "Percentage Time (%)"
+msgstr "Percentuale di tempo (%)"
 
 msgid "Punkte"
-msgstr "Points"
+msgstr "Punti"
 
 msgid "Einstellungen:"
-msgstr "Settings:"
+msgstr "Impostazioni:"
 
 msgid "Hintergrund:"
-msgstr "Background:"
+msgstr "Sfondo:"
 
 msgid "Schrift:"
 msgstr "Font:"
 
 msgid "Schrift Größe:"
-msgstr "Font Size:"
+msgstr "Dimensione del font:"
 
 msgid "Fortschritt Zeigen:"
-msgstr "Show Progress:"
+msgstr "Mostra progressi:"
 
 msgid "Angezeigte wörter:"
-msgstr "Displayed words:"
+msgstr "Parole visualizzates:"
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Time based next word:"
+msgstr "Parola successiva basata sul tempo:"
 
 msgid "Zeit (sec):"
-msgstr "Time (sec):"
+msgstr "Tempo (sec):"
 
 msgid "Statistiken erheben:"
-msgstr "Collect Statistics:"
+msgstr "Raccogli statistiche:"
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
-"The time will be calculated by:\n"
-"Time-Per-Word×(₃√Word-Length)"
+"Il tempo verrà calcolato da:\n"
+"Tempo per parola×(₃√Lunghezza della parola)"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
 
 msgid "Lesen"
-msgstr "Read"
+msgstr "Leggere"
 
 msgid "Copy"
-msgstr "Copy"
+msgstr "Copia"
 
 msgid "Paste"
-msgstr "Paste"
+msgstr "Incolla"
 
 msgid "Clear"
-msgstr "Clear"
+msgstr "Cancella"
 
 msgid "Undo"
-msgstr "Undo"
+msgstr "Annulla"
 
 msgid "Ergebnissezeigen"
-msgstr "Show results"
+msgstr "Mostra risultati"
 
 msgid "Zurück"
-msgstr "Back"
-
-msgid "Icon gefunden.\n"
-msgstr "Icon found.\n"
-
-msgid "Icon nicht gefunden.\n"
-msgstr "Icon not found.\n"
-
-msgid "ICON_NAME ist definiert: %s\n"
-msgstr "ICON_NAME is defined: %s\n"
+msgstr "Indietro"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
-msgstr "Could not retrieve default configuration directory.\n"
+msgstr "Impossibile recuperare la directory di configurazione predefinita.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Error while creating FastReader directory.\n"
+msgstr "Errore durante la creazione della directory di FastReader.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"

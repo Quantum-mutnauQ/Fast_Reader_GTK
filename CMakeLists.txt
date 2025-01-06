@@ -148,6 +148,7 @@ endfunction()
 # Kompiliere die Übersetzungen für Deutsch und Englisch
 compile_po_files(de)
 compile_po_files(en)
+compile_po_files(it) #Thangs to https://github.com/albanobattistella
 copy_icon()
 copy_metainfo()
 generate_desktop_file()
