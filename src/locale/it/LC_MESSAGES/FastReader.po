@@ -8,8 +8,8 @@ msgstr "Errore durante la scrittura del file.\n"
 msgid "Error while reading file: %s:%d - %s\n"
 msgstr "Errore durante la lettura del file: %s:%d - %s\n"
 
-msgid "Trye to corrct"
-msgstr "Prova a correggere"
+msgid "Trye to corrct\n"
+msgstr "Prova a correggere\n"
 
 msgid "Statistiken:"
 msgstr "Statistiche:"
@@ -51,7 +51,7 @@ msgid "Fortschritt Zeigen:"
 msgstr "Mostra progressi:"
 
 msgid "Angezeigte wörter:"
-msgstr "Parole visualizzate:"
+msgstr "Parole visualizzates:"
 
 msgid "Zeitbassirt nechstes Wort:"
 msgstr "Parola successiva basata sul tempo:"
@@ -62,15 +62,15 @@ msgstr "Tempo (sec):"
 msgid "Statistiken erheben:"
 msgstr "Raccogli statistiche:"
 
+msgid "Zurücksetzen"
+msgstr "Reset"
+
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
 "Il tempo verrà calcolato da:\n"
 "Tempo per parola×(₃√Lunghezza della parola)"
-
-msgid "Zurücksetzen"
-msgstr "Reset"
 
 msgid "Lesen"
 msgstr "Leggere"
@@ -92,6 +92,15 @@ msgstr "Mostra risultati"
 
 msgid "Zurück"
 msgstr "Indietro"
+
+msgid "Icon gefunden.\n"
+msgstr "Icon found.\n"
+
+msgid "Icon nicht gefunden.\n"
+msgstr "Icon not found.\n"
+
+msgid "ICON_NAME ist definiert: %s\n"
+msgstr "ICON_NAME is defined: %s\n"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Impossibile recuperare la directory di configurazione predefinita.\n"
