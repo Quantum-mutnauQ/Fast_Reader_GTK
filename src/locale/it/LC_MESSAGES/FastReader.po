@@ -51,7 +51,7 @@ msgid "Fortschritt Zeigen:"
 msgstr "Mostra progressi:"
 
 msgid "Angezeigte wörter:"
-msgstr "Parole visualizzates:"
+msgstr "Parole visualizzate:"
 
 msgid "Zeitbassirt nechstes Wort:"
 msgstr "Parola successiva basata sul tempo:"
@@ -61,16 +61,15 @@ msgstr "Tempo (sec):"
 
 msgid "Statistiken erheben:"
 msgstr "Raccogli statistiche:"
-
-msgid "Zurücksetzen"
-msgstr "Reset"
-
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
 "Il tempo verrà calcolato da:\n"
 "Tempo per parola×(₃√Lunghezza della parola)"
+
+msgid "Zurücksetzen"
+msgstr "Reset"
 
 msgid "Lesen"
 msgstr "Leggere"
