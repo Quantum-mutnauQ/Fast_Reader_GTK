@@ -61,106 +61,113 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
-msgstr "Fehler beim Schreiben der Datei.\n"
+msgstr "Error while writing file.\n"
 
 msgid "Error while reading file: %s:%d - %s\n"
-msgstr "Fehler beim Lesen der Datei: %s:%d - %s\n"
+msgstr "Error while reading file: %s:%d - %s\n"
 
-msgid "Trye to corrct"
-msgstr "Versuche zu korrigieren"
+msgid "Trye to corrct\n"
+msgstr "Try to correct\n"
 
 msgid "Statistiken:"
-msgstr "Statistiken:"
+msgstr "Statistics:"
 
 msgid "Lese Zeit Ergebnisse"
-msgstr "Lesezeit Ergebnisse"
+msgstr "Reading Time Results"
 
 msgid "Gesamtzeit: "
-msgstr "Gesamtzeit: "
+msgstr "Total Time: "
 
 msgid "Farbe:"
-msgstr "Farbe:"
+msgstr "Color:"
 
 msgid "Wort"
-msgstr "Wort"
+msgstr "Word"
 
 msgid "Zeit (s)"
-msgstr "Zeit (s)"
+msgstr "Time (s)"
 
 msgid "Prozentuale Zeit (%)"
-msgstr "Prozentuale Zeit (%)"
+msgstr "Percentage Time (%)"
 
 msgid "Punkte"
-msgstr "Punkte"
+msgstr "Points"
 
 msgid "Einstellungen:"
-msgstr "Einstellungen:"
+msgstr "Settings:"
 
 msgid "Hintergrund:"
-msgstr "Hintergrund:"
+msgstr "Background:"
 
 msgid "Schrift:"
-msgstr "Schrift:"
+msgstr "Font:"
 
 msgid "Schrift Größe:"
-msgstr "Schriftgröße:"
+msgstr "Font Size:"
 
 msgid "Fortschritt Zeigen:"
-msgstr "Fortschritt anzeigen:"
+msgstr "Show Progress:"
 
 msgid "Angezeigte wörter:"
-msgstr "Angezeigte Wörter:"
+msgstr "Displayed words:"
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Zeitbasiert nächstes Wort:"
+msgstr "Time based next word:"
 
 msgid "Zeit (sec):"
-msgstr "Zeit (s):"
+msgstr "Time (sec):"
 
 msgid "Statistiken erheben:"
-msgstr "Statistiken erstellen:"
+msgstr "Collect Statistics:"
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
-"Die Zeit wird berechnet durch:\n"
-"Zeit−Pro−Wort×(₃√Wort−Länge )"
+"The time will be calculated by:\n"
+"Time-Per-Word×(₃√Word-Length)"
 
 msgid "Zurücksetzen"
-msgstr "Zurücksetzen"
+msgstr "Reset"
 
 msgid "Lesen"
-msgstr "Lesen"
+msgstr "Read"
 
 msgid "Copy"
-msgstr "Kopieren"
+msgstr "Copy"
 
 msgid "Paste"
-msgstr "Einfügen"
+msgstr "Paste"
 
 msgid "Clear"
-msgstr "Löschen"
+msgstr "Clear"
 
 msgid "Undo"
-msgstr "Rückgängig"
-
+msgstr "Undo"
 
 msgid "Ergebnissezeigen"
-msgstr "Ergebnisse anzeigen"
+msgstr "Show results"
 
 msgid "Zurück"
-msgstr "Zurück"
+msgstr "Back"
+
+msgid "Icon gefunden.\n"
+msgstr "Icon found.\n"
+
+msgid "Icon nicht gefunden.\n"
+msgstr "Icon not found.\n"
+
+msgid "ICON_NAME ist definiert: %s\n"
+msgstr "ICON_NAME is defined: %s\n"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
-msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
+msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-msgstr "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
+msgstr "Error while creating FastReader directory.\n"
 
 msgid "Fast Reader"
-msgstr "Geschwindigkeitsleser"
-
+msgstr "Fast Reader"
  ```
 3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt src/locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o build/locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
 4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
