@@ -51,7 +51,7 @@ msgid "Fortschritt Zeigen:"
 msgstr "Mostra progressi:"
 
 msgid "Angezeigte wörter:"
-msgstr "Parole visualizzates:"
+msgstr "Parole visualizzate:"
 
 msgid "Zeitbassirt nechstes Wort:"
 msgstr "Parola successiva basata sul tempo:"
