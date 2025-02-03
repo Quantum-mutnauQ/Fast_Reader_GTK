@@ -641,22 +641,70 @@ static gchar* get_default_font_name() {
   return font_name;
 }
 
-// Funktion zum Abrufen der Standard-Hintergrund- und Schriftfarbe
+static gchar *extract_theme_bg_rgb(const gchar *css_string) {
+    if (!css_string) return NULL;
+
+    GRegex *regex = g_regex_new("@define-color\\s+theme_bg_color\\s+([^;]+);",G_REGEX_DOTALL, G_REGEX_MATCH_DEFAULT, NULL);
+    GMatchInfo *match_info;
+    gchar *result = NULL;
+
+    if (g_regex_match(regex, css_string, G_REGEX_MATCH_DEFAULT, &match_info)) {
+        gchar *match = g_match_info_fetch(match_info, 1);
+        if (match) {
+            GRegex *rgb_regex = g_regex_new("rgb\\((\\d{1,3}),\\s*(\\d{1,3}),\\s*(\\d{1,3})\\)",G_REGEX_DOTALL, G_REGEX_MATCH_DEFAULT, NULL);
+            GMatchInfo *rgb_match_info;
+
+            if (g_regex_match(rgb_regex, match, G_REGEX_MATCH_DEFAULT, &rgb_match_info)) {
+                result = g_match_info_fetch(rgb_match_info, 0);
+                g_match_info_free(rgb_match_info);
+            }
+
+            g_regex_unref(rgb_regex);
+            g_free(match);
+        }
+    }
+
+    g_match_info_free(match_info);
+    g_regex_unref(regex);
+    return result; // Muss später mit g_free() freigegeben werden!
+}
+
 static void get_default_colors(GdkRGBA *bg_color, GdkRGBA *fg_color, GtkWidget *window) {
-    
-    GdkRGBA color;
-    
-    // Hintergrundfarbe abrufen
+    if (!bg_color || !fg_color || !window) return;
+
     gtk_widget_get_color(window, fg_color);
-    g_print("Textfarbe: rgba(%.2f, %.2f, %.2f, %.2f)\n", fg_color->red, fg_color->green, fg_color->blue, fg_color->alpha);
-    
-    // Hintergrundfarbe abrufen
-    //gtk_widget_get_background_color(window , &color);
-    //g_print("Hintergrundfarbe: rgba(%.2f, %.2f, %.2f, %.2f)\n", color.red, color.green, color.blue, color.alpha);
 
-  GtkStyleContext *context = gtk_widget_get_style_context(window);
+    GtkSettings *settings = gtk_widget_get_settings(window);
+    gchar *theme_name = NULL;
+    g_object_get(settings, "gtk-theme-name", &theme_name, NULL);
 
-  gtk_style_context_lookup_color(context, "theme_bg_color", bg_color);
+    if (theme_name) {
+        GtkCssProvider *provider = gtk_css_provider_new();
+        gtk_css_provider_load_named(provider, theme_name, NULL);
+
+        gchar *css_string = gtk_css_provider_to_string(provider);
+        gboolean found = FALSE;
+
+        if (css_string) {
+            gchar *theme_bg = extract_theme_bg_rgb(css_string);
+            if (theme_bg) {
+                found = gdk_rgba_parse(bg_color, theme_bg);
+                g_free(theme_bg);
+            }
+            g_free(css_string);
+        }
+
+        g_object_unref(provider);
+        g_free(theme_name);
+
+        if (!found) {
+            gdk_rgba_parse(bg_color, "rgb(200,200,200)");
+            g_print(_("Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"));
+        }
+    } else {
+        gdk_rgba_parse(bg_color, "rgb(200,200,200)");
+        g_print(_("Kein GTK-Theme gefunden, Standardwert gesetzt!\n"));
+    }
 }
 
 // Callback-Funktion, die beim Klicken auf den Button zum Wechseln zu Seite 1 aufgerufen wird
@@ -1121,7 +1169,7 @@ int main(int argc, char *argv[]) {
     gtk_icon_theme_add_resource_path(icon_theme, "assets/");
 
     if (gtk_icon_theme_has_icon(icon_theme, "fastreader")) {
-        g_print(_("Icon gefunden.\n"));
+        g_print(_("Icon mit standart Namen gefunden.\n"));
     } else {
         g_print(_("Icon nicht gefunden.\n"));
     }
