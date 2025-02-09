@@ -8,8 +8,8 @@ msgstr "Fehler beim Schreiben der Datei.\n"
 msgid "Error while reading file: %s:%d - %s\n"
 msgstr "Fehler beim Lesen der Datei: %s:%d - %s\n"
 
-msgid "Trye to corrct"
-msgstr "Versuche zu korrigieren"
+msgid "Trye to corrct\n"
+msgstr "Versuche zu korrigieren\n"
 
 msgid "Statistiken:"
 msgstr "Statistiken:"
@@ -34,6 +34,12 @@ msgstr "Prozentuale Zeit (%)"
 
 msgid "Punkte"
 msgstr "Punkte"
+
+msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
+msgstr "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
+
+msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
+msgstr "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 
 msgid "Einstellungen:"
 msgstr "Einstellungen:"
@@ -93,8 +99,8 @@ msgstr "Ergebnisse anzeigen"
 msgid "Zurück"
 msgstr "Zurück"
 
-msgid "Icon gefunden.\n"
-msgstr "Icon gefunden.\n"
+msgid "Icon mit standart Namen gefunden.\n"
+msgstr "Icon mit standart Namen gefunden.\n"
 
 msgid "Icon nicht gefunden.\n"
 msgstr "Icon nicht gefunden.\n"

@@ -35,6 +35,12 @@ msgstr "Percentage Time (%)"
 msgid "Punkte"
 msgstr "Points"
 
+msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
+msgstr "No RGB value found, default value set!\n"
+
+msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
+msgstr "No RGB value found, default value set!\n"
+
 msgid "Einstellungen:"
 msgstr "Settings:"
 
@@ -93,8 +99,8 @@ msgstr "Show results"
 msgid "Zurück"
 msgstr "Back"
 
-msgid "Icon gefunden.\n"
-msgstr "Icon found.\n"
+msgid "Icon mit standart Namen gefunden.\n"
+msgstr "Icon found with standard name.\n"
 
 msgid "Icon nicht gefunden.\n"
 msgstr "Icon not found.\n"
