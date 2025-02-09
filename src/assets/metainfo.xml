@@ -97,6 +97,15 @@
 
 
 <releases>
+  <release version="7" date="2025-2-9">
+    <description>
+      Version 7
+      <p>GTK update</p>
+      <ul>
+        <li>Move to GTK 4.14.2 version</li>
+      </ul>
+    </description>
+  </release>
   <release version="6.3" date="2025-1-6">
     <description>
       Version 6.3
