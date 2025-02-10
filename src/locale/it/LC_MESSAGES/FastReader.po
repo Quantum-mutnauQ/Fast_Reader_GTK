@@ -36,10 +36,10 @@ msgid "Punkte"
 msgstr "Punti"
 
 msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
-msgstr "No RGB value found, default value set!\n"
+msgstr "Nessun valore RGB trovato, valore predefinito impostato!\n"
 
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
-msgstr "No RGB value found, default value set!\n"
+msgstr "Nessun tema GTK trovato, valore predefinito impostato!\n"
 
 msgid "Einstellungen:"
 msgstr "Impostazioni:"
@@ -99,13 +99,13 @@ msgid "Zurück"
 msgstr "Indietro"
 
 msgid "Icon mit standart Namen gefunden.\n"
-msgstr "Icon found with standard name.\n"
+msgstr "Icona trovata con nome standard.\n"
 
 msgid "Icon nicht gefunden.\n"
-msgstr "Icon not found.\n"
+msgstr "Icona non trovata.\n"
 
 msgid "ICON_NAME ist definiert: %s\n"
-msgstr "ICON_NAME is defined: %s\n"
+msgstr "ICON_NAME è definito: %s\n"
 
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Impossibile recuperare la directory di configurazione predefinita.\n"
