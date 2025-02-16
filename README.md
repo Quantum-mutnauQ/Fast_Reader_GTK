@@ -1,6 +1,6 @@
 # Fast Reader
 
-Reader is a versatile application designed to assist users in reading text swiftly and effectively. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
+Reader is a versatile application designed to assist users in reading text swiftly and effectively by showing word by word. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
 
 **Version 4(Light theme Version 6) images**:
 
@@ -29,6 +29,17 @@ Reader is a versatile application designed to assist users in reading text swift
 
 ## Features
 
+Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it.
+You can choose two different basic settings. Either you can choose the next word bei using the button „→“ or you can use the „Time based next word“. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the “Read” button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.
+
+This program offers individual settings to improve reading:
+- Background colour
+- Font colour
+- Font and size
+- Reading progress in the text
+
+Used to highlight which words took a particularly long time and which were read quickly.
+
 - **Customizable Settings**: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.
 - **Text Input**: Easily input text into the application through a dedicated text entry field.
 - **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
@@ -38,7 +49,7 @@ Reader is a versatile application designed to assist users in reading text swift
 - **Statistic Collection**: Generates statistics for you, showing how long you took to read each word.
 - **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
 
- You can set a variable time limit for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)" (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
+ You can set a variable time limit for the display of each word.
 
 ## Translations by:
 - Italian:  [albanobattistella](https://github.com/albanobattistella)
