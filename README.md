@@ -1,6 +1,28 @@
 # Fast Reader
 
-Reader is a versatile application designed to assist users in reading text swiftly and effectively by showing word by word. Developed using the GTK library in C++, this program offers a customizable interface to enhance the reading experience.
+Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it.
+You can choose two different basic settings. Either you can choose the next word bei using the button „→“ or you can use the „Time based next word“. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the “Read” button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.
+
+This program offers individual settings to improve reading:
+- Background colour
+- Font colour
+- Font and size
+- Reading progress in the text
+
+Used to highlight which words took a particularly long time and which were read quickly.
+
+- **Customizable Settings**: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.
+- **Text Input**: Easily input text into the application through a dedicated text entry field.
+- **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
+- **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
+- **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
+- **Time-Based Word predictions**: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
+- **Statistic Collection**: Generates statistics for you, showing how long you took to read each word.
+- **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
+
+ You can set a variable time limit for the display of each word.
+
+ ## Screenshots
 
 **Version 4(Light theme Version 6) images**:
 
@@ -26,37 +48,18 @@ Reader is a versatile application designed to assist users in reading text swift
 ![Bildschirmfoto vom 2024-12-29 13-25-26](https://github.com/user-attachments/assets/6195e5e6-5c20-4446-a75b-6a44a4235514)
 ![Bildschirmfoto vom 2024-12-29 13-25-36](https://github.com/user-attachments/assets/044fc9d1-aa70-4128-80b3-fb7554f04750)
 
-
-## Features
-
-Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it.
-You can choose two different basic settings. Either you can choose the next word bei using the button „→“ or you can use the „Time based next word“. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the “Read” button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.
-
-This program offers individual settings to improve reading:
-- Background colour
-- Font colour
-- Font and size
-- Reading progress in the text
-
-Used to highlight which words took a particularly long time and which were read quickly.
-
-- **Customizable Settings**: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.
-- **Text Input**: Easily input text into the application through a dedicated text entry field.
-- **Word-by-Word Display**: The text is broken down into individual words, presented one at a time, facilitating focused reading.
-- **Navigation Options**: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.
-- **Progress Indicators**: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.
-- **Time-Based Word predictions**: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
-- **Statistic Collection**: Generates statistics for you, showing how long you took to read each word.
-- **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
-
- You can set a variable time limit for the display of each word.
-
 ## Translations by:
 - Italian:  [albanobattistella](https://github.com/albanobattistella)
 
 ## Getting Started
 
-To begin using Fast Reader, follow these simple steps:
+There are two installation methods available for you to choose from:
+
+**1. Install via [Flatpak on Flathub](https://flathub.org/apps/io.github.quantum_mutnauq.fast_reader_gtk)**
+
+**2. Run from the Binary**
+
+If you prefer to run Fast Reader from the binary, just follow these simple steps:
 
 1. **Installation**: Download the latest release and extract the contents from the zip file.
 2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./FastReader` in the folder where the program is saved, or simply double-click on it.
@@ -201,5 +204,5 @@ Feel free to let me know if you need any further modifications!
 - [ ] Option for longer time for wery long word (Version 7. 1)
 - [ ] Option for longer time on first word usng Time-Based Word predictions (Version 7.1)
 - [x] Pausebutton on Time-Based Word predictions (Version 7.1)
-- [ ] Refine the description (Version ?)
+- [x] Refine the description (Version ?)
 - [ ] Add icon (Version ?)
