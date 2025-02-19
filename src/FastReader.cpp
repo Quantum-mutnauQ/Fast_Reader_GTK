@@ -1046,12 +1046,15 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_expander_set_child(GTK_EXPANDER(TimeToNextWordAdvandedSettings),advacedWordPredictinsSettings);
     gtk_widget_set_margin_start(advacedWordPredictinsSettings, 20);
 
+    const char*  labelLongerTimeOnLongWordToolTip=_("Die Berechnete zeit wird auf die Normale Lese Zeit aufgerechnet wenn das Wort lange genug ist.\nSie wird berechnet durch:\nZusetzliche-Zeit−Pro−Wort×Wort−Länge");
+
     GtkWidget *longWordLongTime = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,4);
     GtkWidget *labelLongerTimeOnLongWord = gtk_label_new(_("Längere Zeit Bei sehrlangen Wörtern:"));
     global_SwitchLongerTimeOnLongWord = GTK_SWITCH(gtk_switch_new());
     gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
     gtk_box_append(GTK_BOX(longWordLongTime), labelLongerTimeOnLongWord);
     gtk_box_append(GTK_BOX(longWordLongTime), GTK_WIDGET(global_SwitchLongerTimeOnLongWord));
+    gtk_widget_set_tooltip_text(longWordLongTime,labelLongerTimeOnLongWordToolTip);
 
     GtkAdjustment *adjustment3 = gtk_adjustment_new(35, 1, DBL_MAX, 1, 10, 1);
     GtkWidget *longWordLongTimeAdvanced = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,4);
@@ -1060,6 +1063,7 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     global_SpinnButtonLongerTimeOnLongWord = GTK_SPIN_BUTTON(gtk_spin_button_new(adjustment3, 1, 0));
     gtk_box_append(GTK_BOX(longWordLongTimeAdvanced),label2LongerTimeOnLongWord);
     gtk_box_append(GTK_BOX(longWordLongTimeAdvanced), GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord));
+    gtk_widget_set_tooltip_text(longWordLongTimeAdvanced,labelLongerTimeOnLongWordToolTip);
 
     GtkAdjustment *adjustment4 = gtk_adjustment_new(0.4, 0.001, DBL_MAX, 0.05, 0.5, 1);
     GtkWidget *longWordLongTimeMultiplyer = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,4);
@@ -1068,6 +1072,7 @@ static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     global_SpinnButtonLongerTimeOnLongWordMultyplyer = GTK_SPIN_BUTTON(gtk_spin_button_new(adjustment4, 1, 3));
     gtk_box_append(GTK_BOX(longWordLongTimeMultiplyer),label3LongerTimeOnLongWord);
     gtk_box_append(GTK_BOX(longWordLongTimeMultiplyer), GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer));
+    gtk_widget_set_tooltip_text(longWordLongTimeMultiplyer,labelLongerTimeOnLongWordToolTip);
 
     GtkWidget *LongWordFistTime = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,4);
     GtkWidget *labelLongerTimeFirstWord = gtk_label_new(_("Längere Zeit Bei ersten Wort:"));

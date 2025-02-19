@@ -65,6 +65,34 @@ msgstr "Zeitbasiert nächstes Wort:"
 msgid "Zeit (sec):"
 msgstr "Zeit (s):"
 
+msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
+msgstr "Erweiterte Einstellungen für zeitbasiertes nächstes Wort"
+
+msgid ""
+"Die Berechnete zeit wird auf die Normale Lese Zeit aufgerechnet wenn das "
+"Wort lange genug ist.\n"
+"Sie wird berechnet durch:\n"
+"Zusetzliche-Zeit−Pro−Wort×Wort−Länge"
+msgstr ""
+"Die berechnete Zeit wird zur normalen Lesezeit addiert, wenn das Wort lang genug ist.\n"
+"Sie wird berechnet durch:\n"
+"Zusätzliche Zeit pro Wort × Wortlänge"
+
+msgid "Längere Zeit Bei sehrlangen Wörtern:"
+msgstr "Längere Zeit bei sehr langen Wörtern:"
+
+msgid "→ Wortlänge in Bustaben:"
+msgstr "→ Wortlänge in Buchstaben:"
+
+msgid "→ Verlängerungs Faktor:"
+msgstr "→ Verlängerungsfaktor:"
+
+msgid "Längere Zeit Bei ersten Wort:"
+msgstr "Längere Zeit beim ersten Wort:"
+
+msgid "→ dazu addierte Zeit(Sekunden):"
+msgstr "→ Dazu addierte Zeit (Sekunden):"
+
 msgid "Statistiken erheben:"
 msgstr "Statistiken erstellen:"
 
