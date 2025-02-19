@@ -107,6 +107,12 @@ msgstr "Percentage Time (%)"
 msgid "Punkte"
 msgstr "Points"
 
+msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
+msgstr "No RGB value found, default value set!\n"
+
+msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
+msgstr "No RGB value found, default value set!\n"
+
 msgid "Einstellungen:"
 msgstr "Settings:"
 
@@ -130,6 +136,34 @@ msgstr "Time based next word:"
 
 msgid "Zeit (sec):"
 msgstr "Time (sec):"
+
+msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
+msgstr "Extended settings for time-based next word"
+
+msgid ""
+"Die Berechnete zeit wird auf die Normale Lese Zeit aufgerechnet wenn das "
+"Wort lange genug ist.\n"
+"Sie wird berechnet durch:\n"
+"Zusetzliche-Zeit−Pro−Wort×Wort−Länge"
+msgstr ""
+"The calculated time is added to the normal reading time when the word is long enough.\n"
+"It is calculated by:\n"
+"Additional-Time−Per−Word×Word−Length"
+
+msgid "Längere Zeit Bei sehrlangen Wörtern:"
+msgstr "Longer time for very long words:"
+
+msgid "→ Wortlänge in Bustaben:"
+msgstr "→ Word length in characters:"
+
+msgid "→ Verlängerungs Faktor:"
+msgstr "→ Extension factor:"
+
+msgid "Längere Zeit Bei ersten Wort:"
+msgstr "Longer time for the first word:"
+
+msgid "→ dazu addierte Zeit(Sekunden):"
+msgstr "→ Additional time added (seconds):"
 
 msgid "Statistiken erheben:"
 msgstr "Collect Statistics:"
@@ -165,8 +199,8 @@ msgstr "Show results"
 msgid "Zurück"
 msgstr "Back"
 
-msgid "Icon gefunden.\n"
-msgstr "Icon found.\n"
+msgid "Icon mit standart Namen gefunden.\n"
+msgstr "Icon found with standard name.\n"
 
 msgid "Icon nicht gefunden.\n"
 msgstr "Icon not found.\n"
