@@ -15,26 +15,31 @@
   <project_license>GPL-2.0-only</project_license>
   
    <description>
-    <p>
-      Fast Reader helps you read quickly by displaying only one word at a time. This program offers a customizable interface to enhance the reading experience. 
-    </p>
-    <p>
-      Features:
-    </p>
+    <p>Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it. You can choose two different basic settings. Either you can choose the next word bei using the button &quot;→&quot; or you can use the &quot;Time based next word&quot;. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the &quot;Read&quot; button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.</p>
+
+    <p>This program offers individual settings to improve reading:</p>
     <ul>
-      <li>Customizable Settings: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.</li>
-      <li>Text Input: Easily input text into the application through a dedicated text entry field.</li>
-      <li>Word-by-Word Display: The text is broken down into individual words, presented one at a time, facilitating focused reading.</li>
-      <li>Navigation Options: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.</li>
-      <li>Progress Indicators: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.</li>
-      <li>Time-Based Word predictions: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: &quot;Time-Per-Word × (Cube Root of Word-Length)&quot;. This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.</li>
-      <li>Statistic Collection: Generates statistics for you, showing how long you took to read each word. </li>
-      <li>Colorize Statistics: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.</li>
+        <li>Background colour</li>
+        <li>Font colour</li>
+        <li>Font and size</li>
+        <li>Reading progress in the text</li>
     </ul>
-    <p>
-    You can set a variable time limit for the display of each word. The formula for calculating the word display time is: &quot;Time-Per-Word × (Cube Root of Word-Length)&quot; (Time−Per−Word×(₃√Word−Length )). This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.
-    </p>
-  </description>
+
+    <p>Used to highlight which words took a particularly long time and which were read quickly.</p>
+
+    <ul>   
+        <li>Customizable Settings: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.</li>
+        <li>Text Input: Easily input text into the application through a dedicated text entry field.</li>
+        <li>Word-by-Word Display: The text is broken down into individual words, presented one at a time, facilitating focused reading.</li>
+        <li>Navigation Options: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.</li>
+        <li>Progress Indicators: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.</li>
+        <li>Time-Based Word predictions: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.</li>
+        <li>Statistic Collection: Generates statistics for you, showing how long you took to read each word.</li>
+        <li>Colorize Statistics: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.</li>
+    </ul>
+
+    <p>You can set a variable time limit for the display of each word.</p>
+   </description>
 
 <launchable type="desktop-id">io.github.quantum_mutnauq.fast_reader_gtk.desktop</launchable>
 <icon type="stock">io.github.quantum_mutnauq.fast_reader_gtk</icon>
