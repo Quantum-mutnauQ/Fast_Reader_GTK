@@ -6,6 +6,7 @@
   <name xml:lang="de">Geschwindigkeitsleser</name>
 
   <summary>Reading one word at a time</summary>
+  <summary xml:lang="de">Ein Wort nach dem anderen lesen</summary>
 
   <developer id="io.github.quantum_mutnauq.fast_reader_gtk">
     <name>Quantum_mutnauQ</name>
@@ -16,29 +17,56 @@
   
    <description>
     <p>Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it. You can choose two different basic settings. Either you can choose the next word bei using the button &quot;→&quot; or you can use the &quot;Time based next word&quot;. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the &quot;Read&quot; button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.</p>
-
+    <p xml:lang="de">Fast Reader hilft Ihnen dabei schnell zu lesen, indem es nur ein Wort auf einmal anzeigt. Dadurch muss das Auge nicht von Wort zu Wort zu Wort springen, dass die Lesegeschwindigkeit reduziert. Um den Text zu lesen, muss er in das große Feld in der Mitte kopiert werden. Es gibt zwei unterschiedliche Grundeinstellung. Entweder wird das nächste Wort durch die &quot;→&quot; Taste angezeigt, oder eine &quot;Zeitbasiert nächstes Wort&quot; ausgewählt. Dort kann die Verweildauer eines Wortes gewählt werden. Die Angabe wird mit einen Faktor verarbeitet, damit längere Wörter nicht zu kurz angezeigt werden. Diese dynamische Einstellung sichert, dass längere und komplexere Wörter mehr Zeit erhalten, um eine natürliche und flüssiges Lesen zu bieten. Das lesen kann über die &quot;Lesen&quot; Taste gestartet werden. Geübten Lesern ist es sogar möglich mehrere Wörter auf einmal anzeigen zu lassen. Dadurch erhöht sich sie Lesegeschwindigkeit um ein weiteres.</p>
+    
     <p>This program offers individual settings to improve reading:</p>
+    <p xml:lang="de">Dieses Programm bietet individuelle Einstellungen an, um das Lesen zu verbessern:</p>
+
     <ul>
         <li>Background colour</li>
+        <li xml:lang="de">Hintergrundfarbe</li>
+
         <li>Font colour</li>
+        <li xml:lang="de">Schriftfarbe</li>
+
         <li>Font and size</li>
+        <li xml:lang="de">Schriftart und Größe</li>
+
         <li>Reading progress in the text</li>
+        <li xml:lang="de">Lesefortschritt im Text</li>
     </ul>
 
     <p>Used to highlight which words took a particularly long time and which were read quickly.</p>
+    <p xml:lang="de">Über die Aktivierung der Statistik erhält man sein persönliche Lesegeschwindigkeit der Worte. Diese Statistik ist interessant, wenn man nicht &quot;Zeitbasiert&quot; liest. Dort kann über Farben hervorgehoben werden, welche Worte besonders viel Zeit benötigten und welche schnell erfasst wurden.</p>
 
     <ul>   
         <li>Customizable Settings: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.</li>
+        <li xml:lang="de">Anpassbare Einstellungen: Passen Sie Ihre Leseerfahrung an, indem Sie Einstellungen wie Hintergrundfarbe, Textfarbe, Schriftgröße und Anzeige von Fortschrittsindikatoren anpassen.</li>
+
         <li>Text Input: Easily input text into the application through a dedicated text entry field.</li>
+        <li xml:lang="de">Texteingabe: Fügen Sie einfach Text in das Programm ein, indem Sie einen dedizierten Texteingabefeld verwenden.</li>
+
         <li>Word-by-Word Display: The text is broken down into individual words, presented one at a time, facilitating focused reading.</li>
+        <li xml:lang="de">Wort für Wort-Anzeige: Der Text wird in einzelne Wörter aufgeteilt und als Einzelworte angezeigt, um konzentriertes Lesen zu ermöglichen.</li>
+
         <li>Navigation Options: Seamlessly navigate through the text using intuitive navigation buttons or convenient keyboard shortcuts.</li>
+        <li xml:lang="de">Navigationsoptionen: Navigieren Sie leicht durch den Text mit intuitiven Navigationstasten oder bequemen Tastenkombinationen.</li>
+
         <li>Progress Indicators: Keep track of your reading progress with helpful indicators displaying your current position in the text and overall progress.</li>
+        <li xml:lang="de">Fortschrittsindikatoren: Verfolgen Sie Ihren Lesevorschritt mit hilfreichen Indikatoren, die Ihre aktuelle Position im Text und den Gesamtfortschritt anzeigen.</li>
+
         <li>Time-Based Word predictions: You can set a variable time calculate by a formal for the display of each word. The formula for calculating the word display time is: "Time-Per-Word × (Cube Root of Word-Length)". This dynamic adjustment ensures that longer, more complex words are allotted more time, providing a natural and responsive reading experience.</li>
+        <li xml:lang="de">Zeitbasierte Wortvorhersagen: Stellen Sie eine variable Zeitspanne fest, um jedes Wort anzuzeigen. Die Formel für die Berechnung der Anzeigedauer eines Wortes lautet: "Zeit pro Wort × (Kubikwurzel des Wortlängen)". Diese dynamische Einstellung sichert sicherzustellen, dass längere und komplexere Wörter mehr Zeit benötigen, um eine natürliche und reaktive Leseerfahrung zu bieten.</li>
+
         <li>Statistic Collection: Generates statistics for you, showing how long you took to read each word.</li>
+        <li xml:lang="de">Statistik-Sammlung: Erstellt Statistiken für Sie, die anzeigen, wie lange es dauerte, jedes Wort zu lesen.</li>
+
         <li>Colorize Statistics: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.</li>
+        <li xml:lang="de">Farbige Statistiken: Färbt die Statistiken farbig (optional), sodass Sie schnell erkennen können, wie lange Sie pro Wort benötigt haben und welche Wörter sehr langsam oder schnell gelesen wurden.</li>
     </ul>
 
     <p>You can set a variable time limit for the display of each word.</p>
+    <p xml:lang="de">tt</p>
    </description>
 
 <launchable type="desktop-id">io.github.quantum_mutnauq.fast_reader_gtk.desktop</launchable>
