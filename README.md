@@ -20,7 +20,6 @@ Used to highlight which words took a particularly long time and which were read 
 - **Statistic Collection**: Generates statistics for you, showing how long you took to read each word.
 - **Colorize Statistics**: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.
 
- You can set a variable time limit for the display of each word.
 
  ## Screenshots
 
