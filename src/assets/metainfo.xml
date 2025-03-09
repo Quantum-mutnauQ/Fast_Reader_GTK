@@ -64,9 +64,6 @@
         <li>Colorize Statistics: Makes the statistics colorful (optional), allowing you to quickly see how long you took per word and identify which words were very slow or fast.</li>
         <li xml:lang="de">Farbige Statistiken: Färbt die Statistiken farbig (optional), sodass Sie schnell erkennen können, wie lange Sie pro Wort benötigt haben und welche Wörter sehr langsam oder schnell gelesen wurden.</li>
     </ul>
-
-    <p>You can set a variable time limit for the display of each word.</p>
-    <p xml:lang="de">tt</p>
    </description>
 
 <launchable type="desktop-id">io.github.quantum_mutnauq.fast_reader_gtk.desktop</launchable>
@@ -130,6 +127,18 @@
 
 
 <releases>
+  <release version="7.1" date="2025-2-9">
+    <description>
+      Version 7.1
+      <p>New features and improvements</p>
+      <ul>
+        <li>Option for longer time for wery long word.</li>
+        <li>Option for longer time on first word usng Time-Based Word predictions.</li>
+        <li>Pausebutton on Time-Based Word predictions.</li>
+        <li>Refine the description</li>
+      </ul>
+    </description>
+  </release>
   <release version="7" date="2025-2-9">
     <description>
       Version 7
@@ -225,7 +234,7 @@
   <release version="1" date="2024-06-01">
     <description>
       Version 1
-      <p>The first version from the Speed reader </p>
+      <p>The first version from the Speed reader</p>
     </description>
   </release>
 </releases>
