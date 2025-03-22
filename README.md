@@ -235,9 +235,5 @@ msgstr "Fast Reader"
 
 Feel free to let me know if you need any further modifications!
 ## Plans for the future 
-- [ ] Optimize RAM usage and clean up code (Version 8)
-- [x] Option for longer time for wery long word (Version 7. 1)
-- [x] Option for longer time on first word usng Time-Based Word predictions (Version 7.1)
-- [x] Pausebutton on Time-Based Word predictions (Version 7.1)
-- [x] Refine the description (Version ?)
+- [ ] Optimize RAM usage and clean up code (Version 8)  
 - [ ] Add icon (Version ?)
