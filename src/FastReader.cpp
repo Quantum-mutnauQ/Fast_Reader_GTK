@@ -509,12 +509,6 @@ static void show_results_window() {
     GtkWidget *results_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(results_window), _("Lese Zeit Ergebnisse"));
     gtk_window_set_default_size(GTK_WINDOW(results_window), 600, 300);
-
-#ifdef ICON_NAME
-    gtk_window_set_icon_name(GTK_WINDOW(results_window), ICON_NAME);
-#else
-    gtk_window_set_icon_name(GTK_WINDOW(results_window), "fastreader");
-#endif
     
     GtkWidget *results = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(results, 4);
@@ -1003,9 +997,83 @@ static void on_undo_button_clicked(GtkButton *button, gpointer data) {
     gtk_text_buffer_undo(buffer);
 }
 
+static void on_quit_activate(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    gtk_window_close(GTK_WINDOW(app));
+}
+
+static void on_about_activate(GSimpleAction *action, GVariant *parameter, gpointer user_data) {
+    GtkWidget *about_dialog = gtk_about_dialog_new();
+    gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(about_dialog), "FastReader");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.2");
+    gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(about_dialog), _("Fast Reader helps you read quickly by displaying only one word at a time"));
+    gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about_dialog), "https://github.com/Quantum-mutnauQ/Fast_Reader_GTK");
+    gtk_about_dialog_set_license_type(GTK_ABOUT_DIALOG(about_dialog), GTK_LICENSE_GPL_2_0);
+
+#ifdef ICON_NAME
+    gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(about_dialog), ICON_NAME);
+#else
+    gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(about_dialog), "fastreader");
+#endif
+
+    const char *authors[] = {
+        "Quantum-mutnauQ",
+        NULL
+    };
+    gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(about_dialog), authors);
+
+    const char *translators = "albanobattistella";
+    gtk_about_dialog_set_translator_credits(GTK_ABOUT_DIALOG(about_dialog), translators);
+
+    const char *documenters[] = {
+        "Quaste42",
+        NULL
+    };
+    gtk_about_dialog_set_documenters(GTK_ABOUT_DIALOG(about_dialog), documenters);
+
+    gtk_window_present(GTK_WINDOW(about_dialog));
+}
+
+GtkWidget *create_menu_bar(GtkApplication *app,GtkWidget *window) {
+
+    GSimpleAction *quit_action = g_simple_action_new("quit", NULL);
+    g_signal_connect(quit_action, "activate", G_CALLBACK(on_quit_activate), window);
+    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(quit_action));
+
+    GSimpleAction *about_action = g_simple_action_new("about", NULL);
+    g_signal_connect(about_action, "activate", G_CALLBACK(on_about_activate), NULL);
+    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(about_action));
+
+    GMenu *menu_model = g_menu_new();
+    GMenu *file_menu = g_menu_new();
+    GMenu *help_menu = g_menu_new();
+
+    GMenuItem *file_item = g_menu_item_new_submenu(_("Datei"), G_MENU_MODEL(file_menu));
+    GMenuItem *help_item = g_menu_item_new_submenu(_("Hilfe"), G_MENU_MODEL(help_menu));
+
+    GMenuItem *quit_item = g_menu_item_new(_("Schließen"), "app.quit");
+    GMenuItem *about_item = g_menu_item_new(_("Über"), "app.about");
+
+    g_menu_append_item(file_menu, quit_item);
+    g_menu_append_item(help_menu, about_item);
+
+    g_menu_append_item(menu_model, file_item);
+    g_menu_append_item(menu_model, help_item);
+
+    // Erstelle die Menüleiste
+    GtkWidget *menu_bar = gtk_popover_menu_bar_new_from_model(G_MENU_MODEL(menu_model));
+
+    return menu_bar;
+}
+
 // Funktion zum Erstellen von Seite 1
 static GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+
+    GtkWidget *menu_bar = create_menu_bar(gtk_window_get_application(GTK_WINDOW(window)),window);
+
+    gtk_box_append(GTK_BOX(page1), menu_bar);
+
+
     GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(settings_box, 4);
 
@@ -1340,13 +1408,7 @@ static void on_close_request(GtkWidget *widget, gpointer data) {
     save_settings();
 }
 
-int main(int argc, char *argv[]) {
-    gtk_init();
-
-    setlocale(LC_ALL, "");
-    bindtextdomain("FastReader", LOCALEDIRR);
-    textdomain("FastReader");
-
+static void on_activate(GtkApplication *app, gpointer user_data) {
 #ifndef ICON_NAME
     GtkIconTheme *icon_theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
     gtk_icon_theme_add_search_path(icon_theme, "assets/");
@@ -1361,6 +1423,55 @@ int main(int argc, char *argv[]) {
     g_print(_("ICON_NAME ist definiert: %s\n"), ICON_NAME);
 #endif
 
+    GtkWidget *window = gtk_application_window_new(app);
+    gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
+    gtk_window_set_default_size(GTK_WINDOW(window), 400, 620);
+
+    GtkWidget *stack = gtk_stack_new();
+    gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
+    gtk_stack_add_named(GTK_STACK(stack), create_page1(GTK_STACK(stack), window), "page1");
+    gtk_stack_add_named(GTK_STACK(stack), create_page2(GTK_STACK(stack), window), "page2");
+
+    load_settings();
+
+    int x,y;
+    gtk_window_get_size(GTK_WINDOW(window),&x,&y);
+
+            g_print("Fensterposition: X=%d, Y=%d\n",x, y);
+
+    if (gtk_switch_get_active(global_TimeToNextWordSwitch))
+        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
+    else
+        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), FALSE);
+
+    if (gtk_switch_get_active(global_SwitchLongerTimeOnLongWord)) {
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer), TRUE);
+    } else {
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer), FALSE);
+    }
+
+    if (gtk_switch_get_active(global_SwitchLongerTimeFirstWord))
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), TRUE);
+    else
+        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), FALSE);
+
+    GtkEventController *controller = gtk_event_controller_key_new();
+    g_signal_connect(controller, "key-pressed", G_CALLBACK(on_key_press), stack);
+    gtk_widget_add_controller(window, controller);
+
+    g_signal_connect(window, "close-request", G_CALLBACK(on_close_request), NULL);
+
+    gtk_window_set_child(GTK_WINDOW(window), stack);
+    gtk_widget_set_visible(window, TRUE);
+}
+
+int main(int argc, char *argv[]) {
+    setlocale(LC_ALL, "");
+    bindtextdomain("FastReader", LOCALEDIRR);
+    textdomain("FastReader");
+
     const gchar *config_dir = g_get_user_config_dir();
     if (config_dir == NULL) {
         printf(_("Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"));
@@ -1368,7 +1479,6 @@ int main(int argc, char *argv[]) {
     }
 
     gchar *fastreader_dir = g_build_filename(config_dir, "FastReader", NULL);
-
     if (g_mkdir_with_parents(fastreader_dir, 0700) != 0) {
         printf(_("Fehler beim Erstellen des Verzeichnisses FastReader.\n"));
         g_free(fastreader_dir);
@@ -1376,60 +1486,20 @@ int main(int argc, char *argv[]) {
     }
 
     config_file_path = g_build_filename(fastreader_dir, "config.cfg", NULL);
+    g_free(fastreader_dir);
 
-    GtkWidget *window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
-    gtk_window_set_default_size(GTK_WINDOW(window), 400, 600);
+    GtkApplication *app = gtk_application_new("io.github.quantum_mutnauq.fast_reader_gtk", G_APPLICATION_DEFAULT_FLAGS);
+    g_signal_connect(app, "activate", G_CALLBACK(on_activate), NULL);
 
 #ifdef ICON_NAME
-    gtk_window_set_icon_name(GTK_WINDOW(window), ICON_NAME);
+    gtk_window_set_default_icon_name(ICON_NAME);
 #else
-    gtk_window_set_icon_name(GTK_WINDOW(window), "fastreader");
+    gtk_window_set_default_icon_name("fastreader");
 #endif
 
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), loop);
-    g_signal_connect(window, "close-request", G_CALLBACK(on_close_request), NULL);
+    int status = g_application_run(G_APPLICATION(app), argc, argv);
 
-    GtkWidget *stack = gtk_stack_new();
-    gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
-    gtk_stack_add_named(GTK_STACK(stack), create_page1(GTK_STACK(stack), window), "page1");
-    gtk_stack_add_named(GTK_STACK(stack), create_page2(GTK_STACK(stack), window), "page2");
-    
-    load_settings();
-    
-    if(gtk_switch_get_active(global_TimeToNextWordSwitch))
-        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
-    else
-        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), FALSE);
-
-    if(gtk_switch_get_active(global_SwitchLongerTimeOnLongWord)){
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord), TRUE);
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer), TRUE);
-    }else{
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer), FALSE);
-    }
-
-
-    if(gtk_switch_get_active(global_SwitchLongerTimeFirstWord))
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), TRUE);
-    else
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), FALSE);
-
-
-
-    GtkEventController *controller = gtk_event_controller_key_new();
-    g_signal_connect(controller, "key-pressed", G_CALLBACK(on_key_press), stack);
-    gtk_widget_add_controller(window, controller);
-
-    gtk_window_set_child(GTK_WINDOW(window), stack);
-
-    gtk_widget_set_visible(window,TRUE);
-    g_main_loop_run(loop);
-
-    g_main_loop_unref(loop);
-    g_free(fastreader_dir);
+    g_object_unref(app);
     g_free(config_file_path);
-    return 0;
+    return status;
 }
