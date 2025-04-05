@@ -1434,11 +1434,6 @@ static void on_activate(GtkApplication *app, gpointer user_data) {
 
     load_settings();
 
-    int x,y;
-    gtk_window_get_size(GTK_WINDOW(window),&x,&y);
-
-            g_print("Fensterposition: X=%d, Y=%d\n",x, y);
-
     if (gtk_switch_get_active(global_TimeToNextWordSwitch))
         gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
     else

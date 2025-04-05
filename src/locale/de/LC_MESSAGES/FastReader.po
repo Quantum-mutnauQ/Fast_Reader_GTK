@@ -41,6 +41,22 @@ msgstr "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 
+msgid ""
+"Fast Reader helps you read quickly by displaying only one word at a time"
+msgstr "Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort anzeigt."
+
+msgid "Datei"
+msgstr "Datei"
+
+msgid "Hilfe"
+msgstr "Hilfe"
+
+msgid "Schließen"
+msgstr "Schließen"
+
+msgid "Über"
+msgstr "Über"
+
 msgid "Einstellungen:"
 msgstr "Einstellungen:"
 
@@ -137,12 +153,12 @@ msgstr "Icon nicht gefunden.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME ist definiert: %s\n"
 
+msgid "Fast Reader"
+msgstr "Geschwindigkeitsleser"
+
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
-
-msgid "Fast Reader"
-msgstr "Geschwindigkeitsleser"
 

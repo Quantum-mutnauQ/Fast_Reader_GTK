@@ -41,6 +41,22 @@ msgstr "Nessun valore RGB trovato, valore predefinito impostato!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "Nessun tema GTK trovato, valore predefinito impostato!\n"
 
+msgid ""
+"Fast Reader helps you read quickly by displaying only one word at a time"
+msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
+
+msgid "Datei"
+msgstr "File"
+
+msgid "Hilfe"
+msgstr "Help"
+
+msgid "Schließen"
+msgstr "Close"
+
+msgid "Über"
+msgstr "About"
+
 msgid "Einstellungen:"
 msgstr "Impostazioni:"
 
@@ -138,11 +154,11 @@ msgstr "Icona non trovata.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME è definito: %s\n"
 
+msgid "Fast Reader"
+msgstr "Fast Reader"
+
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Impossibile recuperare la directory di configurazione predefinita.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Errore durante la creazione della directory di FastReader.\n"
-
-msgid "Fast Reader"
-msgstr "Fast Reader"

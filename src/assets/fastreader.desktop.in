@@ -2,6 +2,7 @@
 Name=Fast Reader
 Name[de]=Geschwindigkeitsleser
 Comment=Fast Reader helps you read quickly by displaying only one word at a time
+Comment[de]=Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort anzeigt.
 Exec=@EXEC_COMMAND@
 Icon=@ICON_NAME@
 Terminal=false
