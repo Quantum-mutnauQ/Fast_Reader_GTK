@@ -137,6 +137,7 @@
         <ul>
             <li>Introduced a menu bar</li>
             <li>Included additional information in the "About" section</li>
+            <li>updated sdk on flatpak</li>
         </ul>
     </description>
   </release>
