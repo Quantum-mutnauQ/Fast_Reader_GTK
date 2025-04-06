@@ -114,6 +114,22 @@ msgstr "No RGB value found, default value set!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "No RGB value found, default value set!\n"
 
+msgid ""
+"Fast Reader helps you read quickly by displaying only one word at a time"
+msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
+
+msgid "Datei"
+msgstr "File"
+
+msgid "Hilfe"
+msgstr "Help"
+
+msgid "Schließen"
+msgstr "Close"
+
+msgid "Über"
+msgstr "About"
+
 msgid "Einstellungen:"
 msgstr "Settings:"
 
@@ -211,14 +227,14 @@ msgstr "Icon not found.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME is defined: %s\n"
 
+msgid "Fast Reader"
+msgstr "Fast Reader"
+
 msgid "Konnte das Standard-Konfigurationsverzeichnis nicht abrufen.\n"
 msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Error while creating FastReader directory.\n"
-
-msgid "Fast Reader"
-msgstr "Fast Reader"
  ```
 3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt src/locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o build/locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
 4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
