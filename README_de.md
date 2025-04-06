@@ -15,6 +15,14 @@ Dieses Programm bietet individuelle Einstellungen an, um das Lesen zu verbessern
 
 In den "Erweiterten Einstellungen für zeitbasiertes nächstes Wort" können Sie die Standzeit für längere Wörter verlängern. Hier können Sie festlegen, wie lange die Zeit dauern soll und ab wie vielen Buchstaben diese Zeit genutzt werden soll. Zusätzlich können Sie auch eine Verzögerung beim Start angeben, sodass das erste Wort länger auf dem Bildschirm bleibt.
 
+- **Anpassbare Einstellungen**: Passen Sie Ihre Leseerfahrung an, indem Sie Einstellungen wie Hintergrundfarbe, Textfarbe, Schriftgröße und Anzeige von Fortschrittsindikatoren anpassen.
+- **Texteingabe**: Fügen Sie einfach Text in das Programm ein, indem Sie einen dedizierten Texteingabefeld verwenden.
+- **Wort für Wort-Anzeige**: Der Text wird in einzelne Wörter aufgeteilt und als Einzelworte angezeigt, um konzentriertes Lesen zu ermöglichen.
+- **Navigationsoptionen**: Navigieren Sie leicht durch den Text mit intuitiven Navigationstasten oder bequemen Tastenkombinationen.
+- **Fortschrittsindikatoren**: Verfolgen Sie Ihren Lesevorschritt mit hilfreichen Indikatoren, die Ihre aktuelle Position im Text und den Gesamtfortschritt anzeigen.
+- **Zeitbasierte Wortvorhersagen**: Stellen Sie eine variable Zeitspanne fest, um jedes Wort anzuzeigen. Die Formel für die Berechnung der Anzeigedauer eines Wortes lautet: "Zeit pro Wort × (Kubikwurzel des Wortlängen)". Diese dynamische Einstellung sichert sicherzustellen, dass längere und komplexere Wörter mehr Zeit benötigen, um eine natürliche und reaktive Leseerfahrung zu bieten.
+- **Statistik-Sammlung**: Erstellt Statistiken für Sie, die anzeigen, wie lange es dauerte, jedes Wort zu lesen.
+- **Farbige Statistiken**: Färbt die Statistiken farbig (optional), sodass Sie schnell erkennen können, wie lange Sie pro Wort benötigt haben und welche Wörter sehr langsam oder schnell gelesen wurden.
 ## Screenshots
 
 **Version 4 (Helles Thema Version 6) Bilder**:
