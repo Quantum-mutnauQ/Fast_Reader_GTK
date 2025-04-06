@@ -1,6 +1,6 @@
 # Fast Reader
 
-Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it.
+Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and to start it.
 You can choose two different basic settings. Either you can choose the next word bei using the button „→“ or you can use the „Time based next word“. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the “Read” button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.
 
 This program offers individual settings to improve reading:
@@ -9,7 +9,9 @@ This program offers individual settings to improve reading:
 - Font and size
 - Reading progress in the text
 
-Used to highlight which words took a particularly long time and which were read quickly.
+used to highlight which words took a particularly long time and which were read quickly.
+
+In the "Advanced settings for time-based next word", you can extend the display time for longer words. Here, you can set the duration of the time and from how many characters this time should be used. Additionally, you can also specify a delay at the start, so that the first word remains on the screen for a longer period.
 
 - **Customizable Settings**: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.
 - **Text Input**: Easily input text into the application through a dedicated text entry field.
