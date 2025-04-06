@@ -63,7 +63,7 @@ There are two installation methods available for you to choose from:
 If you prefer to run Fast Reader from the binary, just follow these simple steps:
 
 1. **Installation**: Download the [latest release](https://github.com/Quantum-mutnauQ/Fast_Reader_GTK/releases) and extract the contents from the zip file.
-2. **Execution**: Run the compiled "SpeedReader" executable. You can execute it by running `./FastReader` in the folder where the program is saved, or simply double-click on it.
+2. **Execution**: Run the compiled "FastReader" executable. You can execute it by running `./FastReader` in the folder where the program is saved, or simply double-click on it.
 3. **Troubleshooting** You need to install `libgtk-4-1` and `libconfig9`.
 
 ## Adding a New Language
