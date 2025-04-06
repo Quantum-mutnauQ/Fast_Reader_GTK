@@ -4,10 +4,10 @@ Das lesen kann über die „Lesen“ Taste gestartet werden.
 Geübten Lesern ist es sogar möglich mehrere Wörter auf einmal anzeigen zu lassen. Dadurch erhöht sich sie Lesegeschwindigkeit um ein weiteres.
 
 Dieses Programm bietet individuelle Einstellungen an, um das Lesen zu verbessern:
-    • Hintergrundfarbe
-    • Schriftfarbe
-    • Schriftart und Größe
-    • Lesefortschritt im Text
+- Hintergrundfarbe
+- Schriftfarbe
+- Schriftart und Größe
+- Lesefortschritt im Text
 
 Über die Aktivierung der Statistik erhält man sein persönliche Lesegeschwindigkeit der Worte. Diese Statistik ist interessant, wenn man nicht „Zeitbasiert“ liest. Dort kann über Farben hervorgehoben werden, welche Worte besonders viel Zeit benötigten und welche schnell erfasst wurden.
 
