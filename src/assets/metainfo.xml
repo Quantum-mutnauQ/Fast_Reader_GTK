@@ -16,8 +16,8 @@
   <project_license>GPL-2.0-only</project_license>
   
    <description>
-    <p>Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and start it. You can choose two different basic settings. Either you can choose the next word bei using the button &quot;→&quot; or you can use the &quot;Time based next word&quot;. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the &quot;Read&quot; button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.</p>
-    <p xml:lang="de">Fast Reader hilft Ihnen dabei schnell zu lesen, indem es nur ein Wort auf einmal anzeigt. Dadurch muss das Auge nicht von Wort zu Wort zu Wort springen, dass die Lesegeschwindigkeit reduziert. Um den Text zu lesen, muss er in das große Feld in der Mitte kopiert werden. Es gibt zwei unterschiedliche Grundeinstellung. Entweder wird das nächste Wort durch die &quot;→&quot; Taste angezeigt, oder eine &quot;Zeitbasiert nächstes Wort&quot; ausgewählt. Dort kann die Verweildauer eines Wortes gewählt werden. Die Angabe wird mit einen Faktor verarbeitet, damit längere Wörter nicht zu kurz angezeigt werden. Diese dynamische Einstellung sichert, dass längere und komplexere Wörter mehr Zeit erhalten, um eine natürliche und flüssiges Lesen zu bieten. Das lesen kann über die &quot;Lesen&quot; Taste gestartet werden. Geübten Lesern ist es sogar möglich mehrere Wörter auf einmal anzeigen zu lassen. Dadurch erhöht sich sie Lesegeschwindigkeit um ein weiteres.</p>
+    <p>Fast Reader helps you to read more quickly, by showing only one word after the other. Therefor the eyes don’t have to move from word to word, that reduce the speed of reading. To read the text you only have to copy the text into the big field in the middle and to start it. You can choose two different basic settings. Either you can choose the next word bei using the button „→“ or you can use the „Time based next word“. By this setting can be the duration of the word chosen. The selection is processed with a factor so that longer words are not displayed too short. This dynamic setting ensures that longer and more complex words are given more time to provide a natural and fluid reading experience. Reading can be started via the “Read” button. Experienced readers can even have more than one word displayed at once. This increases the reading speed even further.</p>
+    <p xml:lang="de">Fast Reader hilft Ihnen dabei schnell zu lesen, indem es nur ein Wort auf einmal anzeigt. Dadurch muss das Auge nicht von Wort zu Wort zu Wort springen, dass die Lesegeschwindigkeit reduziert. Um den Text zu lesen, muss er in das große Feld in der Mitte kopiert werden. Es gibt zwei unterschiedliche Grundeinstellung. Entweder wird das nächste Wort durch die → Taste angezeigt, oder eine „Zeitbasiert nächstes Wort“ ausgewählt. Dort kann die Verweildauer eines Wortes gewählt werden. Die Angabe wird mit einen Faktor verarbeitet, damit längere Wörter nicht zu kurz angezeigt werden. Diese dynamische Einstellung sichert, dass längere und komplexere Wörter mehr Zeit erhalten, um eine natürliche und flüssiges Lesen zu bieten. Das lesen kann über die „Lesen“ Taste gestartet werden. Geübten Lesern ist es sogar möglich mehrere Wörter auf einmal anzeigen zu lassen. Dadurch erhöht sich sie Lesegeschwindigkeit um ein weiteres.</p>
     
     <p>This program offers individual settings to improve reading:</p>
     <p xml:lang="de">Dieses Programm bietet individuelle Einstellungen an, um das Lesen zu verbessern:</p>
@@ -36,8 +36,11 @@
         <li xml:lang="de">Lesefortschritt im Text</li>
     </ul>
 
-    <p>Used to highlight which words took a particularly long time and which were read quickly.</p>
-    <p xml:lang="de">Über die Aktivierung der Statistik erhält man sein persönliche Lesegeschwindigkeit der Worte. Diese Statistik ist interessant, wenn man nicht &quot;Zeitbasiert&quot; liest. Dort kann über Farben hervorgehoben werden, welche Worte besonders viel Zeit benötigten und welche schnell erfasst wurden.</p>
+    <p>used to highlight which words took a particularly long time and which were read quickly.</p>
+    <p xml:lang="de">Über die Aktivierung der Statistik erhält man sein persönliche Lesegeschwindigkeit der Worte. Diese Statistik ist interessant, wenn man nicht „Zeitbasiert“ liest. Dort kann über Farben hervorgehoben werden, welche Worte besonders viel Zeit benötigten und welche schnell erfasst wurden.</p>
+
+    <p>In the "Advanced settings for time-based next word", you can extend the display time for longer words. Here, you can set the duration of the time and from how many characters this time should be used. Additionally, you can also specify a delay at the start, so that the first word remains on the screen for a longer period.</p>
+    <p xml:lang="de">In den "Erweiterten Einstellungen für zeitbasiertes nächstes Wort" können Sie die Standzeit für längere Wörter verlängern. Hier können Sie festlegen, wie lange die Zeit dauern soll und ab wie vielen Buchstaben diese Zeit genutzt werden soll. Zusätzlich können Sie auch eine Verzögerung beim Start angeben, sodass das erste Wort länger auf dem Bildschirm bleibt.</p>
 
     <ul>   
         <li>Customizable Settings: Tailor your reading experience by adjusting settings like background color, text color, font size, and display of progress indicators.</li>
@@ -127,6 +130,16 @@
 
 
 <releases>
+  <release version="7.2" date="2025-4-6">
+    <description>
+        Version 7.2
+        <p>New features added:</p>
+        <ul>
+            <li>Introduced a menu bar</li>
+            <li>Included additional information in the "About" section</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.1" date="2025-3-10">
     <description>
       Version 7.1
