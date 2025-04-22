@@ -1647,6 +1647,12 @@ void on_activate(GtkApplication *app, gpointer user_data) {
 
     load_settings();
 
+    const gchar *accels[] = { "F11", NULL };
+    gtk_application_set_accels_for_action(app, "app.toggle-fullscreen", accels);
+
+    const gchar *quit_accels[] = { "<Primary>q", NULL };
+    gtk_application_set_accels_for_action(app, "app.quit", quit_accels);
+
     if (gtk_switch_get_active(global_TimeToNextWordSwitch))
         gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
     else
