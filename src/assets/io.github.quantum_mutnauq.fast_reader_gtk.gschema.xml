@@ -1,0 +1,17 @@
+<schemalist>
+  <schema id="io.github.quantum_mutnauq.fast_reader_gtk.State" path="/io/github/quantum_mutnauq/fast_reader_gtk/State/">
+    <key name="width" type="i">
+      <default>200</default>
+    </key>
+    <key name="height" type="i">
+      <default>620</default>
+    </key>
+    <key name="is-maximized" type="b">
+      <default>false</default>
+    </key>
+    <key name="is-fullscreen" type="b">
+      <default>false</default>
+    </key>
+  </schema>
+</schemalist>
+

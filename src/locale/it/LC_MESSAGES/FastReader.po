@@ -43,19 +43,19 @@ msgstr "Nessun tema GTK trovato, valore predefinito impostato!\n"
 
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
-msgstr "Fast Reader ti aiuta a leggere velocemente visualizzando solo una parola alla volta"
+msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
 
 msgid "Datei"
 msgstr "File"
 
 msgid "Hilfe"
-msgstr "Aiuto"
+msgstr "Help"
 
 msgid "Schließen"
-msgstr "Chiudi"
+msgstr "Close"
 
 msgid "Über"
-msgstr "Informazioni"
+msgstr "About"
 
 msgid "Einstellungen:"
 msgstr "Impostazioni:"
@@ -87,8 +87,8 @@ msgstr "Impostazioni estese per la parola successiva basata sul tempo"
 msgid ""
 "Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
 "länger bleiben soll (in Sekunden)"
-msgstr "Qui puoi specificare il tempo aggiuntivo desiderato per cui la parola "
-"deve rimanere più a lungo (in secondi)"
+msgstr "Here you can specify the desired additional time for which the"
+" word should remain longer (in seconds)"
 
 msgid "Längere Zeit Bei sehrlangen Wörtern:"
 msgstr "Tempo più lungo per parole molto lunghe:"
@@ -97,16 +97,16 @@ msgid "→ Wortlänge in Bustaben:"
 msgstr "→ Lunghezza della parola in caratteri:"
 
 msgid "→ + Zeit: "
-msgstr "→ + Tempo: "
+msgstr "→ + Time: "
 
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
-msgstr "Tempo di attesa prima che inizi il programma di lettura." 
-"Questo consente alle prime parole brevi di non scomparire troppo rapidamente."
+msgstr "Waiting time before the reading program starts."
+"This allows the first short words not to disappear too quickly."
 
 msgid "Exterzeit für erstes Wort:"
-msgstr "Tempo esterno per la prima parola:"
+msgstr "External time for the first word:"
 
 msgid "→ dazu addierte Zeit(Sekunden):"
 msgstr "→ Ulteriore tempo aggiunto (secondi):"
