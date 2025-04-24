@@ -45,21 +45,6 @@ msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort anzeigt."
 
-msgid "Datei"
-msgstr "Datei"
-
-msgid "Hilfe"
-msgstr "Hilfe"
-
-msgid "Schließen"
-msgstr "Schließen"
-
-msgid "Über"
-msgstr "Über"
-
-msgid "Einstellungen:"
-msgstr "Einstellungen:"
-
 msgid "Hintergrund:"
 msgstr "Hintergrund:"
 
@@ -81,14 +66,6 @@ msgstr "Zeitbasiert nächstes Wort:"
 msgid "Zeit (sec):"
 msgstr "Zeit (s):"
 
-msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
-msgstr "Erweiterte Einstellungen für zeitbasiertes nächstes Wort"
-
-msgid ""
-"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
-"länger bleiben soll (in Sekunden)"
-msgstr "Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort länger bleiben soll (in Sekunden)"
-
 msgid "Längere Zeit Bei sehrlangen Wörtern:"
 msgstr "Längere Zeit bei sehr langen Wörtern:"
 
@@ -97,12 +74,6 @@ msgstr "→ Wortlänge in Buchstaben:"
 
 msgid "→ + Zeit: "
 msgstr "→ + Zeit: "
-
-msgid ""
-"Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
-"kurze Worte nicht zu schnell verschwinden."
-msgstr "Wartezeit, bis das Leseprogramm startet. Ermöglicht so, dass das"
-"erste kurze Wort nicht zu schnell verschwindet."
 
 msgid "Exterzeit für erstes Wort:"
 msgstr "Exterzeit für erstes Wort:"
@@ -113,15 +84,55 @@ msgstr "→ Dazu addierte Zeit (Sekunden):"
 msgid "Statistiken erheben:"
 msgstr "Statistiken erstellen:"
 
+msgid "Text Box"
+msgstr "Textfeld"
+
+msgid "Zurücksetzen"
+msgstr "Zurücksetzen"
+
+msgid "Schließen"
+msgstr "Schließen"
+
+msgid "Datei"
+msgstr "Datei"
+
+msgid "Vollbild"
+msgstr "Vollbild"
+
+msgid "Ansicht"
+msgstr "Ansicht"
+
+msgid "Über"
+msgstr "Über"
+
+msgid "Hilfe"
+msgstr "Hilfe"
+
+msgid "Einstellungen:"
+msgstr "Einstellungen:"
+
+msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
+msgstr "Erweiterte Einstellungen für zeitbasiertes nächstes Wort"
+
+msgid ""
+"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
+"länger bleiben soll (in Sekunden)"
+msgstr ""
+"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
+"länger angezeigt werden soll (in Sekunden)."
+
+msgid ""
+"Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
+"kurze Worte nicht zu schnell verschwinden."
+msgstr "Wartezeit, bis das Leseprogramm startet. Ermöglicht so, dass das"
+"erste kurze Wort nicht zu schnell verschwindet."
+
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
-
-msgid "Zurücksetzen"
-msgstr "Zurücksetzen"
 
 msgid "Lesen"
 msgstr "Lesen"

@@ -3,13 +3,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
-msgstr "Error while writing file.\n"
+msgstr "Error while writing the file.\n"
 
 msgid "Error while reading file: %s:%d - %s\n"
-msgstr "Error while reading file: %s:%d - %s\n"
+msgstr "Error while reading the file: %s:%d - %s\n"
 
 msgid "Trye to corrct\n"
-msgstr "Try to correct\n"
+msgstr "Try to correct it\n"
 
 msgid "Statistiken:"
 msgstr "Statistics:"
@@ -39,26 +39,11 @@ msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
 msgstr "No RGB value found, default value set!\n"
 
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
-msgstr "No RGB value found, default value set!\n"
+msgstr "No GTK theme found, default value set!\n"
 
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
-
-msgid "Datei"
-msgstr "File"
-
-msgid "Hilfe"
-msgstr "Help"
-
-msgid "Schließen"
-msgstr "Close"
-
-msgid "Über"
-msgstr "About"
-
-msgid "Einstellungen:"
-msgstr "Settings:"
 
 msgid "Hintergrund:"
 msgstr "Background:"
@@ -76,19 +61,10 @@ msgid "Angezeigte wörter:"
 msgstr "Displayed words:"
 
 msgid "Zeitbassirt nechstes Wort:"
-msgstr "Time based next word:"
+msgstr "Time-based next word:"
 
 msgid "Zeit (sec):"
 msgstr "Time (sec):"
-
-msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
-msgstr "Extended settings for time-based next word"
-
-msgid ""
-"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
-"länger bleiben soll (in Sekunden)"
-msgstr "Here you can specify the desired additional time for which the"
-" word should remain longer (in seconds)"
 
 msgid "Längere Zeit Bei sehrlangen Wörtern:"
 msgstr "Longer time for very long words:"
@@ -99,20 +75,57 @@ msgstr "→ Word length in characters:"
 msgid "→ + Zeit: "
 msgstr "→ + Time: "
 
+msgid "Exterzeit für erstes Wort:"
+msgstr "Extra time for the first word:"
+
+msgid "→ dazu addierte Zeit(Sekunden):"
+msgstr "→ Time added (seconds):"
+
+msgid "Statistiken erheben:"
+msgstr "Collect statistics:"
+
+msgid "Text Box"
+msgstr "Text Box"
+
+msgid "Zurücksetzen"
+msgstr "Reset"
+
+msgid "Schließen"
+msgstr "Close"
+
+msgid "Datei"
+msgstr "File"
+
+msgid "Vollbild"
+msgstr "Fullscreen"
+
+msgid "Ansicht"
+msgstr "View"
+
+msgid "Über"
+msgstr "About"
+
+msgid "Hilfe"
+msgstr "Help"
+
+msgid "Einstellungen:"
+msgstr "Settings:"
+
+msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
+msgstr "Advanced settings for time-based next word"
+
+msgid ""
+"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
+"länger bleiben soll (in Sekunden)"
+msgstr "Here you can specify the desired additional time for which the"
+" word should remain longer (in seconds)"
+
+
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
 msgstr "Waiting time before the reading program starts."
 "This allows the first short words not to disappear too quickly."
-
-msgid "Exterzeit für erstes Wort:"
-msgstr "External time for the first word:"
-
-msgid "→ dazu addierte Zeit(Sekunden):"
-msgstr "→ Additional time added (seconds):"
-
-msgid "Statistiken erheben:"
-msgstr "Collect Statistics:"
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
@@ -120,9 +133,6 @@ msgid ""
 msgstr ""
 "The time will be calculated by:\n"
 "Time-Per-Word×(₃√Word-Length)"
-
-msgid "Zurücksetzen"
-msgstr "Reset"
 
 msgid "Lesen"
 msgstr "Read"
@@ -140,7 +150,7 @@ msgid "Undo"
 msgstr "Undo"
 
 msgid "Ergebnissezeigen"
-msgstr "Show results"
+msgstr "Show Results"
 
 msgid "Zurück"
 msgstr "Back"

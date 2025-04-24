@@ -45,21 +45,6 @@ msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader ti aiuta a leggere velocemente visualizzando solo una parola alla volta"
 
-msgid "Datei"
-msgstr "File"
-
-msgid "Hilfe"
-msgstr "Aiuto"
-
-msgid "Schließen"
-msgstr "Chiudi"
-
-msgid "Über"
-msgstr "Informazioni"
-
-msgid "Einstellungen:"
-msgstr "Impostazioni:"
-
 msgid "Hintergrund:"
 msgstr "Sfondo:"
 
@@ -81,15 +66,6 @@ msgstr "Parola successiva basata sul tempo:"
 msgid "Zeit (sec):"
 msgstr "Tempo (sec):"
 
-msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
-msgstr "Impostazioni estese per la parola successiva basata sul tempo"
-
-msgid ""
-"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
-"länger bleiben soll (in Sekunden)"
-msgstr "Qui puoi specificare il tempo aggiuntivo desiderato per cui la parola "
-"deve rimanere più a lungo (in secondi)"
-
 msgid "Längere Zeit Bei sehrlangen Wörtern:"
 msgstr "Tempo più lungo per parole molto lunghe:"
 
@@ -98,12 +74,6 @@ msgstr "→ Lunghezza della parola in caratteri:"
 
 msgid "→ + Zeit: "
 msgstr "→ + Tempo: "
-
-msgid ""
-"Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
-"kurze Worte nicht zu schnell verschwinden."
-msgstr "Tempo di attesa prima che inizi il programma di lettura." 
-"Questo consente alle prime parole brevi di non scomparire troppo rapidamente."
 
 msgid "Exterzeit für erstes Wort:"
 msgstr "Tempo esterno per la prima parola:"
@@ -114,15 +84,54 @@ msgstr "→ Ulteriore tempo aggiunto (secondi):"
 msgid "Statistiken erheben:"
 msgstr "Raccogli statistiche:"
 
+msgid "Text Box"
+msgstr "Text Box"
+
+msgid "Zurücksetzen"
+msgstr "Reset"
+
+msgid "Schließen"
+msgstr "Chiudi"
+
+msgid "Datei"
+msgstr "File"
+
+msgid "Vollbild"
+msgstr "Fullscreen"
+
+msgid "Ansicht"
+msgstr "View"
+
+msgid "Über"
+msgstr "Informazioni"
+
+msgid "Hilfe"
+msgstr "Aiuto"
+
+msgid "Einstellungen:"
+msgstr "Impostazioni:"
+
+msgid "Erweiterte Einstellugen für Zeitbassiertes nächstes Wort"
+msgstr "Impostazioni estese per la parola successiva basata sul tempo"
+
+msgid ""
+"Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
+"länger bleiben soll (in Sekunden)"
+msgstr "Qui puoi specificare il tempo aggiuntivo desiderato per cui la parola "
+"deve rimanere più a lungo (in secondi)"
+
+msgid ""
+"Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
+"kurze Worte nicht zu schnell verschwinden."
+msgstr "Tempo di attesa prima che inizi il programma di lettura." 
+"Questo consente alle prime parole brevi di non scomparire troppo rapidamente."
+
 msgid ""
 "Die Zeit wird berechnet durch:\n"
 "Zeit−Pro−Wort×(₃√Wort−Länge )"
 msgstr ""
 "Il tempo verrà calcolato da:\n"
 "Tempo per parola×(₃√Lunghezza della parola)"
-
-msgid "Zurücksetzen"
-msgstr "Reset"
 
 msgid "Lesen"
 msgstr "Leggere"

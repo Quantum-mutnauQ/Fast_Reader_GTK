@@ -1004,7 +1004,7 @@ void on_quit_activate(GSimpleAction *action, GVariant *parameter, gpointer app) 
 void on_about_activate(GSimpleAction *action, GVariant *parameter, gpointer user_data) {
     GtkWidget *about_dialog = gtk_about_dialog_new();
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(about_dialog), "FastReader");
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.2");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.3");
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(about_dialog), _("Fast Reader helps you read quickly by displaying only one word at a time"));
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about_dialog), "https://github.com/Quantum-mutnauQ/Fast_Reader_GTK");
     gtk_about_dialog_set_license_type(GTK_ABOUT_DIALOG(about_dialog), GTK_LICENSE_GPL_2_0);
@@ -1164,6 +1164,13 @@ GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     GSimpleAction *reset_TextBox_action = g_simple_action_new("reset_TextBox", NULL);
     g_signal_connect(reset_TextBox_action, "activate", G_CALLBACK(reset_TextBox), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TextBox_action));
+
+    const gchar *accels[] = { "F11", NULL };
+    gtk_application_set_accels_for_action(app, "app.toggle-fullscreen", accels);
+
+    const gchar *quit_accels[] = { "<Primary>q", NULL };
+    gtk_application_set_accels_for_action(app, "app.quit", quit_accels);
+
     // Hauptmenü
     GMenu *menu_model = g_menu_new();
 
@@ -1646,12 +1653,6 @@ void on_activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(GTK_STACK(stack), create_page2(GTK_STACK(stack), window), "page2");
 
     load_settings();
-
-    const gchar *accels[] = { "F11", NULL };
-    gtk_application_set_accels_for_action(app, "app.toggle-fullscreen", accels);
-
-    const gchar *quit_accels[] = { "<Primary>q", NULL };
-    gtk_application_set_accels_for_action(app, "app.quit", quit_accels);
 
     if (gtk_switch_get_active(global_TimeToNextWordSwitch))
         gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
