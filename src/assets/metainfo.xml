@@ -130,6 +130,21 @@
 
 
 <releases>
+  <release version="7.3" date="2025-4-24">
+    <description>
+        Version 7.3
+        <p>New features added:</p>
+        <ul>
+            <li>Added individual option to reset settings in the menu bar</li>
+            <li>Remembers window size after closing and reopening</li>
+            <li>Added support for fullscreen mode</li>
+            <li>Added keyboard shortcuts:</li>
+            <li>Ctrl + Q to close the application</li>
+            <li>F11 to toggle fullscreen mode</li>
+
+        </ul>
+    </description>
+  </release>
   <release version="7.2" date="2025-4-6">
     <description>
         Version 7.2
