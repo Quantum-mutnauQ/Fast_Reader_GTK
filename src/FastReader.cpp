@@ -42,6 +42,10 @@ GtkSpinButton *global_SpinnButtonLongerTimeOnLongWord = NULL;
 GtkSwitch *global_SwitchLongerTimeFirstWord = NULL;
 GtkSpinButton *global_SpinnButtonLongerTimeOnFirstWord= NULL;
 GtkSpinButton *global_SpinnButtonLongerTimeOnLongWordMultyplyer= NULL;
+GtkButton *global_top_right_jump_button= NULL;
+
+char *last_text = NULL;
+bool same_text=false;
 
 gchar *config_file_path = NULL;
 
@@ -49,6 +53,7 @@ gchar *config_file_path = NULL;
 // Globale Variablen zur Verwaltung des Texts und der Wörter
 gchar **words = NULL;
 int current_word_index = 0;
+int last_word_index=0;
 int total_words = 0;
 gboolean timebased_next_word = false;
 gboolean make_statistics = false;
@@ -126,7 +131,8 @@ void save_settings() {
     config_setting_t *longer_time_on_first_word_value_setting = config_setting_add(root, "longer_time_on_first_word_value", CONFIG_TYPE_FLOAT);
     config_setting_set_float(longer_time_on_first_word_value_setting, longer_time_on_first_word_value);
 
-
+    config_setting_t *current_word_index_setting = config_setting_add(root, "current_word_index", CONFIG_TYPE_INT);
+    config_setting_set_int(current_word_index_setting, current_word_index);
 
     if (!config_write_file(&cfg, config_file_path)) {
         fprintf(stderr, _("Error while writing file.\n"));
@@ -231,6 +237,10 @@ void load_settings() {
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
         gtk_text_buffer_set_text(buffer, text_str, -1);
 
+        if (last_text)
+            g_free(last_text);
+
+        last_text = g_strdup(text_str);
     }
 
     int make_statistics;
@@ -264,11 +274,18 @@ void load_settings() {
         gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, longer_time_on_first_word_value);
     }
 
+    int index;
+    if (config_lookup_int(&cfg, "current_word_index", &index)) {
+        current_word_index = index;
+    }
+
     config_destroy(&cfg);
 }
 
 void update_button_and_Lable_states() {
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
+
+
 
     if (current_word_index <= words_per_time) {
         gtk_widget_set_sensitive(GTK_WIDGET(global_button_previous), FALSE);
@@ -289,9 +306,6 @@ void update_button_and_Lable_states() {
         gtk_widget_set_visible(GTK_WIDGET(global_top_right_button),FALSE);
         gtk_button_set_icon_name(GTK_BUTTON(global_pause_button),"gtk-media-pause");
     }
-
-
-
 
     if (current_word_index >= total_words && make_statistics)
         gtk_widget_set_visible(GTK_WIDGET(global_results_button),TRUE);
@@ -316,6 +330,12 @@ void update_button_and_Lable_states() {
         gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d", progress_index, total_progress_steps));
     double progress = (double)progress_index / total_progress_steps;
     gtk_progress_bar_set_fraction(global_ProgressBar, progress);
+
+    if(same_text && current_word_index < last_word_index)
+        gtk_widget_set_visible(GTK_WIDGET(global_top_right_jump_button),TRUE);
+    else
+        gtk_widget_set_visible(GTK_WIDGET(global_top_right_jump_button),FALSE);
+
 }
 
 // Funktion zum Überprüfen des Textfelds und zum Aktualisieren des "Lesen"-Buttons
@@ -350,7 +370,7 @@ void split_text_into_words(const gchar *text) {
     // Text in Wörter aufteilen, wobei Leerzeichen und neue Zeilen als Trennzeichen verwendet werden
     words = g_regex_split_simple("[ \n]+", text, (GRegexCompileFlags) 0, (GRegexMatchFlags) 0);
 
-    current_word_index = 0;
+
     total_words = g_strv_length(words);
 
 
@@ -378,6 +398,27 @@ void split_text_into_words(const gchar *text) {
 
 }
 
+void update_displaed_word(){
+    int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
+    GString *current_words = g_string_new(NULL);
+
+    int current_word_index_shifted=current_word_index-1;
+
+    for (int i = 0; i < words_per_time && (current_word_index_shifted +i)< total_words; i++) {
+        if (g_strcmp0(words[current_word_index_shifted +i], "") != 0) {
+            g_string_append(current_words, words[current_word_index_shifted +i]);
+            if (i < words_per_time - 1 && (current_word_index_shifted +i) < total_words - 1) {
+                g_string_append(current_words, " ");
+            }
+        }
+    }
+
+    gtk_label_set_text(global_label, current_words->str);
+    g_string_free(current_words, TRUE);
+    update_button_and_Lable_states();
+
+}
+
 // Funktion zum Aktualisieren des Labels mit den nächsten Wörtern
 void update_label_with_next_word() {
     if(make_statistics&&current_word_index < total_words){
@@ -389,22 +430,8 @@ void update_label_with_next_word() {
     }   
     if (words != NULL && current_word_index < total_words) {
         int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
-
-        GString *next_words = g_string_new(NULL);
-
-        for (int i = 0; i < words_per_time && current_word_index < total_words; i++) {
-            if (g_strcmp0(words[current_word_index], "") != 0) {
-                g_string_append(next_words, words[current_word_index]);
-                if (i < words_per_time - 1 && current_word_index < total_words - 1) {
-                    g_string_append(next_words, " ");
-                }
-            }
-            current_word_index++;
-        }
-
-        gtk_label_set_text(global_label, next_words->str);
-        g_string_free(next_words, TRUE);
-        update_button_and_Lable_states();
+        current_word_index += words_per_time;
+        update_displaed_word();
     }
     
     if(make_statistics&&current_word_index < total_words)
@@ -413,29 +440,16 @@ void update_label_with_next_word() {
 }
 
 
+
+
 void update_label_with_previous_word() {
     if (words != NULL && current_word_index > 1) {
         int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
-        current_word_index -= 2 * words_per_time;
+        current_word_index -= words_per_time;
         if (current_word_index < 0) {
             current_word_index = 0;
         }
-
-        GString *prev_words = g_string_new(NULL);
-
-        for (int i = 0; i < words_per_time && current_word_index < total_words; i++) {
-            if (g_strcmp0(words[current_word_index], "") != 0) {
-                g_string_append(prev_words, words[current_word_index]);
-                if (i < words_per_time - 1 && current_word_index < total_words - 1) {
-                    g_string_append(prev_words, " ");
-                }
-            }
-            current_word_index++;
-        }
-
-        gtk_label_set_text(global_label, prev_words->str);
-        g_string_free(prev_words, TRUE);
-        update_button_and_Lable_states();
+        update_displaed_word();
     }
     if(make_statistics&&current_word_index < total_words)
         start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
@@ -835,6 +849,31 @@ void apply_label_styles() {
     g_free(font_desc_str);
     pango_font_description_free(font_desc);
 }
+void update_to_last_word(GtkWidget *widget, gpointer data){
+    current_word_index = last_word_index;
+    update_displaed_word();
+}
+
+void on_choose_response(GObject *source_object, GAsyncResult *res, gpointer user_data) {
+    GtkAlertDialog *dialog = GTK_ALERT_DIALOG(source_object);
+    int response = gtk_alert_dialog_choose_finish(dialog, res, NULL);
+
+    if (response == 0) {
+        update_to_last_word(NULL,0);
+    }
+    if(timebased_next_word)
+        run_timer(NULL,user_data);
+
+    g_object_unref(dialog);
+}
+
+void ask_for_Last_Progress(GtkStack *stack) {
+    GtkAlertDialog *dialog = gtk_alert_dialog_new("Möchten Sie zur letzten Stelle springen?");
+    const char *buttons[] = { "Ja", "Nein", NULL };
+    gtk_alert_dialog_set_buttons(dialog, buttons);
+
+    gtk_alert_dialog_choose(dialog, GTK_WINDOW(gtk_widget_get_parent(GTK_WIDGET(stack))), NULL, on_choose_response, stack);
+}
 
 // Callback-Funktion, die beim Klicken auf den Button zum Wechseln zu Seite 2 aufgerufen wird
 void on_switch_to_page2(GtkWidget *widget, gpointer data) {
@@ -854,6 +893,20 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
 
     split_text_into_words(text);
     apply_label_styles();
+
+    last_word_index = current_word_index;
+
+    current_word_index = 1;
+    if (last_text && text && strcmp(last_text, text) == 0 && last_word_index > 1){
+        same_text=true;
+        ask_for_Last_Progress(stack);
+    }else
+        same_text=false;
+
+    if (last_text)
+        g_free(last_text);
+
+    last_text = g_strdup(text);
 
     g_free(text);
 
@@ -876,10 +929,11 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
 
     gtk_stack_set_visible_child_name(stack, "page2");
 
-    if (timebased_next_word)
-        update_label_with_next_word_by_timer(stack);
-    else
-        update_label_with_next_word();
+
+    update_displaed_word();
+
+    if(timebased_next_word && !same_text)
+        run_timer(NULL,stack);
 
     save_settings();
 }
@@ -1004,7 +1058,7 @@ void on_quit_activate(GSimpleAction *action, GVariant *parameter, gpointer app) 
 void on_about_activate(GSimpleAction *action, GVariant *parameter, gpointer user_data) {
     GtkWidget *about_dialog = gtk_about_dialog_new();
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(about_dialog), "FastReader");
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.3");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.4");
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(about_dialog), _("Fast Reader helps you read quickly by displaying only one word at a time"));
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about_dialog), "https://github.com/Quantum-mutnauQ/Fast_Reader_GTK");
     gtk_about_dialog_set_license_type(GTK_ABOUT_DIALOG(about_dialog), GTK_LICENSE_GPL_2_0);
@@ -1551,18 +1605,30 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     g_object_unref(provider);
 
+    GtkWidget *top_right_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     // Button für die rechte obere Ecke
+    global_top_right_jump_button = GTK_BUTTON(gtk_button_new_with_label("⟼"));
+    gtk_widget_add_css_class(GTK_WIDGET(global_top_right_jump_button), "transparent-button");
+    gtk_box_append(GTK_BOX(top_right_box), GTK_WIDGET(global_top_right_jump_button));
+
+
     global_top_right_button = GTK_BUTTON(gtk_button_new_with_label("▶️"));
     gtk_widget_add_css_class(GTK_WIDGET(global_top_right_button), "transparent-button");
+    gtk_box_append(GTK_BOX(top_right_box), GTK_WIDGET(global_top_right_button));
 
     g_signal_connect(GTK_WIDGET(global_top_right_button), "clicked", G_CALLBACK(run_timer), stack);
+    g_signal_connect(GTK_WIDGET(global_top_right_jump_button), "clicked", G_CALLBACK(update_to_last_word), stack);
 
     g_signal_connect(GTK_WIDGET(global_pause_button), "clicked", G_CALLBACK(on_pause_button_presed), stack);
 
-    gtk_overlay_add_overlay(GTK_OVERLAY(overlay), GTK_WIDGET(global_top_right_button));
-    gtk_widget_set_halign(GTK_WIDGET(global_top_right_button), GTK_ALIGN_END);
-    gtk_widget_set_valign(GTK_WIDGET(global_top_right_button), GTK_ALIGN_START);
+
     gtk_widget_set_visible(GTK_WIDGET(global_top_right_button),FALSE);
+    gtk_widget_set_visible(GTK_WIDGET(global_top_right_jump_button),FALSE);
+
+
+    gtk_overlay_add_overlay(GTK_OVERLAY(overlay), GTK_WIDGET(top_right_box));
+    gtk_widget_set_halign(GTK_WIDGET(top_right_box), GTK_ALIGN_END);
+    gtk_widget_set_valign(GTK_WIDGET(top_right_box), GTK_ALIGN_START);
 
     return overlay;
 }
