@@ -41,6 +41,15 @@ msgstr "No RGB value found, default value set!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "No GTK theme found, default value set!\n"
 
+msgid "Möchten Sie zur letzten Stelle springen?"
+msgstr "Would you like to jump to the last position?"
+
+msgid "Ja"
+msgstr "yes"
+
+msgid "Nein"
+msgstr "no"
+
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader helps you read quickly by displaying only one word at a time"

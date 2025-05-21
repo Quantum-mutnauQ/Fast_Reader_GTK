@@ -868,8 +868,8 @@ void on_choose_response(GObject *source_object, GAsyncResult *res, gpointer user
 }
 
 void ask_for_Last_Progress(GtkStack *stack) {
-    GtkAlertDialog *dialog = gtk_alert_dialog_new("Möchten Sie zur letzten Stelle springen?");
-    const char *buttons[] = { "Ja", "Nein", NULL };
+    GtkAlertDialog *dialog = gtk_alert_dialog_new(_("Möchten Sie zur letzten Stelle springen?"));
+    const char *buttons[] = { _("Ja"), _("Nein"), NULL };
     gtk_alert_dialog_set_buttons(dialog, buttons);
 
     gtk_alert_dialog_choose(dialog, GTK_WINDOW(gtk_widget_get_parent(GTK_WIDGET(stack))), NULL, on_choose_response, stack);
