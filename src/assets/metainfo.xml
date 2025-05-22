@@ -130,6 +130,17 @@
 
 
 <releases>
+  <release version="7.4" date="2025-5-22">
+    <description>
+        Version 7.4
+        <p>New features added:</p>
+        <ul>
+            <li>Remembers your last reading progress</li>
+            <li>Prompts you to jump to your last progress</li>
+            <li>Button to quickly jump to your last progress</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.3" date="2025-4-24">
     <description>
         Version 7.3
