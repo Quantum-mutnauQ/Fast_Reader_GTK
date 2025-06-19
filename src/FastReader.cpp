@@ -10,6 +10,11 @@
 #include <set>
 #include <map>
 
+#include <iostream>
+
+
+#define FAST_READER_VERSION "7.4"
+
 
 std::chrono::steady_clock::time_point start_time;
 std::vector<std::pair<std::string, double>> word_times;
@@ -285,15 +290,13 @@ void load_settings() {
 void update_button_and_Lable_states() {
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
 
-
-
     if (current_word_index <= words_per_time) {
         gtk_widget_set_sensitive(GTK_WIDGET(global_button_previous), FALSE);
     } else {
         gtk_widget_set_sensitive(GTK_WIDGET(global_button_previous), TRUE);
     }
 
-    if (current_word_index >= total_words) {
+    if (current_word_index >= total_words+make_statistics) {
         gtk_widget_set_sensitive(GTK_WIDGET(global_button_next), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(global_pause_button), FALSE);
     } else {
@@ -307,25 +310,17 @@ void update_button_and_Lable_states() {
         gtk_button_set_icon_name(GTK_BUTTON(global_pause_button),"gtk-media-pause");
     }
 
-    if (current_word_index >= total_words && make_statistics)
+    if (current_word_index >= total_words+1 && make_statistics)
         gtk_widget_set_visible(GTK_WIDGET(global_results_button),TRUE);
     else
         gtk_widget_set_visible(GTK_WIDGET(global_results_button),FALSE);
 
+    int clamped_current_word_index =MIN(current_word_index,total_words);
 
-
-    int fake_total_words=total_words;
-    int fake_current_word_index=current_word_index;
-    if(make_statistics){
-        fake_total_words--;
-        fake_current_word_index=MIN(fake_total_words,current_word_index);
-
-    }
-
-    int progress_index = (fake_current_word_index + words_per_time - 1) / words_per_time;
-    int total_progress_steps = (fake_total_words + words_per_time - 1) / words_per_time;
+    int progress_index = (clamped_current_word_index + words_per_time-1) / words_per_time;
+    int total_progress_steps = (total_words + words_per_time-1) / words_per_time;
     if (words_per_time > 1)
-        gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d - %d/%d", progress_index, total_progress_steps, fake_current_word_index, fake_total_words));
+        gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d - %d/%d", progress_index, total_progress_steps, clamped_current_word_index, total_words));
     else
         gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d", progress_index, total_progress_steps));
     double progress = (double)progress_index / total_progress_steps;
@@ -391,9 +386,6 @@ void split_text_into_words(const gchar *text) {
         total_words--;
     }
 
-    if(make_statistics)
-        append_word(&words, &total_words, _("Statistiken:"));
-
     update_button_and_Lable_states();
 
 }
@@ -402,16 +394,19 @@ void update_displaed_word(){
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
     GString *current_words = g_string_new(NULL);
 
-    int current_word_index_shifted=current_word_index-1;
+    if(current_word_index <= total_words){
+        int current_word_index_shifted=MAX(current_word_index-1,0);
 
-    for (int i = 0; i < words_per_time && (current_word_index_shifted +i)< total_words; i++) {
-        if (g_strcmp0(words[current_word_index_shifted +i], "") != 0) {
-            g_string_append(current_words, words[current_word_index_shifted +i]);
-            if (i < words_per_time - 1 && (current_word_index_shifted +i) < total_words - 1) {
-                g_string_append(current_words, " ");
+        for (int i = 0; i < words_per_time && (current_word_index_shifted +i)< total_words; i++) {
+            if (g_strcmp0(words[current_word_index_shifted +i], "") != 0) {
+                g_string_append(current_words, words[current_word_index_shifted +i]);
+                if (i < words_per_time - 1 && (current_word_index_shifted +i) < total_words - 1) {
+                    g_string_append(current_words, " ");
+                }
             }
         }
-    }
+    }else
+        g_string_append(current_words, _("Statistiken:"));
 
     gtk_label_set_text(global_label, current_words->str);
     g_string_free(current_words, TRUE);
@@ -421,23 +416,35 @@ void update_displaed_word(){
 
 // Funktion zum Aktualisieren des Labels mit den nächsten Wörtern
 void update_label_with_next_word() {
-    if(make_statistics&&current_word_index < total_words){
+    if (make_statistics && current_word_index < total_words) {
         auto end_time = std::chrono::steady_clock::now();  // Endzeit erfassen
         std::chrono::duration<double> elapsed_seconds = end_time - start_time;
+
         if (current_word_index > 0) {
+            //std::cout << "Wort: " << words[current_word_index - 1]
+            //          << ", Zeit( Start ): " << std::chrono::duration_cast<std::chrono::milliseconds>(start_time.time_since_epoch()).count() << " ms\n"
+            //          << ", Zeit( Ende ): " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time.time_since_epoch()).count() << " ms\n"
+            //          << ", Zeitdifferenz: " << elapsed_seconds.count() * 1000 << " ms\n";  // Zeitdifferenz ausgeben
             word_times.push_back({words[current_word_index - 1], elapsed_seconds.count()});  // Zeitdifferenz und Wort speichern
         }
-    }   
-    if (words != NULL && current_word_index < total_words) {
+    }
+
+
+    if (words != NULL && current_word_index < total_words+make_statistics) {
+        if(current_word_index < total_words){
         int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
         current_word_index += words_per_time;
+        }else
+            current_word_index++;
+
         update_displaed_word();
     }
-    
-    if(make_statistics&&current_word_index < total_words)
-        start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
 
+    if (make_statistics && current_word_index < total_words) {
+        start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
+    }
 }
+
 
 
 
@@ -445,7 +452,15 @@ void update_label_with_next_word() {
 void update_label_with_previous_word() {
     if (words != NULL && current_word_index > 1) {
         int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
-        current_word_index -= words_per_time;
+        int removal_words= words_per_time;
+
+        if (current_word_index > total_words) {
+            removal_words =total_words % words_per_time;
+            if(removal_words==0)
+                removal_words= words_per_time;
+        }
+
+        current_word_index -= removal_words;
         if (current_word_index < 0) {
             current_word_index = 0;
         }
@@ -864,6 +879,10 @@ void on_choose_response(GObject *source_object, GAsyncResult *res, gpointer user
     if(timebased_next_word)
         run_timer(NULL,user_data);
 
+    if(make_statistics&&current_word_index < total_words)
+        start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
+
+
     g_object_unref(dialog);
 }
 
@@ -897,7 +916,7 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     last_word_index = current_word_index;
 
     current_word_index = 1;
-    if (last_text && text && strcmp(last_text, text) == 0 && last_word_index > 1){
+    if (last_text && text && strcmp(last_text, text) == 0 && last_word_index > 1 && !(last_word_index >= total_words)){
         same_text=true;
         ask_for_Last_Progress(stack);
     }else
@@ -922,6 +941,7 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     timebased_next_word = gtk_switch_get_active(global_TimeToNextWordSwitch);
     gtk_widget_set_visible(GTK_WIDGET(global_top_right_button),FALSE);
     gtk_button_set_icon_name(GTK_BUTTON(global_pause_button),"gtk-media-pause");
+
     if(timebased_next_word)
         gtk_widget_set_visible(GTK_WIDGET(global_pause_button),TRUE);
     else
@@ -931,6 +951,9 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
 
 
     update_displaed_word();
+    if(make_statistics&&current_word_index < total_words)
+        start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
+
 
     if(timebased_next_word && !same_text)
         run_timer(NULL,stack);
@@ -1058,7 +1081,7 @@ void on_quit_activate(GSimpleAction *action, GVariant *parameter, gpointer app) 
 void on_about_activate(GSimpleAction *action, GVariant *parameter, gpointer user_data) {
     GtkWidget *about_dialog = gtk_about_dialog_new();
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(about_dialog), "FastReader");
-    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), "7.4");
+    gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(about_dialog), FAST_READER_VERSION);
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(about_dialog), _("Fast Reader helps you read quickly by displaying only one word at a time"));
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about_dialog), "https://github.com/Quantum-mutnauQ/Fast_Reader_GTK");
     gtk_about_dialog_set_license_type(GTK_ABOUT_DIALOG(about_dialog), GTK_LICENSE_GPL_2_0);
