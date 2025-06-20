@@ -41,6 +41,9 @@ msgstr "No RGB value found, default value set!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "No GTK theme found, default value set!\n"
 
+msgid "Fehler beim Abrufen der Farben.\n"
+msgstr "Error while retrieving the colors.\n"
+
 msgid "Möchten Sie zur letzten Stelle springen?"
 msgstr "Would you like to jump to the last position?"
 
@@ -50,9 +53,18 @@ msgstr "yes"
 msgid "Nein"
 msgstr "no"
 
+msgid "Fehler beim Abrufen des Textes.\n"
+msgstr "Error while retrieving the text.\n"
+
+msgid "Fehler beim Abrufen des Textpuffers.\n"
+msgstr "Error while retrieving the text buffer.\n"
+
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
+
+msgid "Fehler beim Erstellen der Aktion.\n"
+msgstr "Error while creating the action.\n"
 
 msgid "Hintergrund:"
 msgstr "Background:"
@@ -173,6 +185,12 @@ msgstr "Icon not found.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME is defined: %s\n"
 
+msgid "Schema nicht gefunden!\n"
+msgstr "Schema not found!\n"
+
+msgid "Fehler beim Erstellen des Fensters.\n"
+msgstr "Error while creating the window.\n"
+
 msgid "Fast Reader"
 msgstr "Fast Reader"
 
@@ -181,3 +199,6 @@ msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Error while creating FastReader directory.\n"
+
+msgid "Fehler beim Erstellen der Anwendung.\n"
+msgstr "Error while creating the application.\n"

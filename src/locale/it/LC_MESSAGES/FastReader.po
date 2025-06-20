@@ -41,6 +41,9 @@ msgstr "Nessun valore RGB trovato, valore predefinito impostato!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "Nessun tema GTK trovato, valore predefinito impostato!\n"
 
+msgid "Fehler beim Abrufen der Farben.\n"
+msgstr "Error while retrieving the colors.\n"
+
 msgid "Möchten Sie zur letzten Stelle springen?"
 msgstr "Would you like to jump to the last position?"
 
@@ -50,9 +53,18 @@ msgstr "yes"
 msgid "Nein"
 msgstr "no"
 
+msgid "Fehler beim Abrufen des Textes.\n"
+msgstr "Error while retrieving the text.\n"
+
+msgid "Fehler beim Abrufen des Textpuffers.\n"
+msgstr "Error while retrieving the text buffer.\n"
+
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader ti aiuta a leggere velocemente visualizzando solo una parola alla volta"
+
+msgid "Fehler beim Erstellen der Aktion.\n"
+msgstr "Error while creating the action.\n"
 
 msgid "Hintergrund:"
 msgstr "Sfondo:"
@@ -172,6 +184,12 @@ msgstr "Icona non trovata.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME è definito: %s\n"
 
+msgid "Schema nicht gefunden!\n"
+msgstr "Schema not found!\n"
+
+msgid "Fehler beim Erstellen des Fensters.\n"
+msgstr "Error while creating the window.\n"
+
 msgid "Fast Reader"
 msgstr "Fast Reader"
 
@@ -180,3 +198,6 @@ msgstr "Impossibile recuperare la directory di configurazione predefinita.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Errore durante la creazione della directory di FastReader.\n"
+
+msgid "Fehler beim Erstellen der Anwendung.\n"
+msgstr "Error while creating the application.\n"

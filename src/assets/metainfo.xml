@@ -130,6 +130,19 @@
 
 
 <releases>
+  <release version="7.5" date="2025-6-20">
+    <description>
+        Version 7.5
+        <p>Bug Fixes:</p>
+        <ul>
+            <li>Fixed issues with multiple word per time</li>
+            <li>Corrected the timing of the first word in the statistics</li>
+            <li>Addressed memory leaks</li>
+            <li>Fixed the statistics button being mixed in with text when more than one word is present</li>
+            <li>Fixed the individual resetting of foreground and background colors.</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.4" date="2025-5-22">
     <description>
         Version 7.4

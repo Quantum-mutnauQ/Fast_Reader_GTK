@@ -13,7 +13,7 @@
 #include <iostream>
 
 
-#define FAST_READER_VERSION "7.4"
+#define FAST_READER_VERSION "7.5"
 
 
 std::chrono::steady_clock::time_point start_time;
@@ -319,10 +319,14 @@ void update_button_and_Lable_states() {
 
     int progress_index = (clamped_current_word_index + words_per_time-1) / words_per_time;
     int total_progress_steps = (total_words + words_per_time-1) / words_per_time;
-    if (words_per_time > 1)
-        gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d - %d/%d", progress_index, total_progress_steps, clamped_current_word_index, total_words));
-    else
-        gtk_label_set_text(global_ProgressLabel, g_strdup_printf("%d/%d", progress_index, total_progress_steps));
+    gchar *progress_text;
+    if (words_per_time > 1) {
+        progress_text = g_strdup_printf("%d/%d - %d/%d", progress_index, total_progress_steps, clamped_current_word_index, total_words);
+    } else {
+        progress_text = g_strdup_printf("%d/%d", progress_index, total_progress_steps);
+    }
+    gtk_label_set_text(global_ProgressLabel, progress_text);
+    g_free(progress_text); // Speicher freigeben
     double progress = (double)progress_index / total_progress_steps;
     gtk_progress_bar_set_fraction(global_ProgressBar, progress);
 
@@ -350,62 +354,80 @@ void update_read_and_actions_button_state(GtkTextBuffer *buffer, gpointer user_d
     }
 }
 
-void append_word(gchar ***words2, int *total_words2, const gchar *new_word) {
-    *words2 = (gchar **)g_realloc(*words2, (*total_words2 + 1) * sizeof(gchar *));
-    (*words2)[*total_words2] = g_strdup(new_word);
-    (*total_words2)++;
-}
-
 // Funktion zum Aufteilen eines Textes in Wörter
 void split_text_into_words(const gchar *text) {
 
-    //g_strfreev(words);  // Alte Wörter freigeben, falls vorhanden
+    if (words != NULL) {
+        g_strfreev(words);
+    }
     words=NULL;
 
     // Text in Wörter aufteilen, wobei Leerzeichen und neue Zeilen als Trennzeichen verwendet werden
     words = g_regex_split_simple("[ \n]+", text, (GRegexCompileFlags) 0, (GRegexMatchFlags) 0);
-
+    if (words == NULL) {
+        // Fehlerbehandlung, z.B. Protokollierung oder Rückgabe eines Fehlers
+        return;
+    }
 
     total_words = g_strv_length(words);
 
 
-    // Leere Wörter am Ende entfernen
-    if (total_words > 0 && g_strcmp0(words[total_words - 1], "") == 0) {
-        g_free(words[total_words - 1]);
-        words[total_words - 1] = NULL;
-        total_words--;
-    }
-
-    // Leere Wörter am Anfang entfernen
-    if (total_words > 0 && g_strcmp0(words[0], "") == 0) {
-        g_free(words[0]);
-        for (int i = 1; i < total_words; i++) {
-            words[i - 1] = words[i];
+    int i = 0;
+    while (i < total_words) {
+        if (g_strcmp0(words[i], "") == 0) {
+            g_free(words[i]);
+            for (int j = i; j < total_words - 1; j++) {
+                words[j] = words[j + 1];
+            }
+            words[total_words - 1] = NULL;
+            total_words--;
+        } else {
+            i++;
         }
-        words[total_words - 1] = NULL;
-        total_words--;
     }
-
     update_button_and_Lable_states();
 
 }
 
-void update_displaed_word(){
+GString* list_current_words(){
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
     GString *current_words = g_string_new(NULL);
 
-    if(current_word_index <= total_words){
-        int current_word_index_shifted=MAX(current_word_index-1,0);
+    if (current_words == NULL) {
+        // Fehlerbehandlung, z.B. Protokollierung oder Rückgabe eines Fehlers
+        return NULL;
+    }
 
-        for (int i = 0; i < words_per_time && (current_word_index_shifted +i)< total_words; i++) {
-            if (g_strcmp0(words[current_word_index_shifted +i], "") != 0) {
-                g_string_append(current_words, words[current_word_index_shifted +i]);
-                if (i < words_per_time - 1 && (current_word_index_shifted +i) < total_words - 1) {
-                    g_string_append(current_words, " ");
-                }
+    int current_word_index_shifted=MAX(current_word_index-1,0);
+
+    for (int i = 0; i < words_per_time && (current_word_index_shifted + i) < total_words; i++) {
+        if (g_strcmp0(words[current_word_index_shifted + i], "") != 0) {
+            g_string_append(current_words, words[current_word_index_shifted + i]);
+            if (i < words_per_time - 1 && (current_word_index_shifted + i) < total_words - 1) {
+                g_string_append(current_words, " ");
             }
         }
-    }else
+    }
+    return current_words;
+}
+
+void update_displaed_word(){
+    int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
+
+    GString *current_words = g_string_new(NULL);
+    if (current_words == NULL) {
+        return;
+    }
+
+    if (current_word_index <= total_words) {
+        GString *temp_words = list_current_words();
+        if (temp_words == NULL) {
+            g_string_free(current_words, TRUE);
+            return;
+        }
+        g_string_append(current_words, temp_words->str);
+        g_string_free(temp_words, TRUE);
+    } else
         g_string_append(current_words, _("Statistiken:"));
 
     gtk_label_set_text(global_label, current_words->str);
@@ -421,21 +443,26 @@ void update_label_with_next_word() {
         std::chrono::duration<double> elapsed_seconds = end_time - start_time;
 
         if (current_word_index > 0) {
-            //std::cout << "Wort: " << words[current_word_index - 1]
-            //          << ", Zeit( Start ): " << std::chrono::duration_cast<std::chrono::milliseconds>(start_time.time_since_epoch()).count() << " ms\n"
-            //          << ", Zeit( Ende ): " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time.time_since_epoch()).count() << " ms\n"
-            //          << ", Zeitdifferenz: " << elapsed_seconds.count() * 1000 << " ms\n";  // Zeitdifferenz ausgeben
-            word_times.push_back({words[current_word_index - 1], elapsed_seconds.count()});  // Zeitdifferenz und Wort speichern
+            GString *current_words = g_string_new(NULL);
+
+            if (current_words == NULL) {
+                return;
+            }
+            current_words=list_current_words();
+
+            std::string current_words_str(current_words->str);
+            word_times.push_back({current_words_str, elapsed_seconds.count()});
+            g_string_free(current_words, TRUE);
         }
     }
 
-
-    if (words != NULL && current_word_index < total_words+make_statistics) {
-        if(current_word_index < total_words){
-        int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
-        current_word_index += words_per_time;
-        }else
+    if (words != NULL && current_word_index < total_words + make_statistics) {
+        if (current_word_index < total_words) {
+            int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
+            current_word_index += words_per_time;
+        } else {
             current_word_index++;
+        }
 
         update_displaed_word();
     }
@@ -444,10 +471,6 @@ void update_label_with_next_word() {
         start_time = std::chrono::steady_clock::now();  // Startzeit erfassen
     }
 }
-
-
-
-
 
 void update_label_with_previous_word() {
     if (words != NULL && current_word_index > 1) {
@@ -500,7 +523,7 @@ void update_colors(GtkSwitch *widget, gpointer data) {
         GtkWidget *time = time_labels[index];
         GtkWidget *relative_time_widget = relative_time_labels[index];
         GtkWidget *score_widget = score_labels[index];
-
+        gchar* class_name = g_strdup_printf("score-color-%d", i);
         if (state) {
             if (lowest_indices.find(index) != lowest_indices.end()) {
                 gtk_widget_remove_css_class(GTK_WIDGET(word), "low-score-style");
@@ -509,15 +532,17 @@ void update_colors(GtkSwitch *widget, gpointer data) {
                 gtk_widget_remove_css_class(GTK_WIDGET(score_widget), "low-score-style");
             }
             
-            gtk_widget_add_css_class(GTK_WIDGET(word),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_add_css_class(GTK_WIDGET(time),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_add_css_class(GTK_WIDGET(relative_time_widget),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_add_css_class(GTK_WIDGET(score_widget),  g_strdup_printf("score-color-%d", i));
+
+            gtk_widget_add_css_class(GTK_WIDGET(word),  class_name);
+            gtk_widget_add_css_class(GTK_WIDGET(time),  class_name);
+            gtk_widget_add_css_class(GTK_WIDGET(relative_time_widget),  class_name);
+            gtk_widget_add_css_class(GTK_WIDGET(score_widget),  class_name);
+
         } else {
-            gtk_widget_remove_css_class(GTK_WIDGET(word),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_remove_css_class(GTK_WIDGET(time),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_remove_css_class(GTK_WIDGET(relative_time_widget),  g_strdup_printf("score-color-%d", i));
-            gtk_widget_remove_css_class(GTK_WIDGET(score_widget),  g_strdup_printf("score-color-%d", i));
+            gtk_widget_remove_css_class(GTK_WIDGET(word),  class_name);
+            gtk_widget_remove_css_class(GTK_WIDGET(time),  class_name);
+            gtk_widget_remove_css_class(GTK_WIDGET(relative_time_widget),  class_name);
+            gtk_widget_remove_css_class(GTK_WIDGET(score_widget),  class_name);
             
             if (lowest_indices.find(index) != lowest_indices.end()) {
 
@@ -527,6 +552,7 @@ void update_colors(GtkSwitch *widget, gpointer data) {
                 gtk_widget_add_css_class(GTK_WIDGET(score_widget), "low-score-style");
             }
         }
+        g_free(class_name);
     }
 }
 
@@ -586,47 +612,31 @@ void show_results_window() {
     for (int i = 0; i < 3 && i < scores.size(); ++i) {
         lowest_indices.insert(scores[i].second);
     }
+
+    GtkCssProvider *provider = gtk_css_provider_new();
+    std::string css;
+
     for (int i = 0; i < scores.size(); ++i) {
-        // Färbe die Labels basierend auf dem Score
         double percentage = static_cast<double>(i) / scores.size();
         int red = static_cast<int>(255 * (1 - percentage));
         int green = static_cast<int>(255 * percentage);
-
-        // Erstelle die CSS-Regel für die jeweilige Score-Farbe
-        gchar *css = g_strdup_printf(
-            ".score-color-%d { color: rgb(%d,%d,0); }", i, red, green
-            );
-
-        // CSS global laden und anwenden
-        GtkCssProvider *provider = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider, css);
-        gtk_style_context_add_provider_for_display(
-            gdk_display_get_default(),
-            GTK_STYLE_PROVIDER(provider),
-            GTK_STYLE_PROVIDER_PRIORITY_USER
-            );
-
-        // Aufräumen
-        g_object_unref(provider);
-        g_free(css);
+        css += g_strdup_printf(".score-color-%d { color: rgb(%d,%d,0); }\n", i, red, green);
     }
 
-    // Erstellen der CSS-Klasse als String
-    gchar *css = g_strdup_printf(
-        ".low-score-style { color: red; }"
-        );
+    // Füge die Regel für die niedrigen Scores hinzu
+    css += ".low-score-style { color: red; }\n";
 
-    // CSS global laden und anwenden
-    GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_string(provider, css);
+    // Lade die CSS-Regeln
+    gtk_css_provider_load_from_string(provider, css.c_str());
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
         GTK_STYLE_PROVIDER(provider),
         GTK_STYLE_PROVIDER_PRIORITY_USER
         );
+
     // Aufräumen
     g_object_unref(provider);
-    g_free(css);
+
 
     // Füge Daten zum Grid hinzu
     int row = 2;
@@ -701,19 +711,34 @@ double calculate(double m, double w,double addon) {
     return addon + (m * (pow(w * w, 1.0 / 3.0)));
 }
 
-double preCalculate(double multiplyer, double textLetgh){
-    double addon=0;
-    if(gtk_switch_get_state(global_SwitchLongerTimeFirstWord) && current_word_index == 1)
-        addon +=gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnFirstWord);
+double preCalculate(double multiplyer, double textLength){
+    double addon = 0;
 
-    if(gtk_switch_get_state(global_SwitchLongerTimeOnLongWord) && gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnLongWord) <= textLetgh)
-        addon +=gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer); //*textLetgh;
+    if (gtk_switch_get_state(global_SwitchLongerTimeFirstWord) && current_word_index == 1) {
+        double firstWordValue = gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnFirstWord);
+        if (firstWordValue >= 0) { // Überprüfe, ob der Wert gültig ist
+            addon += firstWordValue;
+        }
+    }
 
-    return calculate(multiplyer,textLetgh,addon);
+    if (gtk_switch_get_state(global_SwitchLongerTimeOnLongWord) && gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnLongWord) <= textLength) {
+        double longWordMultiplier = gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer);
+        if (longWordMultiplier >= 0) { // Überprüfe, ob der Wert gültig ist
+            addon += longWordMultiplier; // *textLength; // Wenn du die Multiplikation benötigst, füge sie hier hinzu
+        }
+    }
+
+    return calculate(multiplyer, textLength, addon);
 }
+
 void run_timer(GtkButton *button, gpointer user_data){
+    if (user_data == NULL) return;
+
     GtkStack *stack = GTK_STACK(user_data);
-    int text_length = strlen(gtk_label_get_text(GTK_LABEL(global_label)));
+    const gchar *label_text = gtk_label_get_text(GTK_LABEL(global_label));
+    if (label_text == NULL) return; // Überprüfe, ob der Text nicht null ist
+
+    int text_length = strlen(label_text);
     int words_per_time = gtk_spin_button_get_value_as_int(global_labelWortsPerTimeSpinn);
     double time_per_word = gtk_spin_button_get_value(global_TimeToNextWordSpinn);
 
@@ -721,6 +746,9 @@ void run_timer(GtkButton *button, gpointer user_data){
         gtk_widget_set_visible(GTK_WIDGET(global_top_right_button),FALSE);
         gtk_button_set_icon_name(GTK_BUTTON(global_pause_button),"gtk-media-pause");
         timer_id = g_timeout_add(preCalculate(time_per_word, text_length)*1000, update_label_with_next_word_by_timer, stack);
+        if (timer_id == 0) {
+            g_warning("Failed to add timer.");
+        }
     }else timer_id =0;
 }
 
@@ -779,16 +807,18 @@ void get_default_colors(GdkRGBA *bg_color, GdkRGBA *fg_color, GtkWidget *window)
 
     gtk_widget_get_color(window, fg_color);
 
+
     GtkSettings *settings = gtk_widget_get_settings(window);
     gchar *theme_name = NULL;
     g_object_get(settings, "gtk-theme-name", &theme_name, NULL);
 
+    gboolean found = FALSE; // Deklariere die Variable found hier
+
     if (theme_name) {
         GtkCssProvider *provider = gtk_css_provider_new();
-        gtk_css_provider_load_named(provider, theme_name, NULL);
+        gtk_css_provider_load_named(provider, theme_name, NULL); // Diese Funktion gibt void zurück
 
         gchar *css_string = gtk_css_provider_to_string(provider);
-        gboolean found = FALSE;
 
         if (css_string) {
             gchar *theme_bg = extract_theme_bg_rgb(css_string);
@@ -824,12 +854,20 @@ void apply_label_styles() {
     const GdkRGBA *bg_color = gtk_color_dialog_button_get_rgba(global_labelBackgroundColor);
     const GdkRGBA *fg_color = gtk_color_dialog_button_get_rgba(global_labelForgroudColor);
 
+    if(!bg_color || !fg_color){
+        g_print(_("Fehler beim Abrufen der Farben.\n"));
+        return;
+    }
+
     gchar *font_desc_str = pango_font_description_to_string(gtk_font_dialog_button_get_font_desc(global_labelTextButton));
     PangoFontDescription *font_desc = pango_font_description_from_string(font_desc_str);
     const gchar *font_family = pango_font_description_get_family(font_desc);
     gint font_size = pango_font_description_get_size(font_desc) / PANGO_SCALE;
 
     // Erstellen der CSS-Klasse als String
+    gchar *bg_color_str = gdk_rgba_to_string(bg_color);
+    gchar *fg_color_str = gdk_rgba_to_string(fg_color);
+
     gchar *css = g_strdup_printf(
         ".custom-label-style {"
         "  background-color: %s;"
@@ -837,11 +875,12 @@ void apply_label_styles() {
         "  font-family: '%s';"
         "  font-size: %dpt;"
         "}",
-        gdk_rgba_to_string(bg_color),
-        gdk_rgba_to_string(fg_color),
+        bg_color_str,
+        fg_color_str,
         font_family,
         font_size
         );
+
 
     // CSS global laden und anwenden
     GtkCssProvider *provider = gtk_css_provider_new();
@@ -862,6 +901,8 @@ void apply_label_styles() {
     g_object_unref(provider);
     g_free(css);
     g_free(font_desc_str);
+    g_free(bg_color_str); // Freigabe des Hintergrundfarbstrings
+    g_free(fg_color_str); // Freigabe des Vordergrundfarbstrings
     pango_font_description_free(font_desc);
 }
 void update_to_last_word(GtkWidget *widget, gpointer data){
@@ -909,6 +950,11 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     gtk_text_buffer_get_end_iter(buffer, &end);
 
     char *text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
+
+    if (text == NULL) {
+        g_print(_("Fehler beim Abrufen des Textes.\n"));
+        return;
+    }
 
     split_text_into_words(text);
     apply_label_styles();
@@ -1002,6 +1048,10 @@ void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
 
     // Leere das Textfeld
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     gtk_text_buffer_set_text(buffer, "", -1);
 
     update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
@@ -1049,6 +1099,10 @@ void SwitchLongerTimeFirstWordToggle(GtkSwitch *widget, gpointer data){
 
 void on_copy_button_clicked(GtkButton *button, gpointer data) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     GtkTextIter start, end;
     gtk_text_buffer_get_start_iter(buffer, &start);
     gtk_text_buffer_get_end_iter(buffer, &end);
@@ -1060,17 +1114,29 @@ void on_copy_button_clicked(GtkButton *button, gpointer data) {
 
 void on_paste_button_clicked(GtkButton *button, gpointer data) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     GdkClipboard *clipboard = gdk_display_get_clipboard(gdk_display_get_default());
     gtk_text_buffer_paste_clipboard(buffer, clipboard, NULL, TRUE);
 }
 
 void on_clear_button_clicked(GtkButton *button, gpointer data) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     gtk_text_buffer_set_text(buffer, "", -1);
 }
 
 void on_undo_button_clicked(GtkButton *button, gpointer data) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     gtk_text_buffer_undo(buffer);
 }
 
@@ -1121,14 +1187,17 @@ void reset_Backreound(GSimpleAction *action, GVariant *parameter, gpointer user_
     GdkRGBA bg_color, fg_color;
 
     get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
-        gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
+
+    gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
+
 }
 
 void reset_Forground(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     GdkRGBA bg_color, fg_color;
 
     get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
-        gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
+
+    gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
 }
 void reset_Font(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
@@ -1137,108 +1206,129 @@ void reset_Font(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     pango_font_description_free(default_font_desc);
 }
 void reset_showProgress(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_switch_set_active(global_labelProgressSwitch, TRUE);
+    gtk_switch_set_active(global_labelProgressSwitch, TRUE);
 }
 void reset_multibleWords(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, 1);
+    gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, 1);
 }
 void reset_TimeBasetWordPredictions(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_switch_set_active(global_TimeToNextWordSwitch, FALSE);
+    gtk_switch_set_active(global_TimeToNextWordSwitch, FALSE);
 }
 void reset_TimeBasetWordPredictionsTime(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_spin_button_set_value(global_TimeToNextWordSpinn, 0.9);
+    gtk_spin_button_set_value(global_TimeToNextWordSpinn, 0.9);
 }
 void reset_LongLongWortLongerTime(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
+    gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
 }
 void reset_LongLongWortLongerTimeLetters(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWord, 15);
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWord, 15);
 }
 void reset_LongLongWortLongerTime_Time(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
 }
 void reset_ExtraTimeForFirstWord(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_switch_set_active(global_SwitchLongerTimeFirstWord, TRUE);
+    gtk_switch_set_active(global_SwitchLongerTimeFirstWord, TRUE);
 }
 void reset_ExtraTimeForFirstWord_Time(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, 0.3);
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, 0.3);
 }
 void reset_createStatistics(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-        gtk_switch_set_active(global_StatisticsSwitch, FALSE);
+    gtk_switch_set_active(global_StatisticsSwitch, FALSE);
 }
 void reset_TextBox(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
+    if (buffer == NULL) {
+        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
+        return;
+    }
     gtk_text_buffer_set_text(buffer, "", -1);
-        update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
+    update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
 }
 
 GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     // Actions definieren und mit Callbacks verbinden
     GSimpleAction *quit_action = g_simple_action_new("quit", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(quit_action, "activate", G_CALLBACK(on_quit_activate), window);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(quit_action));
 
     GSimpleAction *about_action = g_simple_action_new("about", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(about_action, "activate", G_CALLBACK(on_about_activate), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(about_action));
 
     GSimpleAction *toggle_fullscreen_action = g_simple_action_new("toggle-fullscreen", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(toggle_fullscreen_action, "activate", G_CALLBACK(toggle_fullscreen), window);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(toggle_fullscreen_action));
 
     GSimpleAction *reset_Backreound_action = g_simple_action_new("reset_Backreound", NULL);
-    g_signal_connect(reset_Backreound_action, "activate", G_CALLBACK(reset_Backreound), NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
+    g_signal_connect(reset_Backreound_action, "activate", G_CALLBACK(reset_Backreound), window);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Backreound_action));
 
     GSimpleAction *reset_Forground_action = g_simple_action_new("reset_Forground", NULL);
-    g_signal_connect(reset_Forground_action, "activate", G_CALLBACK(reset_Forground), NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
+    g_signal_connect(reset_Forground_action, "activate", G_CALLBACK(reset_Forground), window);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Forground_action));
 
     GSimpleAction *reset_Font_action = g_simple_action_new("reset_Font", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_Font_action, "activate", G_CALLBACK(reset_Font), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Font_action));
 
     GSimpleAction *reset_showProgress_action = g_simple_action_new("reset_showProgress", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_showProgress_action, "activate", G_CALLBACK(reset_showProgress), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_showProgress_action));
 
     GSimpleAction *reset_multibleWords_action = g_simple_action_new("reset_multibleWords", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_multibleWords_action, "activate", G_CALLBACK(reset_multibleWords), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_multibleWords_action));
 
     GSimpleAction *reset_TimeBasetWordPredictions_action = g_simple_action_new("reset_TimeBasetWordPredictions", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_TimeBasetWordPredictions_action, "activate", G_CALLBACK(reset_TimeBasetWordPredictions), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TimeBasetWordPredictions_action));
 
     GSimpleAction *reset_TimeBasetWordPredictionsTime_action = g_simple_action_new("reset_TimeBasetWordPredictionsTime", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_TimeBasetWordPredictionsTime_action, "activate", G_CALLBACK(reset_TimeBasetWordPredictionsTime), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TimeBasetWordPredictionsTime_action));
 
     GSimpleAction *reset_LongLongWortLongerTime_action = g_simple_action_new("reset_LongLongWortLongerTime", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_LongLongWortLongerTime_action, "activate", G_CALLBACK(reset_LongLongWortLongerTime), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTime_action));
 
     GSimpleAction *reset_LongLongWortLongerTimeLetters_action = g_simple_action_new("reset_LongLongWortLongerTimeLetters", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_LongLongWortLongerTimeLetters_action, "activate", G_CALLBACK(reset_LongLongWortLongerTimeLetters), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTimeLetters_action));
 
     GSimpleAction *reset_LongLongWortLongerTime_Time_action = g_simple_action_new("reset_LongLongWortLongerTime_Time", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_LongLongWortLongerTime_Time_action, "activate", G_CALLBACK(reset_LongLongWortLongerTime_Time), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTime_Time_action));
 
     GSimpleAction *reset_ExtraTimeForFirstWord_action = g_simple_action_new("reset_ExtraTimeForFirstWord", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_ExtraTimeForFirstWord_action, "activate", G_CALLBACK(reset_ExtraTimeForFirstWord), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_ExtraTimeForFirstWord_action));
 
     GSimpleAction *reset_ExtraTimeForFirstWord_Time_action = g_simple_action_new("reset_ExtraTimeForFirstWord_Time", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_ExtraTimeForFirstWord_Time_action, "activate", G_CALLBACK(reset_ExtraTimeForFirstWord_Time), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_ExtraTimeForFirstWord_Time_action));
 
     GSimpleAction *reset_createStatistics_action = g_simple_action_new("reset_createStatistics", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_createStatistics_action, "activate", G_CALLBACK(reset_createStatistics), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_createStatistics_action));
 
     GSimpleAction *reset_TextBox_action = g_simple_action_new("reset_TextBox", NULL);
+    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
     g_signal_connect(reset_TextBox_action, "activate", G_CALLBACK(reset_TextBox), NULL);
     g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TextBox_action));
 
@@ -1495,6 +1585,7 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_style_context_add_provider_for_display(gdk_display_get_default(),
                                                GTK_STYLE_PROVIDER(provider),
                                                GTK_STYLE_PROVIDER_PRIORITY_USER);
+    g_object_unref(provider);
 
 
     global_copy_button = gtk_button_new_from_icon_name("edit-copy");
@@ -1658,6 +1749,9 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
 
 void setup_shortcuts(GtkWindow *window) {
     GtkShortcutController *controller = GTK_SHORTCUT_CONTROLLER(gtk_shortcut_controller_new());
+    if (!controller) {
+        return;
+    }
     gtk_widget_add_controller(GTK_WIDGET(window), GTK_EVENT_CONTROLLER(controller));
 
     GtkShortcut *shortcut = gtk_shortcut_new(
@@ -1665,13 +1759,12 @@ void setup_shortcuts(GtkWindow *window) {
         gtk_shortcut_action_parse_string("app.toggle-fullscreen")
         );
 
-    gtk_shortcut_controller_add_shortcut(controller, shortcut);
-}
+    if (!shortcut) {
+        g_object_unref(controller);
+        return;
+    }
 
-// Callback-Funktion, die beim Schließen des Fensters aufgerufen wird
-void on_window_destroy(GtkWidget *widget, gpointer data) {
-    GMainLoop *loop = (GMainLoop *)data;
-    g_main_loop_quit(loop);
+    gtk_shortcut_controller_add_shortcut(controller, shortcut);
 }
 void on_close_request(GtkWidget *widget, gpointer data) {
     save_settings();
@@ -1712,29 +1805,37 @@ void on_activate(GtkApplication *app, gpointer user_data) {
 
     GSettingsSchema *schema = g_settings_schema_source_lookup(source, "io.github.quantum_mutnauq.fast_reader_gtk.State", TRUE);
     if (!schema) {
-        g_printerr("Schema nicht gefunden!\n");
+        g_printerr(_("Schema nicht gefunden!\n"));
         return;
     }
+    g_free(source);
     settings = g_settings_new_full(schema, NULL, NULL);
 #else
     settings = g_settings_new ("io.github.quantum_mutnauq.fast_reader_gtk.State");
 #endif
     GtkWidget *window = gtk_application_window_new(app);
+    if (!window) {
+        g_printerr(_("Fehler beim Erstellen des Fensters.\n"));
+        return;
+    }
+
+
     gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 620);
     if(settings){
-    g_settings_bind (settings, "width",
-                    window, "default-width",
-                    G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (settings, "height",
-                    window, "default-height",
-                    G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (settings, "is-maximized",
-                    window, "maximized",
-                    G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (settings, "is-fullscreen",
-                    window, "fullscreened",
-                    G_SETTINGS_BIND_DEFAULT);
+        g_settings_bind (settings, "width",
+                        window, "default-width",
+                        G_SETTINGS_BIND_DEFAULT);
+        g_settings_bind (settings, "height",
+                        window, "default-height",
+                        G_SETTINGS_BIND_DEFAULT);
+        g_settings_bind (settings, "is-maximized",
+                        window, "maximized",
+                        G_SETTINGS_BIND_DEFAULT);
+        g_settings_bind (settings, "is-fullscreen",
+                        window, "fullscreened",
+                        G_SETTINGS_BIND_DEFAULT);
+        g_object_unref(settings);
     }
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
@@ -1794,6 +1895,10 @@ int main(int argc, char *argv[]) {
     g_free(fastreader_dir);
 
     GtkApplication *app = gtk_application_new("io.github.quantum_mutnauq.fast_reader_gtk", G_APPLICATION_DEFAULT_FLAGS);
+    if (!app) {
+        printf(_("Fehler beim Erstellen der Anwendung.\n"));
+        return 1;
+    }
     g_signal_connect(app, "activate", G_CALLBACK(on_activate), NULL);
 
 #ifdef ICON_NAME
