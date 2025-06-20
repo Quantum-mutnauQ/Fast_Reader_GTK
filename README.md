@@ -114,6 +114,9 @@ msgstr "No RGB value found, default value set!\n"
 msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
 msgstr "No GTK theme found, default value set!\n"
 
+msgid "Fehler beim Abrufen der Farben.\n"
+msgstr "Error while retrieving the colors.\n"
+
 msgid "Möchten Sie zur letzten Stelle springen?"
 msgstr "Would you like to jump to the last position?"
 
@@ -123,9 +126,18 @@ msgstr "yes"
 msgid "Nein"
 msgstr "no"
 
+msgid "Fehler beim Abrufen des Textes.\n"
+msgstr "Error while retrieving the text.\n"
+
+msgid "Fehler beim Abrufen des Textpuffers.\n"
+msgstr "Error while retrieving the text buffer.\n"
+
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
+
+msgid "Fehler beim Erstellen der Aktion.\n"
+msgstr "Error while creating the action.\n"
 
 msgid "Hintergrund:"
 msgstr "Background:"
@@ -202,7 +214,6 @@ msgid ""
 msgstr "Here you can specify the desired additional time for which the"
 " word should remain longer (in seconds)"
 
-
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
@@ -246,6 +257,12 @@ msgstr "Icon not found.\n"
 msgid "ICON_NAME ist definiert: %s\n"
 msgstr "ICON_NAME is defined: %s\n"
 
+msgid "Schema nicht gefunden!\n"
+msgstr "Schema not found!\n"
+
+msgid "Fehler beim Erstellen des Fensters.\n"
+msgstr "Error while creating the window.\n"
+
 msgid "Fast Reader"
 msgstr "Fast Reader"
 
@@ -254,6 +271,9 @@ msgstr "Could not retrieve default configuration directory.\n"
 
 msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Error while creating FastReader directory.\n"
+
+msgid "Fehler beim Erstellen der Anwendung.\n"
+msgstr "Error while creating the application.\n"
  ```
 3. **Compile**: Use the `msgfmt` command to compile the language file. For example: `msgfmt src/locale/<YourLanguage>/LC_MESSAGES/FastReader.po -o build/locale/<YourLanguage>/LC_MESSAGES/FastReader.mo`.
 4. **Testing**: Launch Fast Reader and verify that the new language is working correctly. If any issues arise, please open an issue and provide your `FastReader.po` file and language details.
