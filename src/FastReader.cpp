@@ -1,4 +1,7 @@
 #include <gtk/gtk.h>
+#ifdef USE_ADWAITA
+#include <adwaita.h>
+#endif
 #include <libintl.h>
 #include <locale.h>
 #include <libconfig.h>
@@ -13,7 +16,7 @@
 #include <iostream>
 
 
-#define FAST_READER_VERSION "7.5"
+#define FAST_READER_VERSION "7.6"
 
 
 std::chrono::steady_clock::time_point start_time;
@@ -48,6 +51,8 @@ GtkSwitch *global_SwitchLongerTimeFirstWord = NULL;
 GtkSpinButton *global_SpinnButtonLongerTimeOnFirstWord= NULL;
 GtkSpinButton *global_SpinnButtonLongerTimeOnLongWordMultyplyer= NULL;
 GtkButton *global_top_right_jump_button= NULL;
+GtkSwitch *global_labelBackgroundColorSwitch= NULL;
+GtkSwitch *global_labelForgroudColorSwitch= NULL;
 
 char *last_text = NULL;
 bool same_text=false;
@@ -79,6 +84,14 @@ void save_settings() {
         gtk_color_dialog_button_get_rgba(global_labelForgroudColor);
     config_setting_t *fg_color_setting = config_setting_add(root, "foreground_color", CONFIG_TYPE_STRING);
     config_setting_set_string(fg_color_setting, gdk_rgba_to_string(fg_color));
+
+    gboolean bg_color_switch = gtk_switch_get_active(global_labelBackgroundColorSwitch);
+    config_setting_t *bg_color_switch_setting = config_setting_add(root, "background_color_switch", CONFIG_TYPE_BOOL);
+    config_setting_set_bool(bg_color_switch_setting, bg_color_switch);
+
+    gboolean fg_color_switch = gtk_switch_get_active(global_labelForgroudColorSwitch);
+    config_setting_t *fg_color_switch_setting = config_setting_add(root, "foreground_color_switsh", CONFIG_TYPE_BOOL);
+    config_setting_set_bool(fg_color_switch_setting, fg_color_switch);
 
     const char *font = pango_font_description_to_string(gtk_font_dialog_button_get_font_desc(global_labelTextButton));
     config_setting_t *font_setting = config_setting_add(root, "font", CONFIG_TYPE_STRING);
@@ -176,6 +189,17 @@ void load_settings() {
         if (gdk_rgba_parse(&fg_color, fg_color_str)) {
             gtk_color_dialog_button_set_rgba(global_labelForgroudColor, &fg_color);
         }
+    }
+
+    int bg_color_switch;
+    if (config_lookup_bool(&cfg, "background_color_switch", &bg_color_switch)) {
+        gtk_switch_set_active(global_labelBackgroundColorSwitch, bg_color_switch);
+    }
+
+
+    int fg_color_switsh;
+    if (config_lookup_bool(&cfg, "foreground_color_switsh", &fg_color_switsh)) {
+        gtk_switch_set_active(global_labelForgroudColorSwitch, fg_color_switsh);
     }
 
 
@@ -774,74 +798,6 @@ gchar* get_default_font_name() {
     return font_name;
 }
 
-gchar *extract_theme_bg_rgb(const gchar *css_string) {
-    if (!css_string) return NULL;
-
-    GRegex *regex = g_regex_new("@define-color\\s+theme_bg_color\\s+([^;]+);",G_REGEX_DOTALL, G_REGEX_MATCH_DEFAULT, NULL);
-    GMatchInfo *match_info;
-    gchar *result = NULL;
-
-    if (g_regex_match(regex, css_string, G_REGEX_MATCH_DEFAULT, &match_info)) {
-        gchar *match = g_match_info_fetch(match_info, 1);
-        if (match) {
-            GRegex *rgb_regex = g_regex_new("rgb\\((\\d{1,3}),\\s*(\\d{1,3}),\\s*(\\d{1,3})\\)",G_REGEX_DOTALL, G_REGEX_MATCH_DEFAULT, NULL);
-            GMatchInfo *rgb_match_info;
-
-            if (g_regex_match(rgb_regex, match, G_REGEX_MATCH_DEFAULT, &rgb_match_info)) {
-                result = g_match_info_fetch(rgb_match_info, 0);
-                g_match_info_free(rgb_match_info);
-            }
-
-            g_regex_unref(rgb_regex);
-            g_free(match);
-        }
-    }
-
-    g_match_info_free(match_info);
-    g_regex_unref(regex);
-    return result; // Muss später mit g_free() freigegeben werden!
-}
-
-void get_default_colors(GdkRGBA *bg_color, GdkRGBA *fg_color, GtkWidget *window) {
-    if (!bg_color || !fg_color || !window) return;
-
-    gtk_widget_get_color(window, fg_color);
-
-
-    GtkSettings *settings = gtk_widget_get_settings(window);
-    gchar *theme_name = NULL;
-    g_object_get(settings, "gtk-theme-name", &theme_name, NULL);
-
-    gboolean found = FALSE; // Deklariere die Variable found hier
-
-    if (theme_name) {
-        GtkCssProvider *provider = gtk_css_provider_new();
-        gtk_css_provider_load_named(provider, theme_name, NULL); // Diese Funktion gibt void zurück
-
-        gchar *css_string = gtk_css_provider_to_string(provider);
-
-        if (css_string) {
-            gchar *theme_bg = extract_theme_bg_rgb(css_string);
-            if (theme_bg) {
-                found = gdk_rgba_parse(bg_color, theme_bg);
-                g_free(theme_bg);
-            }
-            g_free(css_string);
-        }
-
-        g_object_unref(provider);
-        g_free(theme_name);
-
-        if (!found) {
-            gdk_rgba_parse(bg_color, "rgb(200,200,200)");
-            g_print(_("Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"));
-        }
-    } else {
-        gdk_rgba_parse(bg_color, "rgb(200,200,200)");
-        g_print(_("Kein GTK-Theme gefunden, Standardwert gesetzt!\n"));
-    }
-}
-
 // Callback-Funktion, die beim Klicken auf den Button zum Wechseln zu Seite 1 aufgerufen wird
 void on_switch_to_page1(GtkWidget *widget, gpointer data) {
     remove_word_timer();
@@ -865,8 +821,18 @@ void apply_label_styles() {
     gint font_size = pango_font_description_get_size(font_desc) / PANGO_SCALE;
 
     // Erstellen der CSS-Klasse als String
-    gchar *bg_color_str = gdk_rgba_to_string(bg_color);
-    gchar *fg_color_str = gdk_rgba_to_string(fg_color);
+    gchar *bg_color_str = g_strdup("@theme_bg_color");
+    gchar *fg_color_str = g_strdup("@theme_fg_color");
+
+    if (gtk_switch_get_active(GTK_SWITCH(global_labelBackgroundColorSwitch))) {
+        g_free(bg_color_str);
+        bg_color_str = gdk_rgba_to_string(bg_color);
+    }
+
+    if (gtk_switch_get_active(GTK_SWITCH(global_labelForgroudColorSwitch))) {
+        g_free(fg_color_str);
+        fg_color_str = gdk_rgba_to_string(fg_color);
+    }
 
     gchar *css = g_strdup_printf(
         ".custom-label-style {"
@@ -1029,11 +995,14 @@ gboolean on_key_press(GtkEventControllerKey *controller, guint keyval, guint key
 void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
     // Setze die Standard-Hintergrund- und Schriftfarbe zurück
     GdkRGBA bg_color, fg_color;
-
-    get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
+    gdk_rgba_parse(&bg_color, "#000000");
+    gdk_rgba_parse(&fg_color, "#ffffff");
 
     gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
     gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
+    gtk_switch_set_active(global_labelBackgroundColorSwitch, FALSE);
+    gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
+
     // Setze die Schriftart und -größe zurück
     PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
     pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
@@ -1071,11 +1040,11 @@ void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
 
 }
 
-void TimeToNextWordSwitchtoggle(GtkSwitch *widget, gpointer data){
-    if(gtk_switch_get_active(global_TimeToNextWordSwitch)){
-        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), TRUE);
+void switchtoggle(GtkSwitch *widget, GParamSpec *pspec, gpointer data){
+    if(gtk_switch_get_active(widget)){
+        gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
     }else{
-        gtk_widget_set_sensitive(GTK_WIDGET(global_TimeToNextWordSpinn), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
     }
 }
 
@@ -1087,13 +1056,6 @@ void SwitchLongerTimeOnLongWordToggle(GtkSwitch *widget, gpointer data){
         gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWord), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnLongWordMultyplyer), FALSE);
     }
-
-}
-void SwitchLongerTimeFirstWordToggle(GtkSwitch *widget, gpointer data){
-    if(gtk_switch_get_active(global_SwitchLongerTimeFirstWord))
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), TRUE);
-    else
-        gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), FALSE);
 
 }
 
@@ -1184,20 +1146,24 @@ void toggle_fullscreen(GSimpleAction *action, GVariant *parameter, gpointer wind
 }
 
 void reset_Backreound(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-    GdkRGBA bg_color, fg_color;
-
-    get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
+    GdkRGBA bg_color;
+    gdk_rgba_parse(&bg_color, "#000000");
 
     gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
-
 }
 
 void reset_Forground(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-    GdkRGBA bg_color, fg_color;
-
-    get_default_colors(&bg_color, &fg_color, GTK_WIDGET(user_data));
+    GdkRGBA  fg_color;
+    gdk_rgba_parse(&fg_color, "#ffffff");
 
     gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
+}
+void reset_Backreound_Switsh(GSimpleAction *action, GVariant *parameter, gpointer user_data){
+    gtk_switch_set_active(global_labelBackgroundColorSwitch, FALSE);
+}
+
+void reset_Forground_Switsh(GSimpleAction *action, GVariant *parameter, gpointer user_data){
+    gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
 }
 void reset_Font(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
@@ -1245,92 +1211,35 @@ void reset_TextBox(GSimpleAction *action, GVariant *parameter, gpointer user_dat
     update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
 }
 
+void add_action(const gchar* name, GCallback callback, gpointer user_data,GtkApplication *app){
+    GSimpleAction *action = g_simple_action_new(name, NULL);
+    if (!action) {g_printerr(_("Fehler beim Erstellen der Aktion.\n"));return;}
+    g_signal_connect(action, "activate", callback,user_data);
+    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(action));
+}
+
 GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     // Actions definieren und mit Callbacks verbinden
-    GSimpleAction *quit_action = g_simple_action_new("quit", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(quit_action, "activate", G_CALLBACK(on_quit_activate), window);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(quit_action));
 
-    GSimpleAction *about_action = g_simple_action_new("about", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(about_action, "activate", G_CALLBACK(on_about_activate), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(about_action));
-
-    GSimpleAction *toggle_fullscreen_action = g_simple_action_new("toggle-fullscreen", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(toggle_fullscreen_action, "activate", G_CALLBACK(toggle_fullscreen), window);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(toggle_fullscreen_action));
-
-    GSimpleAction *reset_Backreound_action = g_simple_action_new("reset_Backreound", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_Backreound_action, "activate", G_CALLBACK(reset_Backreound), window);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Backreound_action));
-
-    GSimpleAction *reset_Forground_action = g_simple_action_new("reset_Forground", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_Forground_action, "activate", G_CALLBACK(reset_Forground), window);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Forground_action));
-
-    GSimpleAction *reset_Font_action = g_simple_action_new("reset_Font", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_Font_action, "activate", G_CALLBACK(reset_Font), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_Font_action));
-
-    GSimpleAction *reset_showProgress_action = g_simple_action_new("reset_showProgress", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_showProgress_action, "activate", G_CALLBACK(reset_showProgress), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_showProgress_action));
-
-    GSimpleAction *reset_multibleWords_action = g_simple_action_new("reset_multibleWords", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_multibleWords_action, "activate", G_CALLBACK(reset_multibleWords), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_multibleWords_action));
-
-    GSimpleAction *reset_TimeBasetWordPredictions_action = g_simple_action_new("reset_TimeBasetWordPredictions", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_TimeBasetWordPredictions_action, "activate", G_CALLBACK(reset_TimeBasetWordPredictions), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TimeBasetWordPredictions_action));
-
-    GSimpleAction *reset_TimeBasetWordPredictionsTime_action = g_simple_action_new("reset_TimeBasetWordPredictionsTime", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_TimeBasetWordPredictionsTime_action, "activate", G_CALLBACK(reset_TimeBasetWordPredictionsTime), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TimeBasetWordPredictionsTime_action));
-
-    GSimpleAction *reset_LongLongWortLongerTime_action = g_simple_action_new("reset_LongLongWortLongerTime", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_LongLongWortLongerTime_action, "activate", G_CALLBACK(reset_LongLongWortLongerTime), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTime_action));
-
-    GSimpleAction *reset_LongLongWortLongerTimeLetters_action = g_simple_action_new("reset_LongLongWortLongerTimeLetters", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_LongLongWortLongerTimeLetters_action, "activate", G_CALLBACK(reset_LongLongWortLongerTimeLetters), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTimeLetters_action));
-
-    GSimpleAction *reset_LongLongWortLongerTime_Time_action = g_simple_action_new("reset_LongLongWortLongerTime_Time", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_LongLongWortLongerTime_Time_action, "activate", G_CALLBACK(reset_LongLongWortLongerTime_Time), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_LongLongWortLongerTime_Time_action));
-
-    GSimpleAction *reset_ExtraTimeForFirstWord_action = g_simple_action_new("reset_ExtraTimeForFirstWord", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_ExtraTimeForFirstWord_action, "activate", G_CALLBACK(reset_ExtraTimeForFirstWord), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_ExtraTimeForFirstWord_action));
-
-    GSimpleAction *reset_ExtraTimeForFirstWord_Time_action = g_simple_action_new("reset_ExtraTimeForFirstWord_Time", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_ExtraTimeForFirstWord_Time_action, "activate", G_CALLBACK(reset_ExtraTimeForFirstWord_Time), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_ExtraTimeForFirstWord_Time_action));
-
-    GSimpleAction *reset_createStatistics_action = g_simple_action_new("reset_createStatistics", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_createStatistics_action, "activate", G_CALLBACK(reset_createStatistics), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_createStatistics_action));
-
-    GSimpleAction *reset_TextBox_action = g_simple_action_new("reset_TextBox", NULL);
-    if (!quit_action) {g_print(_("Fehler beim Erstellen der Aktion.\n"));return NULL;}
-    g_signal_connect(reset_TextBox_action, "activate", G_CALLBACK(reset_TextBox), NULL);
-    g_action_map_add_action(G_ACTION_MAP(app), G_ACTION(reset_TextBox_action));
+    add_action("quit",G_CALLBACK(on_quit_activate),window,app);
+    add_action("about", G_CALLBACK(on_about_activate), NULL,app);
+    add_action("toggle-fullscreen", G_CALLBACK(toggle_fullscreen), window, app);
+    add_action("reset_Backreound",G_CALLBACK(reset_Backreound), window, app);
+    add_action("reset_Forground", G_CALLBACK(reset_Forground), window,app);
+    add_action("reset_Backreound_Switch",G_CALLBACK(reset_Backreound_Switsh), window,app);
+    add_action("reset_Forground_Switch",G_CALLBACK(reset_Forground_Switsh), window,app);
+    add_action("reset_Font",G_CALLBACK(reset_Font), NULL,app);
+    add_action("reset_showProgress",G_CALLBACK(reset_showProgress), NULL,app);
+    add_action("reset_multibleWords",G_CALLBACK(reset_multibleWords), NULL,app);
+    add_action("reset_TimeBasetWordPredictions", G_CALLBACK(reset_TimeBasetWordPredictions), NULL, app);
+    add_action("reset_TimeBasetWordPredictionsTime",G_CALLBACK(reset_TimeBasetWordPredictionsTime), NULL,app);
+    add_action("reset_LongLongWortLongerTime",G_CALLBACK(reset_LongLongWortLongerTime), NULL,app);
+    add_action("reset_LongLongWortLongerTimeLetters",G_CALLBACK(reset_LongLongWortLongerTimeLetters), NULL,app);
+    add_action("reset_LongLongWortLongerTime_Time",G_CALLBACK(reset_LongLongWortLongerTime_Time), NULL,app);
+    add_action("reset_ExtraTimeForFirstWord",G_CALLBACK(reset_ExtraTimeForFirstWord), NULL,app);
+    add_action("reset_ExtraTimeForFirstWord_Time",G_CALLBACK(reset_ExtraTimeForFirstWord_Time), NULL,app);
+    add_action("reset_createStatistics",G_CALLBACK(reset_createStatistics), NULL,app);
+    add_action("reset_TextBox",G_CALLBACK(reset_TextBox), NULL,app);
 
     const gchar *accels[] = { "F11", NULL };
     gtk_application_set_accels_for_action(app, "app.toggle-fullscreen", accels);
@@ -1346,8 +1255,17 @@ GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
 
     // Untermenü: Zurücksetzen
     GMenu *reset_menu = g_menu_new();
-    g_menu_append(reset_menu, _("Hintergrund:"), "app.reset_Backreound");
-    g_menu_append(reset_menu, _("Schrift:"), "app.reset_Forground");
+    GMenu *background_submenu = g_menu_new();
+    g_menu_append(background_submenu, _("Schalter"), "app.reset_Backreound_Switch");
+    g_menu_append(background_submenu, _("Farbe"), "app.reset_Backreound");
+
+    GMenu *foreground_submenu = g_menu_new();
+    g_menu_append(foreground_submenu, _("Schalter"), "app.reset_Forground_Switch");
+    g_menu_append(foreground_submenu, _("Farbe"), "app.reset_Forground");
+
+    g_menu_append_submenu(reset_menu, _("Hintergrund:"), G_MENU_MODEL(background_submenu));
+    g_menu_append_submenu(reset_menu, _("Schrift:"), G_MENU_MODEL(foreground_submenu));
+
     g_menu_append(reset_menu, _("Schrift Größe:"), "app.reset_Font");
     g_menu_append(reset_menu, _("Fortschritt Zeigen:"), "app.reset_showProgress");
     g_menu_append(reset_menu, _("Angezeigte wörter:"), "app.reset_multibleWords");
@@ -1408,7 +1326,6 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
 
     gtk_box_append(GTK_BOX(page1), menu_bar);
 
-
     GtkWidget *settings_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(settings_box, 4);
 
@@ -1417,10 +1334,14 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
 
     GtkWidget *Backround = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
     GtkWidget *labelBackground = gtk_label_new(_("Hintergrund:"));
+    global_labelBackgroundColorSwitch=GTK_SWITCH(gtk_switch_new());
+    gtk_switch_set_active(global_labelBackgroundColorSwitch, FALSE);
     global_labelBackgroundColor = GTK_COLOR_DIALOG_BUTTON(gtk_color_dialog_button_new(gtk_color_dialog_new()));
 
     GtkWidget *Forgroud = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
     GtkWidget *labelForgroud = gtk_label_new(_("Schrift:"));
+    global_labelForgroudColorSwitch=GTK_SWITCH(gtk_switch_new());
+    gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
     global_labelForgroudColor = GTK_COLOR_DIALOG_BUTTON(gtk_color_dialog_button_new(gtk_color_dialog_new()));
 
     GtkWidget *Text = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
@@ -1520,16 +1441,19 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
 
     // Standard-Hintergrund- und Schriftfarbe abrufen und setzen
     GdkRGBA bg_color, fg_color;
-    get_default_colors(&bg_color, &fg_color, window);
+    gdk_rgba_parse(&bg_color, "#000000");
+    gdk_rgba_parse(&fg_color, "#ffffff");
     gtk_color_dialog_button_set_rgba(global_labelBackgroundColor, &bg_color);
     gtk_color_dialog_button_set_rgba(global_labelForgroudColor, &fg_color);
 
     gtk_box_append(GTK_BOX(settings_box), label);
     gtk_box_append(GTK_BOX(Backround), labelBackground);
+    gtk_box_append(GTK_BOX(Backround), GTK_WIDGET(global_labelBackgroundColorSwitch));
     gtk_box_append(GTK_BOX(Backround), GTK_WIDGET(global_labelBackgroundColor));
     gtk_box_append(GTK_BOX(settings_box), Backround);
 
     gtk_box_append(GTK_BOX(Forgroud), labelForgroud);
+    gtk_box_append(GTK_BOX(Forgroud), GTK_WIDGET(global_labelForgroudColorSwitch));
     gtk_box_append(GTK_BOX(Forgroud), GTK_WIDGET(global_labelForgroudColor));
     gtk_box_append(GTK_BOX(settings_box), Forgroud);
 
@@ -1636,9 +1560,11 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     g_signal_connect(GTK_WIDGET(global_button_read), "clicked", G_CALLBACK(on_switch_to_page2), stack);
     g_signal_connect(gtk_text_view_get_buffer(GTK_TEXT_VIEW(global_text_view)), "changed", G_CALLBACK(update_read_and_actions_button_state), NULL);
     g_signal_connect(ResetButton, "clicked", G_CALLBACK(on_reset_button_clicked), window);
-    g_signal_connect(global_TimeToNextWordSwitch, "notify::active", G_CALLBACK(TimeToNextWordSwitchtoggle), NULL);
+    g_signal_connect(global_TimeToNextWordSwitch, "notify::active", G_CALLBACK(switchtoggle), global_TimeToNextWordSpinn);
     g_signal_connect(global_SwitchLongerTimeOnLongWord, "notify::active", G_CALLBACK(SwitchLongerTimeOnLongWordToggle), NULL);
-    g_signal_connect(global_SwitchLongerTimeFirstWord, "notify::active", G_CALLBACK(SwitchLongerTimeFirstWordToggle), NULL);
+    g_signal_connect(global_SwitchLongerTimeFirstWord, "notify::active", G_CALLBACK(switchtoggle), global_SpinnButtonLongerTimeOnFirstWord);
+    g_signal_connect(global_labelBackgroundColorSwitch, "notify::active", G_CALLBACK(switchtoggle), global_labelBackgroundColor);
+    g_signal_connect(global_labelForgroudColorSwitch, "notify::active", G_CALLBACK(switchtoggle), global_labelForgroudColor);
 
     // Signalhandler für die neuen Buttons hinzufügen
     g_signal_connect(global_copy_button, "clicked", G_CALLBACK(on_copy_button_clicked), global_copy_button);
@@ -1819,6 +1745,23 @@ void on_activate(GtkApplication *app, gpointer user_data) {
         return;
     }
 
+#ifdef USE_ADWAITA
+    AdwStyleManager* styleManager =adw_style_manager_get_default();
+    adw_style_manager_set_color_scheme(styleManager,ADW_COLOR_SCHEME_DEFAULT);
+#endif
+    const gchar *css =
+        ".hintergrund {"
+        "    background-color: @theme_bg_color;"
+        "    color: @theme_fg_color;"
+        "}";
+
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_string(provider, css); // Der vierte Parameter ist in GTK-4 nicht mehr notwendig
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(),
+                                               GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_widget_add_css_class(window, "hintergrund");
+    g_object_unref(provider);
 
     gtk_window_set_title(GTK_WINDOW(window), _("Fast Reader"));
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 620);
@@ -1861,6 +1804,17 @@ void on_activate(GtkApplication *app, gpointer user_data) {
         gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), TRUE);
     else
         gtk_widget_set_sensitive(GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord), FALSE);
+
+    if (gtk_switch_get_active(global_labelBackgroundColorSwitch))
+        gtk_widget_set_sensitive(GTK_WIDGET(global_labelBackgroundColor), TRUE);
+    else
+        gtk_widget_set_sensitive(GTK_WIDGET(global_labelBackgroundColor), FALSE);
+
+    if (gtk_switch_get_active(global_labelForgroudColorSwitch))
+        gtk_widget_set_sensitive(GTK_WIDGET(global_labelForgroudColor), TRUE);
+    else
+        gtk_widget_set_sensitive(GTK_WIDGET(global_labelForgroudColor), FALSE);
+
 
     GtkEventController *controller = gtk_event_controller_key_new();
     g_signal_connect(controller, "key-pressed", G_CALLBACK(on_key_press), stack);
