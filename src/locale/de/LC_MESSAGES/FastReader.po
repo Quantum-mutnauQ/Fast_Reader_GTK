@@ -35,12 +35,6 @@ msgstr "Prozentuale Zeit (%)"
 msgid "Punkte"
 msgstr "Punkte"
 
-msgid "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
-msgstr "Keinen RGB-Wert gefunden, Standardwert gesetzt!\n"
-
-msgid "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
-msgstr "Kein GTK-Theme gefunden, Standardwert gesetzt!\n"
-
 msgid "Fehler beim Abrufen der Farben.\n"
 msgstr "Fehler beim Abrufen der Farben.\n"
 
@@ -65,6 +59,12 @@ msgstr "Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort
 
 msgid "Fehler beim Erstellen der Aktion.\n"
 msgstr "Fehler beim Erstellen der Aktion.\n"
+
+msgid "Schalter"
+msgstr "Schalter"
+
+msgid "Farbe"
+msgstr "Farbe"
 
 msgid "Hintergrund:"
 msgstr "Hintergrund:"
