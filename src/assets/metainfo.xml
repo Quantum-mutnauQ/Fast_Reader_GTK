@@ -130,6 +130,20 @@
 
 
 <releases>
+  <release version="7.6" date="2025-7-19">
+    <description>
+        Version 7.6
+        <p>Added Features:</p>
+        <ul>
+            <li>Added Adwaita for theming the Flatpak package</li>
+        </ul>
+        <p>Other Changes:</p>
+        <ul>
+            <li>Added switch for change background and foreground color</li>
+            <li>Cleaned up some code</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.5" date="2025-6-20">
     <description>
         Version 7.5
