@@ -132,7 +132,7 @@
 <releases>
   <release version="7.6" date="2025-7-19">
     <description>
-        Version 7.6
+        <p>Version 7.6</p>
         <p>Added Features:</p>
         <ul>
             <li>Added Adwaita for theming the Flatpak package</li>
@@ -146,7 +146,7 @@
   </release>
   <release version="7.5" date="2025-6-20">
     <description>
-        Version 7.5
+        <p>Version 7.5</p>
         <p>Bug Fixes:</p>
         <ul>
             <li>Fixed issues with multiple word per time</li>
@@ -159,7 +159,7 @@
   </release>
   <release version="7.4" date="2025-5-22">
     <description>
-        Version 7.4
+        <p>Version 7.4</p>
         <p>New features added:</p>
         <ul>
             <li>Remembers your last reading progress</li>
@@ -170,7 +170,7 @@
   </release>
   <release version="7.3" date="2025-4-24">
     <description>
-        Version 7.3
+        <p>Version 7.3</p>
         <p>New features added:</p>
         <ul>
             <li>Added individual option to reset settings in the menu bar</li>
@@ -185,7 +185,7 @@
   </release>
   <release version="7.2" date="2025-4-6">
     <description>
-        Version 7.2
+        <p>Version 7.2</p>
         <p>New features added:</p>
         <ul>
             <li>Introduced a menu bar</li>
@@ -196,7 +196,7 @@
   </release>
   <release version="7.1" date="2025-3-10">
     <description>
-      Version 7.1
+      <p>Version 7.1</p>
       <p>New features and improvements</p>
       <ul>
         <li>Option for longer time for wery long word.</li>
@@ -208,7 +208,7 @@
   </release>
   <release version="7" date="2025-2-9">
     <description>
-      Version 7
+      <p>Version 7</p>
       <p>GTK update</p>
       <ul>
         <li>Move to GTK 4.14.2 version</li>
@@ -217,7 +217,7 @@
   </release>
   <release version="6.3" date="2025-1-6">
     <description>
-      Version 6.3
+      <p>Version 6.3</p>
       <p>Some Improvements</p>
       <ul>
         <li>Enhanced the readability of the settings</li>
@@ -229,7 +229,7 @@
   </release>
   <release version="6.2" date="2024-12-30">
     <description>
-      Version 6.2
+      <p>Version 6.2</p>
       <p>Flatpak Support</p>
       <ul>
         <li>Did some things in cmake.</li>
@@ -238,7 +238,7 @@
   </release>
   <release version="6.1" date="2024-12-29">
     <description>
-      Version 6.1
+      <p>Version 6.1</p>
       <p>Flatpak Support</p>
       <ul>
         <li>Did some things in cmake.</li>
@@ -247,7 +247,7 @@
   </release>
   <release version="6" date="2024-12-29">
     <description>
-      Version 6
+      <p>Version 6</p>
       <p>Flatpak Support</p>
       <ul>
         <li>Introduced CMake integration</li>
@@ -259,7 +259,7 @@
   </release>
   <release version="5" date="2024-07-11">
     <description>
-      Version 5
+      <p>Version 5</p>
       <p>Include statistics like time per word</p>
         <ul>
           <li>Introduces a new statistics window</li>
@@ -271,7 +271,7 @@
   </release>
   <release version="4" date="2024-07-05">
     <description>
-      Version 4
+      <p>Version 4</p>
       <p>Implement time-based word predictions</p>
         <ul>
           <li>Added Implement time-based word prediction</li>
@@ -281,7 +281,7 @@
   </release>
   <release version="3" date="2024-06-17">
     <description>
-      Version 3
+      <p>Version 3</p>
       <p>Add config support</p>
         <ul>
           <li>Saves all you settings in a file.</li>
@@ -291,7 +291,7 @@
   </release>
   <release version="2" date="2024-06-09">
     <description>
-      Version 2
+      <p>Version 2</p>
         <ul>
           <li>Support for multi languages that are German and English(Hopefully works).</li>
           <li>he ability to show multiple words at the same time.</li>
@@ -300,7 +300,7 @@
   </release>
   <release version="1" date="2024-06-01">
     <description>
-      Version 1
+      <p>Version 1</p>
       <p>The first version from the Speed reader</p>
     </description>
   </release>
