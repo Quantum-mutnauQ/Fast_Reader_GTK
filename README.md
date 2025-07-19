@@ -214,7 +214,6 @@ msgid ""
 msgstr "Here you can specify the desired additional time for which the"
 " word should remain longer (in seconds)"
 
-
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
