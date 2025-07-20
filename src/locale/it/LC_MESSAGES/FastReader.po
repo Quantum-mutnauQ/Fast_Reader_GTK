@@ -36,35 +36,35 @@ msgid "Punkte"
 msgstr "Punti"
 
 msgid "Fehler beim Abrufen der Farben.\n"
-msgstr "Error while retrieving the colors.\n"
+msgstr "Errore durante il recupero dei colori.\n"
 
 msgid "Möchten Sie zur letzten Stelle springen?"
-msgstr "Would you like to jump to the last position?"
+msgstr "Vuoi saltare all'ultima posizione??"
 
 msgid "Ja"
-msgstr "yes"
+msgstr "Si"
 
 msgid "Nein"
-msgstr "no"
+msgstr "No"
 
 msgid "Fehler beim Abrufen des Textes.\n"
-msgstr "Error while retrieving the text.\n"
+msgstr "Errore durante il recupero del testo.\n"
 
 msgid "Fehler beim Abrufen des Textpuffers.\n"
-msgstr "Error while retrieving the text buffer.\n"
+msgstr "Errore durante il recupero del buffer di testo.\n"
 
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
 msgstr "Fast Reader ti aiuta a leggere velocemente visualizzando solo una parola alla volta"
 
 msgid "Fehler beim Erstellen der Aktion.\n"
-msgstr "Error while creating the action.\n"
+msgstr "Errore durante la creazione dell'azione.\n"
 
 msgid "Schalter"
 msgstr "Switch"
 
 msgid "Farbe"
-msgstr "Color"
+msgstr "Colore"
 
 msgid "Hintergrund:"
 msgstr "Sfondo:"
@@ -106,7 +106,7 @@ msgid "Statistiken erheben:"
 msgstr "Raccogli statistiche:"
 
 msgid "Text Box"
-msgstr "Text Box"
+msgstr "Casella di testo"
 
 msgid "Zurücksetzen"
 msgstr "Reset"
@@ -118,10 +118,10 @@ msgid "Datei"
 msgstr "File"
 
 msgid "Vollbild"
-msgstr "Fullscreen"
+msgstr "Schermo intero"
 
 msgid "Ansicht"
-msgstr "View"
+msgstr "Vista"
 
 msgid "Über"
 msgstr "Informazioni"
@@ -188,7 +188,7 @@ msgid "Schema nicht gefunden!\n"
 msgstr "Schema not found!\n"
 
 msgid "Fehler beim Erstellen des Fensters.\n"
-msgstr "Error while creating the window.\n"
+msgstr "Errore durante la creazione della finestra.\n"
 
 msgid "Fast Reader"
 msgstr "Fast Reader"
@@ -200,4 +200,4 @@ msgid "Fehler beim Erstellen des Verzeichnisses FastReader.\n"
 msgstr "Errore durante la creazione della directory di FastReader.\n"
 
 msgid "Fehler beim Erstellen der Anwendung.\n"
-msgstr "Error while creating the application.\n"
+msgstr "Errore durante la creazione dell'applicazione.\n"
