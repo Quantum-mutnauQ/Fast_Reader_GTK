@@ -130,6 +130,16 @@
 
 
 <releases>
+  <release version="7.7" date="2025-8-16">
+    <description>
+        <p>Version 7.7</p>
+        <p>Other Changes:</p>
+        <ul>
+            <li>new icon</li>
+            <li>Updated Italian translations</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.6" date="2025-7-19">
     <description>
         <p>Version 7.6</p>
