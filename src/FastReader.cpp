@@ -16,7 +16,7 @@
 #include <iostream>
 
 
-#define FAST_READER_VERSION "7.8"
+#define FAST_READER_VERSION "7.9"
 
 
 std::chrono::steady_clock::time_point start_time;
@@ -1498,7 +1498,7 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     const gchar *css =
         ".custom-button {"
         "    background-color: transparent;"
-        "    border: none;"
+        "    border: 1px solid transparent;"
         "}"
         ".custom-button:hover {"
         "    border: 1px solid;"
