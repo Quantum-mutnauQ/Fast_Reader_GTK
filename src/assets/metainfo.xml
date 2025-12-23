@@ -130,6 +130,20 @@
 
 
 <releases>
+  <release version="8.0" date="2025-12-23">
+    <description>
+        <p>Version 8.0</p>
+        <p>Other Changes:</p>
+        <ul>
+            <li>Added percentage to Reading progress</li>
+        </ul>
+        <p>Flatpak Changes:</p>
+        <ul>
+            <li>Removed unnecessary keys in the metainfo</li>
+            <li>Updated libconfig</li>
+        </ul>
+    </description>
+  </release>
   <release version="7.9" date="2025-10-11">
     <description>
         <p>Version 7.9</p>
@@ -340,10 +354,4 @@
 </releases>
 
 <translation type="gettext">gnome-builder</translation>
-
-<custom>
-    <value key="flathub::manifest">https://github.com/flathub/io.github.quantum_mutnauq.fast_reader_gtk/blob/master/io.github.quantum_mutnauq.fast_reader_gtk.yml</value>
-</custom>
 </component>
-
-

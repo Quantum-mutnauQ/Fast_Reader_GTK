@@ -16,7 +16,7 @@
 #include <iostream>
 
 
-#define FAST_READER_VERSION "7.9"
+#define FAST_READER_VERSION "8.0"
 
 
 std::chrono::steady_clock::time_point start_time;
@@ -34,6 +34,7 @@ GtkButton *global_button_previous = NULL;
 GtkButton *global_button_next = NULL;
 GtkButton *global_button_read = NULL;
 GtkLabel *global_ProgressLabel = NULL;
+GtkLabel *global_PerzentageLabel = NULL;
 GtkProgressBar *global_ProgressBar = NULL;
 GtkSwitch *global_labelProgressSwitch = NULL;
 GtkSpinButton *global_labelWortsPerTimeSpinn = NULL;
@@ -351,8 +352,13 @@ void update_button_and_Lable_states() {
     }
     gtk_label_set_text(global_ProgressLabel, progress_text);
     g_free(progress_text); // Speicher freigeben
+
     double progress = (double)progress_index / total_progress_steps;
     gtk_progress_bar_set_fraction(global_ProgressBar, progress);
+
+    gchar *percentage_text = g_strdup_printf("%.1f%%", progress * 100);
+    gtk_label_set_text(global_PerzentageLabel, percentage_text);
+    g_free(percentage_text);
 
     if(same_text && current_word_index < last_word_index)
         gtk_widget_set_visible(GTK_WIDGET(global_top_right_jump_button),TRUE);
@@ -945,9 +951,13 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     if (state) {
         gtk_widget_set_visible(GTK_WIDGET(global_ProgressLabel),TRUE);
         gtk_widget_set_visible(GTK_WIDGET(global_ProgressBar),TRUE);
+        gtk_widget_set_visible(GTK_WIDGET(global_PerzentageLabel),TRUE);
+
     } else {
         gtk_widget_set_visible(GTK_WIDGET(global_ProgressLabel),FALSE);
         gtk_widget_set_visible(GTK_WIDGET(global_ProgressBar),FALSE);
+        gtk_widget_set_visible(GTK_WIDGET(global_PerzentageLabel),FALSE);
+
     }
 
     timebased_next_word = gtk_switch_get_active(global_TimeToNextWordSwitch);
@@ -1586,6 +1596,7 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     GtkWidget *ProgressBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     global_ProgressLabel = GTK_LABEL(gtk_label_new("/"));
     global_ProgressBar = GTK_PROGRESS_BAR(gtk_progress_bar_new());
+    global_PerzentageLabel =  GTK_LABEL(gtk_label_new("0%"));
 
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     global_button_previous = GTK_BUTTON(gtk_button_new_with_label("←"));
@@ -1615,6 +1626,7 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
 
     gtk_box_append(GTK_BOX(ProgressBox), GTK_WIDGET(global_ProgressLabel));
     gtk_box_append(GTK_BOX(ProgressBox), GTK_WIDGET(global_ProgressBar));
+    gtk_box_append(GTK_BOX(ProgressBox), GTK_WIDGET(global_PerzentageLabel));
     gtk_box_append(GTK_BOX(page2), ProgressBox);
     gtk_widget_set_hexpand(GTK_WIDGET(global_ProgressBar), TRUE);
 
