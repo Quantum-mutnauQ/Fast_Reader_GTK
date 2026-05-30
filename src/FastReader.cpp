@@ -124,7 +124,7 @@ void save_settings() {
     double time_based_next_word_time = gtk_spin_button_get_value(global_TimeToNextWordSpinn);
     config_setting_t *time_based_next_word_time_setting = config_setting_add(root, "time_based_next_word_time", CONFIG_TYPE_FLOAT);
     config_setting_set_float(time_based_next_word_time_setting, time_based_next_word_time);
-    
+
     gboolean make_statistics = gtk_switch_get_active(global_StatisticsSwitch);
     config_setting_t *make_statistics_setting = config_setting_add(root, "make_statistics", CONFIG_TYPE_BOOL);
     config_setting_set_bool(make_statistics_setting, make_statistics);
@@ -561,7 +561,7 @@ void update_colors(GtkSwitch *widget, gpointer data) {
                 gtk_widget_remove_css_class(GTK_WIDGET(relative_time_widget), "low-score-style");
                 gtk_widget_remove_css_class(GTK_WIDGET(score_widget), "low-score-style");
             }
-            
+
 
             gtk_widget_add_css_class(GTK_WIDGET(word),  class_name);
             gtk_widget_add_css_class(GTK_WIDGET(time),  class_name);
@@ -573,7 +573,7 @@ void update_colors(GtkSwitch *widget, gpointer data) {
             gtk_widget_remove_css_class(GTK_WIDGET(time),  class_name);
             gtk_widget_remove_css_class(GTK_WIDGET(relative_time_widget),  class_name);
             gtk_widget_remove_css_class(GTK_WIDGET(score_widget),  class_name);
-            
+
             if (lowest_indices.find(index) != lowest_indices.end()) {
 
                 gtk_widget_add_css_class(GTK_WIDGET(word), "low-score-style");
@@ -594,7 +594,7 @@ void show_results_window() {
     GtkWidget *results_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(results_window), _("Lese Zeit Ergebnisse"));
     gtk_window_set_default_size(GTK_WINDOW(results_window), 600, 300);
-    
+
     GtkWidget *results = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_margin_start(results, 4);
     gtk_window_set_child(GTK_WINDOW(results_window), results);
@@ -604,18 +604,18 @@ void show_results_window() {
     GtkWidget *total_time_label = gtk_label_new(total_time_text.c_str());
     gtk_widget_set_halign(total_time_label, GTK_ALIGN_START);
     gtk_box_append(GTK_BOX(results), total_time_label);
-    
+
     GtkWidget *scrolled_window = gtk_scrolled_window_new();
     gtk_box_append(GTK_BOX(results), scrolled_window);
     gtk_widget_set_vexpand(scrolled_window, TRUE);
-    
-    GtkWidget *color = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);    
+
+    GtkWidget *color = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *color_label = gtk_label_new(_("Farbe:"));
     GtkWidget *color_switch = gtk_switch_new();
     gtk_box_append(GTK_BOX(color), color_label);
     gtk_box_append(GTK_BOX(color), color_switch);
     gtk_box_append(GTK_BOX(results), color);
-    
+
     // Erstelle ein Grid zur Organisation der Widgets
     grid = gtk_grid_new();
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), grid);
@@ -686,14 +686,14 @@ void show_results_window() {
         if (lowest_indices.find(i) != lowest_indices.end()) {
 
             gtk_widget_add_css_class(GTK_WIDGET(word), "low-score-style");
-            
+
             gtk_widget_add_css_class(GTK_WIDGET(time), "low-score-style");
 
             gtk_widget_add_css_class(GTK_WIDGET(relative_time_widget), "low-score-style");
 
             gtk_widget_add_css_class(GTK_WIDGET(score_widget), "low-score-style");
         }
-        
+
 
         gtk_grid_attach(GTK_GRID(grid), word, 0, row, 1, 1);
         gtk_grid_attach(GTK_GRID(grid), time, 1, row, 1, 1);
@@ -704,7 +704,7 @@ void show_results_window() {
     }
     // Connect the switch to the update_colors function
     g_signal_connect(color_switch, "notify::active", G_CALLBACK(update_colors),NULL);
-    
+
     // Zeige alle Widgets an
     gtk_widget_set_visible(results_window,TRUE);
 
@@ -865,7 +865,7 @@ void apply_label_styles() {
 
     // Entfernen Sie alte Klassen, um sicherzustellen, dass der neue Stil übernommen wird
     gtk_widget_remove_css_class(GTK_WIDGET(global_label), "custom-label-style");
-    
+
     // Wenden Sie die neue CSS-Klasse auf das Label an
     gtk_widget_add_css_class(GTK_WIDGET(global_label), "custom-label-style");
 
@@ -1590,7 +1590,7 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     global_label = GTK_LABEL(gtk_label_new(""));
     GtkWidget *scrolled_window = gtk_scrolled_window_new();
-    
+
     global_results_button = GTK_BUTTON(gtk_button_new_with_label(_("Ergebnissezeigen")));
 
     GtkWidget *ProgressBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
@@ -1616,7 +1616,7 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     gtk_widget_set_hexpand(scrolled_window, TRUE);
     gtk_scrolled_window_set_overlay_scrolling(GTK_SCROLLED_WINDOW(scrolled_window), FALSE);
     gtk_widget_set_vexpand(GTK_WIDGET(global_label), TRUE);
-    
+
     gtk_box_append(GTK_BOX(page2), GTK_WIDGET(global_results_button));
     gtk_widget_set_visible(GTK_WIDGET(global_results_button),FALSE);
 
@@ -1704,6 +1704,46 @@ void setup_shortcuts(GtkWindow *window) {
 
     gtk_shortcut_controller_add_shortcut(controller, shortcut);
 }
+
+void switsh_pages(bool next, GtkStack *stack){
+    const char *current = gtk_stack_get_visible_child_name(stack);
+
+    if (!next) {
+        if (current == NULL || strcmp(current, "page1") != 0) {
+            on_switch_to_page1(NULL,stack);
+        }
+    } else {
+        if (current == NULL || strcmp(current, "page2") != 0) {
+            on_switch_to_page2(NULL,stack);
+        }
+    }
+}
+
+void on_mouse_extra_button(GtkGestureClick *gesture, int n_press, double x, double y, gpointer stack) {
+    guint button = gtk_gesture_single_get_current_button(GTK_GESTURE_SINGLE(gesture));
+    GtkStack *s = GTK_STACK(stack);
+
+    if (button == 8) {
+        gtk_gesture_set_state(GTK_GESTURE(gesture), GTK_EVENT_SEQUENCE_CLAIMED); // <-- neu
+        switsh_pages(false, s);
+    } else if (button == 9) {
+        gtk_gesture_set_state(GTK_GESTURE(gesture), GTK_EVENT_SEQUENCE_CLAIMED); // <-- neu
+        switsh_pages(true, s);
+    }
+}
+
+void on_swipe(GtkGestureSwipe *gesture, double vel_x, double vel_y, gpointer stack) {
+    GtkStack *s = GTK_STACK(stack);
+
+    if (vel_x > 300.0) {
+        gtk_gesture_set_state(GTK_GESTURE(gesture), GTK_EVENT_SEQUENCE_CLAIMED); // <-- neu
+        switsh_pages(false, s);
+    } else if (vel_x < -300.0) {
+        gtk_gesture_set_state(GTK_GESTURE(gesture), GTK_EVENT_SEQUENCE_CLAIMED); // <-- neu
+        switsh_pages(true, s);
+    }
+}
+
 void on_close_request(GtkWidget *widget, gpointer data) {
     save_settings();
 }
@@ -1832,6 +1872,15 @@ void on_activate(GtkApplication *app, gpointer user_data) {
     g_signal_connect(controller, "key-pressed", G_CALLBACK(on_key_press), stack);
     gtk_widget_add_controller(window, controller);
     setup_shortcuts(GTK_WINDOW(window));
+
+    GtkGesture *swipe = gtk_gesture_swipe_new();
+    g_signal_connect(swipe, "swipe", G_CALLBACK(on_swipe), stack);
+    gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(swipe));
+
+    GtkGesture *click = gtk_gesture_click_new();
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(click), 0); // 0 = alle Tasten
+    g_signal_connect(click, "pressed", G_CALLBACK(on_mouse_extra_button), stack);
+    gtk_widget_add_controller(window, GTK_EVENT_CONTROLLER(click));
 
     g_signal_connect(window, "close-request", G_CALLBACK(on_close_request), NULL);
 
