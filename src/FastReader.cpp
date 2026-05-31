@@ -16,7 +16,7 @@
 #include <iostream>
 
 
-#define FAST_READER_VERSION "8.0"
+#define FAST_READER_VERSION "8.1"
 
 
 std::chrono::steady_clock::time_point start_time;

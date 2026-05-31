@@ -75,13 +75,19 @@
   <category>Education</category>
 </categories>
 
-  <keywords>
+<keywords>
     <keyword>reading</keyword>
     <keyword>fast reading</keyword>
     <keyword>fast reader</keyword>
     <keyword>quick reader</keyword>
     <keyword>quick reading</keyword>
-  </keywords>
+</keywords>
+
+<supports>
+  <control>keyboard</control>
+  <control>pointing</control>
+  <control>touch</control>
+</supports>
 
 <branding>
   <color type="primary" scheme_preference="light">#3584e4</color>
@@ -130,6 +136,21 @@
 
 
 <releases>
+  <release version="8.1" date="2026-06-01">
+    <description>
+        <p>Version 8.1</p>
+        <p>Feature added:</p>
+        <ul>
+            <li>Mouse next/prewoust button to switsh betwen main page and reading screen</li>
+            <li>Onone finger swipe on touchscreen to switsh betwen main page and reading screen</li>
+        </ul>
+        <p>Flatpak Changes:</p>
+        <ul>
+            <li>Update SDK</li>
+            <li>added mobile platform support</li>
+        </ul>
+    </description>
+  </release>
   <release version="8.0" date="2025-12-23">
     <description>
         <p>Version 8.0</p>
