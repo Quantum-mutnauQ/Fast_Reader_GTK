@@ -141,13 +141,13 @@
         <p>Version 8.1</p>
         <p>Feature added:</p>
         <ul>
-            <li>Mouse next/prewoust button to switsh betwen main page and reading screen</li>
-            <li>Onone finger swipe on touchscreen to switsh betwen main page and reading screen</li>
+            <li>Mouse back/forward buttons to switch between the main page and reading view</li>
+            <li>One-finger swipe on touchscreens to switch between the main page and reading view</li>
         </ul>
         <p>Flatpak Changes:</p>
         <ul>
-            <li>Update SDK</li>
-            <li>added mobile platform support</li>
+            <li>Updated SDK</li>
+            <li>Added mobile platform support</li>
         </ul>
     </description>
   </release>
