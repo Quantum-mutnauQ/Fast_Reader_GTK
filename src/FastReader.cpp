@@ -81,12 +81,16 @@ void save_settings() {
     const GdkRGBA *bg_color=
         gtk_color_dialog_button_get_rgba(global_labelBackgroundColor);
     config_setting_t *bg_color_setting = config_setting_add(root, "background_color", CONFIG_TYPE_STRING);
-    config_setting_set_string(bg_color_setting, gdk_rgba_to_string(bg_color));
+    gchar *bg_str = gdk_rgba_to_string(bg_color);
+    config_setting_set_string(bg_color_setting, bg_str);
+    g_free(bg_str);
 
     const GdkRGBA *fg_color=
         gtk_color_dialog_button_get_rgba(global_labelForgroudColor);
     config_setting_t *fg_color_setting = config_setting_add(root, "foreground_color", CONFIG_TYPE_STRING);
-    config_setting_set_string(fg_color_setting, gdk_rgba_to_string(fg_color));
+    gchar *fg_str = gdk_rgba_to_string(fg_color);
+    config_setting_set_string(fg_color_setting, fg_str);
+    g_free(fg_str);
 
     gboolean bg_color_switch = gtk_switch_get_active(global_labelBackgroundColorSwitch);
     config_setting_t *bg_color_switch_setting = config_setting_add(root, "background_color_switch", CONFIG_TYPE_BOOL);
@@ -118,6 +122,7 @@ void save_settings() {
     char *text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
     config_setting_t *text_setting = config_setting_add(root, "text", CONFIG_TYPE_STRING);
     config_setting_set_string(text_setting, text);
+    g_free(text);
 
     gboolean TimeToNextWord = gtk_switch_get_active(global_TimeToNextWordSwitch);
     config_setting_t *TimeToNextWord_setting = config_setting_add(root, "time_based_next_word", CONFIG_TYPE_BOOL);
@@ -483,12 +488,7 @@ void update_label_with_next_word() {
         std::chrono::duration<double> elapsed_seconds = end_time - start_time;
 
         if (current_word_index > 0) {
-            GString *current_words = g_string_new(NULL);
-
-            if (current_words == NULL) {
-                return;
-            }
-            current_words=list_current_words();
+            GString* current_words=list_current_words();
 
             std::string current_words_str(current_words->str);
             word_times.push_back({current_words_str, elapsed_seconds.count()});
@@ -660,8 +660,9 @@ void show_results_window() {
         double percentage = static_cast<double>(i) / scores.size();
         int red = static_cast<int>(255 * (1 - percentage));
         int green = static_cast<int>(255 * percentage);
-        css += g_strdup_printf(".score-color-%d { color: rgb(%d,%d,0); }\n", i, red, green);
-    }
+        gchar *line = g_strdup_printf(".score-color-%d { color: rgb(%d,%d,0); }\n", i, red, green);
+        css += line;
+        g_free(line);    }
 
     // Füge die Regel für die niedrigen Scores hinzu
     css += ".low-score-style { color: red; }\n";
@@ -1056,8 +1057,9 @@ void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
     gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
 
     // Setze die Schriftart und -größe zurück
-    PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
-    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
+    gchar *font_name = get_default_font_name();
+    PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
+    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
     gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
     pango_font_description_free(default_font_desc);
 
@@ -1220,8 +1222,9 @@ void reset_Forground_Switsh(GSimpleAction *action, GVariant *parameter, gpointer
     gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
 }
 void reset_Font(GSimpleAction *action, GVariant *parameter, gpointer user_data){
-    PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
-    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
+    gchar *font_name = get_default_font_name();
+    PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
+    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
     gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
     pango_font_description_free(default_font_desc);
 }
@@ -1374,6 +1377,13 @@ GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     GMenuItem *help_item = g_menu_item_new_submenu(_("Hilfe"), G_MENU_MODEL(help_menu));
     g_menu_append_item(menu_model, help_item);
 
+    g_object_unref(zeitwort_item);
+    g_object_unref(langezeit_item);
+    g_object_unref(extrazeit_item);
+    g_object_unref(reset_item);
+    g_object_unref(file_item);
+    g_object_unref(ansicht_item);
+    g_object_unref(help_item);
     // Menüleiste erzeugen
     GtkWidget *menu_bar = gtk_popover_menu_bar_new_from_model(G_MENU_MODEL(menu_model));
     return menu_bar;
@@ -1492,8 +1502,9 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_switch_set_active(GTK_SWITCH(global_labelProgressSwitch), TRUE);
 
     // Erstelle eine Schriftartbeschreibung mit Standardgröße 50
-    PangoFontDescription *default_font_desc = pango_font_description_from_string(get_default_font_name());
-    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
+    gchar *font_name = get_default_font_name();
+    PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
+    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
     gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
 
     pango_font_description_free(default_font_desc);
@@ -1845,8 +1856,10 @@ void on_activate(GtkApplication *app, gpointer user_data) {
         g_printerr(_("Schema nicht gefunden!\n"));
         return;
     }
-    g_free(source);
+    g_settings_schema_source_unref(source);
     settings = g_settings_new_full(schema, NULL, NULL);
+    g_settings_schema_unref(schema);
+
 #else
     settings = g_settings_new ("io.github.quantum_mutnauq.fast_reader_gtk.State");
 #endif
