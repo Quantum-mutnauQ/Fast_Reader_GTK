@@ -1045,56 +1045,6 @@ gboolean on_key_press(GtkEventControllerKey *controller, guint keyval, guint key
     }
     return FALSE;
 }
-void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
-    // Setze die Standard-Hintergrund- und Schriftfarbe zurück
-    GdkRGBA bg_color, fg_color;
-    gdk_rgba_parse(&bg_color, "#000000");
-    gdk_rgba_parse(&fg_color, "#ffffff");
-
-    gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
-    gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
-    gtk_switch_set_active(global_labelBackgroundColorSwitch, FALSE);
-    gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
-
-    // Setze die Schriftart und -größe zurück
-    gchar *font_name = get_default_font_name();
-    PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
-    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
-    gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
-    pango_font_description_free(default_font_desc);
-
-    // Setze den Fortschrittsschalter zurück
-    gtk_switch_set_active(global_labelProgressSwitch, TRUE);
-
-    // Setze die Anzahl der Wörter pro Zeitspanne zurück
-    gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, 1);
-
-    // Leere das Textfeld
-    GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
-    if (buffer == NULL) {
-        g_print(_("Fehler beim Abrufen des Textpuffers.\n"));
-        return;
-    }
-    gtk_text_buffer_set_text(buffer, "", -1);
-
-    update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
-
-    gtk_spin_button_set_value(global_TimeToNextWordSpinn, 0.9);
-
-    gtk_switch_set_active(global_TimeToNextWordSwitch, FALSE);
-
-    gtk_switch_set_active(global_StatisticsSwitch, FALSE);
-
-    gtk_switch_set_active(global_RTLSwitch, system_uses_RTL());
-
-    gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
-    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWord, 15);
-    gtk_switch_set_active(global_SwitchLongerTimeFirstWord, TRUE);
-    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, 0.3);
-
-
-    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
-}
 
 void switchtoggle(GtkSwitch *widget, GParamSpec *pspec, gpointer data){
     if(gtk_switch_get_active(widget)){
@@ -1224,7 +1174,8 @@ void reset_Forground_Switsh(GSimpleAction *action, GVariant *parameter, gpointer
 void reset_Font(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     gchar *font_name = get_default_font_name();
     PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
-    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
+    g_free(font_name);
+    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
     gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
     pango_font_description_free(default_font_desc);
 }
@@ -1270,6 +1221,47 @@ void reset_TextBox(GSimpleAction *action, GVariant *parameter, gpointer user_dat
     gtk_text_buffer_set_text(buffer, "", -1);
     update_read_and_actions_button_state(buffer, NULL); // Aktualisiere den Zustand des "Lesen"-Buttons
 }
+
+void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
+    // Setze die Standard-Hintergrund- und Schriftfarbe zurück
+    GdkRGBA bg_color, fg_color;
+    gdk_rgba_parse(&bg_color, "#000000");
+    gdk_rgba_parse(&fg_color, "#ffffff");
+
+    gtk_color_dialog_button_set_rgba(global_labelBackgroundColor,&bg_color);
+    gtk_color_dialog_button_set_rgba(global_labelForgroudColor,&fg_color);
+    gtk_switch_set_active(global_labelBackgroundColorSwitch, FALSE);
+    gtk_switch_set_active(global_labelForgroudColorSwitch, FALSE);
+
+    // Setze die Schriftart und -größe zurück
+    reset_Font(nullptr, nullptr, nullptr);
+
+    // Setze den Fortschrittsschalter zurück
+    gtk_switch_set_active(global_labelProgressSwitch, TRUE);
+
+    // Setze die Anzahl der Wörter pro Zeitspanne zurück
+    gtk_spin_button_set_value(global_labelWortsPerTimeSpinn, 1);
+
+    // Leere das Textfeld
+    reset_TextBox(nullptr, nullptr, nullptr);
+
+    gtk_spin_button_set_value(global_TimeToNextWordSpinn, 0.9);
+
+    gtk_switch_set_active(global_TimeToNextWordSwitch, FALSE);
+
+    gtk_switch_set_active(global_StatisticsSwitch, FALSE);
+
+    gtk_switch_set_active(global_RTLSwitch, system_uses_RTL());
+
+    gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWord, 15);
+    gtk_switch_set_active(global_SwitchLongerTimeFirstWord, TRUE);
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, 0.3);
+
+
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
+}
+
 
 void add_action(const gchar* name, GCallback callback, gpointer user_data,GtkApplication *app){
     GSimpleAction *action = g_simple_action_new(name, NULL);
@@ -1502,12 +1494,7 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_switch_set_active(GTK_SWITCH(global_labelProgressSwitch), TRUE);
 
     // Erstelle eine Schriftartbeschreibung mit Standardgröße 50
-    gchar *font_name = get_default_font_name();
-    PangoFontDescription *default_font_desc = pango_font_description_from_string(font_name);
-    g_free(font_name);    pango_font_description_set_size(default_font_desc, 50 * PANGO_SCALE);  // Setze Größe auf 50pt
-    gtk_font_dialog_button_set_font_desc(global_labelTextButton, default_font_desc);
-
-    pango_font_description_free(default_font_desc);
+    reset_Font(nullptr, nullptr, nullptr);
 
     global_button_read = GTK_BUTTON(gtk_button_new_with_label(_("Lesen")));
     global_text_view = GTK_TEXT_VIEW(gtk_text_view_new());
