@@ -30,6 +30,7 @@ GtkLabel *global_label = NULL;
 GtkColorDialogButton *global_labelBackgroundColor = NULL;
 GtkColorDialogButton *global_labelForgroudColor = NULL;
 GtkFontDialogButton *global_labelTextButton = NULL;
+GtkWidget *global_navigaton_box = NULL;
 GtkButton *global_button_previous = NULL;
 GtkButton *global_button_next = NULL;
 GtkButton *global_button_read = NULL;
@@ -42,6 +43,7 @@ GtkSwitch *global_TimeToNextWordSwitch = NULL;
 GtkSpinButton *global_TimeToNextWordSpinn = NULL;
 GtkButton *global_top_right_button=NULL;
 GtkSwitch *global_StatisticsSwitch = NULL;
+GtkSwitch *global_RTLSwitch = NULL;
 GtkButton *global_results_button = NULL;
 GtkWidget *global_copy_button = NULL;
 GtkWidget *global_clear_button = NULL;
@@ -137,7 +139,6 @@ void save_settings() {
     config_setting_t *longer_time_on_long_word_value_setting = config_setting_add(root, "longer_time_on_long_word_value", CONFIG_TYPE_FLOAT);
     config_setting_set_float(longer_time_on_long_word_value_setting, longer_time_on_long_word_value);
 
-
     double longer_time_on_long_word_multyplayer = gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer);
     config_setting_t *longer_time_on_long_word_multyplayer_setting = config_setting_add(root, "longer_time_on_long_word_multyplayer", CONFIG_TYPE_FLOAT);
     config_setting_set_float(longer_time_on_long_word_multyplayer_setting, longer_time_on_long_word_multyplayer);
@@ -149,6 +150,10 @@ void save_settings() {
     double longer_time_on_first_word_value = gtk_spin_button_get_value(global_SpinnButtonLongerTimeOnFirstWord);
     config_setting_t *longer_time_on_first_word_value_setting = config_setting_add(root, "longer_time_on_first_word_value", CONFIG_TYPE_FLOAT);
     config_setting_set_float(longer_time_on_first_word_value_setting, longer_time_on_first_word_value);
+
+    gboolean RTLayout = gtk_switch_get_active(global_RTLSwitch);
+    config_setting_t *RTLayout_setting = config_setting_add(root, "rtl_layout", CONFIG_TYPE_BOOL);
+    config_setting_set_bool(RTLayout_setting, RTLayout);
 
     config_setting_t *current_word_index_setting = config_setting_add(root, "current_word_index", CONFIG_TYPE_INT);
     config_setting_set_int(current_word_index_setting, current_word_index);
@@ -302,6 +307,11 @@ void load_settings() {
     double longer_time_on_first_word_value;
     if (config_lookup_float(&cfg, "longer_time_on_first_word_value", &longer_time_on_first_word_value)) {
         gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, longer_time_on_first_word_value);
+    }
+
+    int rtl_layout;
+    if (config_lookup_bool(&cfg, "rtl_layout", &rtl_layout)) {
+        gtk_switch_set_active(global_RTLSwitch, rtl_layout);
     }
 
     int index;
@@ -907,6 +917,12 @@ void ask_for_Last_Progress(GtkStack *stack) {
     gtk_alert_dialog_choose(dialog, GTK_WINDOW(gtk_widget_get_parent(GTK_WIDGET(stack))), NULL, on_choose_response, stack);
 }
 
+bool system_uses_RTL(){
+    GtkTextDirection dir = gtk_widget_get_default_direction();
+
+    return dir == GTK_TEXT_DIR_RTL;
+}
+
 // Callback-Funktion, die beim Klicken auf den Button zum Wechseln zu Seite 2 aufgerufen wird
 void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     GtkStack *stack = GTK_STACK(data);
@@ -963,6 +979,32 @@ void on_switch_to_page2(GtkWidget *widget, gpointer data) {
     timebased_next_word = gtk_switch_get_active(global_TimeToNextWordSwitch);
     gtk_widget_set_visible(GTK_WIDGET(global_top_right_button),FALSE);
     gtk_button_set_icon_name(GTK_BUTTON(global_pause_button),"gtk-media-pause");
+
+    g_object_ref(global_button_previous);
+    g_object_ref(global_pause_button);
+    g_object_ref(global_button_next);
+
+    gtk_box_remove(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_previous));
+    gtk_box_remove(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_pause_button));
+    gtk_box_remove(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_next));
+
+    if (gtk_switch_get_active(global_RTLSwitch)) {
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_next));
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_pause_button));
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_previous));
+        gtk_button_set_label(global_button_previous,"→");
+        gtk_button_set_label(global_button_next,"←");
+    } else {
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_previous));
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_pause_button));
+        gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_next));
+        gtk_button_set_label(global_button_previous,"←");
+        gtk_button_set_label(global_button_next,"→");
+    }
+
+    g_object_unref(global_button_previous);
+    g_object_unref(global_pause_button);
+    g_object_unref(global_button_next);
 
     if(timebased_next_word)
         gtk_widget_set_visible(GTK_WIDGET(global_pause_button),TRUE);
@@ -1041,13 +1083,15 @@ void on_reset_button_clicked(GtkButton *button, gpointer user_data) {
 
     gtk_switch_set_active(global_StatisticsSwitch, FALSE);
 
+    gtk_switch_set_active(global_RTLSwitch, system_uses_RTL());
+
     gtk_switch_set_active(global_SwitchLongerTimeOnLongWord, FALSE);
     gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWord, 15);
     gtk_switch_set_active(global_SwitchLongerTimeFirstWord, TRUE);
     gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnFirstWord, 0.3);
 
-    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
 
+    gtk_spin_button_set_value(global_SpinnButtonLongerTimeOnLongWordMultyplyer, 0.02);
 }
 
 void switchtoggle(GtkSwitch *widget, GParamSpec *pspec, gpointer data){
@@ -1211,6 +1255,9 @@ void reset_ExtraTimeForFirstWord_Time(GSimpleAction *action, GVariant *parameter
 void reset_createStatistics(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     gtk_switch_set_active(global_StatisticsSwitch, FALSE);
 }
+void reset_RTLLayout(GSimpleAction *action, GVariant *parameter, gpointer user_data){
+    gtk_switch_set_active(global_RTLSwitch, system_uses_RTL());
+}
 void reset_TextBox(GSimpleAction *action, GVariant *parameter, gpointer user_data){
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(global_text_view);
     if (buffer == NULL) {
@@ -1250,6 +1297,8 @@ GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     add_action("reset_ExtraTimeForFirstWord_Time",G_CALLBACK(reset_ExtraTimeForFirstWord_Time), NULL,app);
     add_action("reset_createStatistics",G_CALLBACK(reset_createStatistics), NULL,app);
     add_action("reset_TextBox",G_CALLBACK(reset_TextBox), NULL,app);
+    add_action("reset_RTLLayout",G_CALLBACK(reset_RTLLayout), NULL,app);
+
 
     const gchar *accels[] = { "F11", NULL };
     gtk_application_set_accels_for_action(app, "app.toggle-fullscreen", accels);
@@ -1302,6 +1351,7 @@ GtkWidget *create_menu_bar(GtkApplication *app, GtkWidget *window) {
     GMenuItem *extrazeit_item = g_menu_item_new_submenu(_("Exterzeit für erstes Wort:"), G_MENU_MODEL(extrazeit_menu));
     g_menu_append_item(reset_menu, extrazeit_item);
 
+    g_menu_append(reset_menu, _("RTL Navigation:"), "app.reset_RTLLayout");
     g_menu_append(reset_menu, _("Statistiken erheben:"), "app.reset_createStatistics");
     g_menu_append(reset_menu, _("Text Box"), "app.reset_TextBox");
 
@@ -1426,6 +1476,11 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_box_append(GTK_BOX(LongWordFistTimeAdvanced), GTK_WIDGET(global_SpinnButtonLongerTimeOnFirstWord));
     gtk_widget_set_tooltip_text(LongWordFistTimeAdvanced,longerTimeOnFirstWord);
 
+    GtkWidget *RTLBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+    GtkWidget *RTLLabel = gtk_label_new(_("RTL Navigation:"));
+    global_RTLSwitch = GTK_SWITCH(gtk_switch_new());
+    gtk_switch_set_active(global_RTLSwitch, system_uses_RTL());
+
     GtkWidget *Statistics = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
     GtkWidget *labelStatistics = gtk_label_new(_("Statistiken erheben:"));
     global_StatisticsSwitch = GTK_SWITCH(gtk_switch_new());
@@ -1492,6 +1547,10 @@ GtkWidget *create_page1(GtkStack *stack, GtkWidget *window) {
     gtk_box_append(GTK_BOX(advacedWordPredictinsSettings), GTK_WIDGET(LongWordFistTimeAdvanced));
 
     gtk_box_append(GTK_BOX(settings_box), TimeToNextWordAdvandedSettings);
+
+    gtk_box_append(GTK_BOX(RTLBox), RTLLabel);
+    gtk_box_append(GTK_BOX(RTLBox), GTK_WIDGET(global_RTLSwitch));
+    gtk_box_append(GTK_BOX(settings_box), RTLBox);
 
     gtk_box_append(GTK_BOX(Statistics), labelStatistics);
     gtk_box_append(GTK_BOX(Statistics), GTK_WIDGET(global_StatisticsSwitch));
@@ -1598,7 +1657,7 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     global_ProgressBar = GTK_PROGRESS_BAR(gtk_progress_bar_new());
     global_PerzentageLabel =  GTK_LABEL(gtk_label_new("0%"));
 
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    global_navigaton_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     global_button_previous = GTK_BUTTON(gtk_button_new_with_label("←"));
     global_button_next = GTK_BUTTON(gtk_button_new_with_label("→"));
 
@@ -1630,15 +1689,15 @@ GtkWidget *create_page2(GtkStack *stack, GtkWidget *window) {
     gtk_box_append(GTK_BOX(page2), ProgressBox);
     gtk_widget_set_hexpand(GTK_WIDGET(global_ProgressBar), TRUE);
 
-    gtk_box_append(GTK_BOX(hbox), GTK_WIDGET(global_button_previous));
-    gtk_box_append(GTK_BOX(hbox), GTK_WIDGET(global_pause_button));
-    gtk_box_append(GTK_BOX(hbox), GTK_WIDGET(global_button_next));
-    gtk_box_append(GTK_BOX(page2), hbox);
+    gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_previous));
+    gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_pause_button));
+    gtk_box_append(GTK_BOX(global_navigaton_box), GTK_WIDGET(global_button_next));
+    gtk_box_append(GTK_BOX(page2), global_navigaton_box);
 
     gtk_widget_set_hexpand(GTK_WIDGET(global_button_previous), TRUE);
     gtk_widget_set_hexpand(GTK_WIDGET(global_button_next), TRUE);
-    gtk_widget_set_halign(hbox, GTK_ALIGN_FILL);
-    gtk_widget_set_hexpand(hbox, TRUE);
+    gtk_widget_set_halign(global_navigaton_box, GTK_ALIGN_FILL);
+    gtk_widget_set_hexpand(global_navigaton_box, TRUE);
 
     gtk_box_append(GTK_BOX(page2), button2);
 
