@@ -662,7 +662,8 @@ void show_results_window() {
         int green = static_cast<int>(255 * percentage);
         gchar *line = g_strdup_printf(".score-color-%d { color: rgb(%d,%d,0); }\n", i, red, green);
         css += line;
-        g_free(line);    }
+        g_free(line);
+    }
 
     // Füge die Regel für die niedrigen Scores hinzu
     css += ".low-score-style { color: red; }\n";

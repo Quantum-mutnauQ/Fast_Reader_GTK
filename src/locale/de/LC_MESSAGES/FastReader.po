@@ -1,5 +1,24 @@
+# #-#-#-#-#  text.po (PACKAGE VERSION)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  text.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-15 18:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  FastReader.po  #-#-#-#-#\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
@@ -55,7 +74,9 @@ msgstr "Fehler beim Abrufen des Textpuffers.\n"
 
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
-msgstr "Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort anzeigt."
+msgstr ""
+"Fast Reader hilft Ihnen, schnell zu lesen, indem es jeweils nur ein Wort "
+"anzeigt."
 
 msgid "Fehler beim Erstellen der Aktion.\n"
 msgstr "Fehler beim Erstellen der Aktion.\n"
@@ -102,6 +123,10 @@ msgstr "Exterzeit für erstes Wort:"
 msgid "→ dazu addierte Zeit(Sekunden):"
 msgstr "→ Dazu addierte Zeit (Sekunden):"
 
+#: Version 8.2 (cmake)/src/FastReader.cpp:1350 (cmake)/src/FastReader.cpp:1483
+msgid "RTL Navigation:"
+msgstr "RTL Navigation:"
+
 msgid "Statistiken erheben:"
 msgstr "Statistiken erstellen:"
 
@@ -145,8 +170,9 @@ msgstr ""
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
-msgstr "Wartezeit, bis das Leseprogramm startet. Ermöglicht so, dass das"
-"erste kurze Wort nicht zu schnell verschwindet."
+msgstr ""
+"Wartezeit, bis das Leseprogramm startet. Ermöglicht so, dass daserste kurze "
+"Wort nicht zu schnell verschwindet."
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"

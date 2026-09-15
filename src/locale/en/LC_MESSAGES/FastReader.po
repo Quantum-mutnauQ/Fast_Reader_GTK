@@ -1,5 +1,24 @@
+# #-#-#-#-#  text.po (PACKAGE VERSION)  #-#-#-#-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  text.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-15 18:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  FastReader.po  #-#-#-#-#\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Error while writing file.\n"
@@ -55,7 +74,8 @@ msgstr "Error while retrieving the text buffer.\n"
 
 msgid ""
 "Fast Reader helps you read quickly by displaying only one word at a time"
-msgstr "Fast Reader helps you read quickly by displaying only one word at a time"
+msgstr ""
+"Fast Reader helps you read quickly by displaying only one word at a time"
 
 msgid "Fehler beim Erstellen der Aktion.\n"
 msgstr "Error while creating the action.\n"
@@ -102,6 +122,10 @@ msgstr "Extra time for the first word:"
 msgid "→ dazu addierte Zeit(Sekunden):"
 msgstr "→ Time added (seconds):"
 
+#: Version 8.2 (cmake)/src/FastReader.cpp:1350 (cmake)/src/FastReader.cpp:1483
+msgid "RTL Navigation:"
+msgstr "RTL Navigation:"
+
 msgid "Statistiken erheben:"
 msgstr "Collect statistics:"
 
@@ -138,14 +162,16 @@ msgstr "Advanced settings for time-based next word"
 msgid ""
 "Hier kann die gewünschte zusätzliche Zeit angegeben werden, die das Wort "
 "länger bleiben soll (in Sekunden)"
-msgstr "Here you can specify the desired additional time for which the"
-" word should remain longer (in seconds)"
+msgstr ""
+"Here you can specify the desired additional time for which the word should "
+"remain longer (in seconds)"
 
 msgid ""
 "Wartezeit, bis das Lese Programm startet. Ermöglicht so, dass das erste "
 "kurze Worte nicht zu schnell verschwinden."
-msgstr "Waiting time before the reading program starts."
-"This allows the first short words not to disappear too quickly."
+msgstr ""
+"Waiting time before the reading program starts.This allows the first short "
+"words not to disappear too quickly."
 
 msgid ""
 "Die Zeit wird berechnet durch:\n"
