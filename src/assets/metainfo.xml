@@ -144,10 +144,6 @@
             <li>Added LTR navigation</li>
             <li>Fixed memory leaks</li>
         </ul>
-        <p>Flatpak Changes:</p>
-        <ul>
-            <li>Updated SDK</li>
-        </ul>
     </description>
   </release>
   <release version="8.1" date="2026-06-01">
